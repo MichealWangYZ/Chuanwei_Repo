@@ -1,0 +1,836 @@
+\documentclass[showpacs,preprintnumbers,amsmath,amssymb, superscriptaddress, aps, reprint]{revtex4-1}
+%\documentclass[aps,prl,reprint]{revtex4-1}
+%\usepackage{blindtext}
+\usepackage[dvips]{graphicx}
+\usepackage{float}
+\usepackage{tabu}
+\usepackage[hypertexnames=false]{hyperref} % If reset the fig number and want to use hyperlink. Don't use: \usepackage[hidelinks]{hyperref}
+\usepackage{color,soul}
+\usepackage{enumitem}
+%\usepackage{xcolor}  % for highlighting citations
+
+%\usepackage{pdfpages}
+%\usepackage{natbib}
+%\graphicspath{{figures/}}
+
+%\usepackage[hidelinks]{hyperref} % For using hyperlinks and without ugly boxes!!
+\usepackage{graphicx}
+\usepackage{capt-of}% or \usepackage{caption}
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = blue, %Colour of internal links
+  citecolor   = blue %Colour of citations
+}
+
+
+% define symbols
+\def\E_r{E_{\text{r}}}
+\def\k_r{k_{\text{r}}}
+\def\deltaR{\delta_{\text{R}}}
+\def\OmegaF{\Omega_{\text{F}}}
+\def\OmegaI{\Omega_{\text{I}}}
+\def\omegaR{\omega_{\text{R}}}
+\def\omegaZ{\omega_{\text{Z}}}
+\def\thold{t_{\text{hold}}}
+\def\taudamp{\tau_{\text{damp}}}
+
+\renewcommand{\figurename}{Figure}
+%\usepackage{mathptmx}
+
+%\renewcommand{\rmdefault}{cmr}
+
+
+%\renewcommand{\baselinestretch}{1.5}
+
+
+\begin{document}
+\title{{\large Spin current generation and relaxation in a quenched spin-orbit-coupled Bose-Einstein condensate}
+}
+%Spin Current Generation and Relaxation in a Spin-Orbit
+%Coupled Bose-Einstein Condensate
+\author{Chuan-Hsun Li}
+\affiliation{School of Electrical and Computer Engineering, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Chunlei Qu}
+\affiliation{Department of Physics, The University of Texas at Dallas, Richardson, Texas 75080, USA}
+\affiliation{INO-CNR BEC Center and Dipartimento di Fisica, Universit\`a di Trento, Povo 38123, Italy}
+\affiliation{JILA and Department of Physics, University of Colorado, Boulder, Colorado 80309, USA}
+\author{Robert J. Niffenegger}
+\altaffiliation{Current address: Lincoln Laboratory, Massachusetts Institute of Technology, 244 Wood Street Lexington, MA 02421, USA}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Su-Ju Wang}
+\altaffiliation{Current address: J. R. Macdonald Laboratory, Department of Physics, Kansas State University, Manhattan, Kansas 66506, USA}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Mingyuan He}
+\affiliation{Department of Physics, Hong Kong University of Science and Technology, Clear Water Bay, Hong Kong, China}
+\author{David B. Blasing}
+\author{Abraham J. Olson}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Chris H. Greene}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\affiliation{Purdue Quantum Center, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Yuli Lyanda-Geller}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\affiliation{Purdue Quantum Center, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Qi Zhou}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\affiliation{Purdue Quantum Center, Purdue University, West Lafayette, Indiana 47907, USA}
+\author{Chuanwei Zhang}
+\affiliation{Department of Physics, The University of Texas at Dallas, Richardson, Texas 75080, USA}
+\author{Yong P. Chen}
+\email{yongchen@purdue.edu}
+\affiliation{Department of Physics and Astronomy, Purdue University, West Lafayette, Indiana 47907, USA}
+\affiliation{School of Electrical and Computer Engineering, Purdue University, West Lafayette, Indiana 47907, USA}
+\affiliation{Purdue Quantum Center, Purdue University, West Lafayette, Indiana 47907, USA}
+
+\date{\today}
+
+\begin{abstract}
+{
+%\linespread{1.2}
+\begin{center}
+\large{\textbf{Abstract}}
+\end{center}
+Understanding the effects of spin-orbit coupling (SOC) and many-body interactions on spin transport is important in condensed matter physics and spintronics. This topic has been intensively studied for spin carriers such as electrons but barely explored for charge-neutral bosonic quasiparticles (including their condensates), which hold promises for coherent spin transport over macroscopic distances. Here, we explore the effects of synthetic SOC (induced by optical Raman coupling) and atomic interactions on the spin transport in an atomic Bose-Einstein condensate (BEC), where the spin-dipole mode (SDM, actuated by quenching the Raman coupling) of two interacting spin components constitutes an alternating spin current. We experimentally observe that SOC significantly enhances the SDM damping while reducing the thermalization (the reduction of the condensate fraction). We also observe generation of BEC collective excitations such as shape oscillations. Our theory reveals that the SOC-modified interference, immiscibility, and interaction between the spin components can play crucial roles in spin transport.
+}
+\end{abstract}
+
+
+\pacs{}
+
+\maketitle
+
+
+{
+Spin, an internal quantum degree of freedom of particles, is central to many condensed matter phenomena such as topological insulators and superconductors \cite{Hasan_TI_RevModPhys,Qi_TI_TS_RevModPhys} and technological applications such as spintronics \cite{Fundamental_Spintronics_RevModPhys2004} and spin-based quantum computation \cite{SpinQubitReview_science}. Recently, neutral bosonic quasiparticles (such as exciton-polaritons and magnons) or their condensates \cite{PolaritonBEC_RevModPhys2010, MagnonBEC_Nature2006,Physics_Of_Quantum_Fluids_2013} have attracted great interest for coherent manipulation of the spin information. For example, spin currents have been generated using exciton-polarions \cite{SpinCurrent_polariton_NPhy2007} and excitons \cite{SpinCurrent_exciton_PRL2013} in semiconductors and magnons \cite{SpinCurrent_magnon_NPhy2015,Supercurrent_magnon_NatPhy_2016} in a magnetic insulator. In spin-based devices, SOC and
+many-body interactions are key factors for spin current manipulations. SOC can play a particularly crucial role as it may provide a mechanism (such as spin Hall effect) to control the spin, however, it can also cause spin (current) relaxation, leading to loss of spin information. Studying the effects of SOC and many-body interactions on spin relaxation is thus of great importance but also challenging due to uncontrolled disorders and the lack of experimental flexibility in solid state systems.
+
+Cold atomic gases provide a clean and highly-controllable \cite{Bloch_RevModPhys2008} platform for simulating and exploring many condensed matter phenomena \cite{Bloch_RevModPhys2008,Dalibard_gaugefield_RevModPhys,Spielman_Review, Bloch_Nature_review_2012, Zhai_Review}. For example, the generation of synthetic electric \cite{Lin_E_NP_2011} and magnetic \cite{Lin_Magnetic_Nature_2009} fields allows neutral atoms to behave like charged particles. The synthetic magnetic and spin-dependent magnetic fields have been realized to demonstrate respectively the superfluid Hall \cite{LeBlanc_SFHall_PNAS2012} and spin Hall effects \cite{Beeler_SHE_Nature_2013} in BECs. The creation of synthetic SOC in bosonic \cite{Lin_SOC_Nature_2011,zhang_dipole_PRL_2012,Qu_PhysRevA2013,Olson_LZ_PhysRevA2014,2DSOC_Science} and fermionic \cite{Wang_SOCFermi_PhysRevLett2012,SpinInjection_PhysRevLett2012,2DSOC_Fermi2016,SOC_OL_2017} atoms further paves the way to explore diverse phenomena such as topological states \cite{TopologicalMatter_NPhy2016} and exotic condensates and superfluids \cite{SOC_Wu_ChinesePL2011,HuiHu_SOCBEC_PRL2012,ExoticSuperfluid_EPL,Zhai_Review,Stringari_SFdensity_PRA2016,Stringari_vorticity_SOCBEC_PRL2017}. Here, we study the effects of one-dimensional (1D) synthetic SOC on the spin relaxation in a disorder-free atomic BEC using a condensate collider, in which the SDM \cite{SDM_Fermi_PhysRevA1999} of two BECs of different (pseudo) spin states constitute an alternating (AC) spin current. The SDM is initiated by applying a spin-dependent synthetic electric field to the BEC via quenching the Raman coupling that generates the spin-orbit-coupled (SO-coupled) band structure. Similar quantum gas collider systems (without SOC \cite{NewtonCradle_Nature2006,Dark-Bright_Soliton_PRL2011,Sommer_Nature_2011, Collision_soliton_NPhy2014,Spin_Superfluidity_PRL2018}) have been used to study physics that are difficult to access in other systems.
+
+\begin{figure*}[!ht]
+\centering
+\includegraphics[width=7.0in]{Fig1_Setup_Vfinal.pdf}
+\caption{\textbf{Experimental setup and timing diagram used for the spin-dipole mode (SDM) experiments.} (a) Linearly-polarized Raman beams with orthogonal polarizations (indicated by the double-headed arrows along $\hat{z}$ and $\hat{x}$) counter-propagating along $\hat{y}$ couple $m_F$ hyperfine sublevels (bare spin states) of $^{87}$Rb atoms. The sublevels are Zeeman split by $\hbar {\omegaZ} \approx \hbar \Delta {\omegaR} = h \times$ $(3.5$ MHz) using a bias magnetic field $\textbf{B}=B\hat{z}$, which controls the Raman detuning $\deltaR = \hbar (\Delta {\omegaR}-{\omegaZ})$. (b) Experimental timing diagram: Raman coupling $\Omega$ (with an experimental uncertainty of $<10$\%) is slowly ramped up in $80$ ms to an initial value $\OmegaI$ and held for $100$ ms to prepare the BEC around the single minimum of the ground band at $\OmegaI$ as shown in (c). Then, $\Omega$ is quickly lowered to a final coupling $\OmegaF$ in time $t_{\text{E}}$ and held for some time $\thold$, during which we study the dynamics of the BEC in the dipole trap. Subsequently, the atoms are released for absorption imaging after a $15$ ms time of flight (TOF), at the beginning of which a Stern-Gerlach process is performed for $9$ ms to separate atoms of different bare spin states. (c) The ground band (solid lines) of synthetic SOC is calculated for a few representative $\Omega$ {at $\deltaR=0$}. A higher band calculated for $\Omega = 1.3$ $\E_r$ is shown as dashed lines. The colors indicate the spin compositions, with red for $\left|\downarrow\right\rangle$ and blue for $\left|\uparrow\right\rangle$. The ground band minima in quasimomentum marked by dots are identified with spin-dependent vector potentials ($A_{\sigma}$), which shift in opposite directions as $\Omega$ is lowered into the double minima regime during $t_{\text{E}}$. This generates spin-dependent synthetic electric fields $E_{\sigma}$ and thus excites the SDM and an AC spin current along the SOC direction in a trapped BEC. The upper (lower) dashed circle represents the region around $q_y=0$ in the double minima band at an exemplary $\OmegaF=0$ ($\OmegaF=1.3$ $\E_r$), from which the two (dressed) spin components of the BEC roll down towards the corresponding band minima in response to the application of $E_{\sigma}$.}
+\label{Fig1}
+\end{figure*}
+
+Charge or mass currents are typically unaffected by interactions between particles 
+because the currents are associated with the total momentum that is unaffected by interactions. In contrast, spin currents can be intrinsically damped due to the friction resulting from the interactions between different spin components. In electronic systems, such a friction has been referred to as the spin Coulomb drag \cite{Theory_SpinDrag_PhysRevB2000,Observation_spin_Col_drag_Nature2005}. In atomic systems, previous studies have shown that a similar spin drag \cite{SpinDrag_ThermalBose_PRL,Quant_Enhanc_spinDrag_NJP} also exists. Even in the absence of SOC, the relaxation of spin currents can be nontrivial due to, for example, interactions \cite{SpinDrag_Fermi_PRL,DampSDM_Fermi_PRL, SDM_Fermi_PhysRevA1999,Jin_SpinExc_PRL2001, Sommer_Nature_2011,Koschorreck_2013NatPhy} and quantum statistical effects \cite{DeMarco_SpinExc_PRL2002,Quant_Enhanc_spinDrag_NJP}. In one previous experiment \cite{Beeler_SHE_Nature_2013}, bosonic spin currents have been generated in a SO-coupled BEC using the spin Hall effect. However, how the spin currents may relax in the presence of SOC and interactions has not been explored. Here, we observe that SOC can significantly enhance the relaxation of a coherent spin current in a BEC while reducing the thermalization  during our experiment. Moreover, our theory, consistent with the observations, discloses that the interference, immiscibility, and interaction between the two colliding spin components can be notably modified by SOC and play an important role in spin transport. 
+
+
+
+
+\begin{flushleft}
+{\textbf{Results}}
+\end{flushleft}
+
+
+{\textbf{Experimental setup.}} 
+
+In our experiments, we create 3D $^{87}$Rb BECs in the $F=1$ hyperfine state in an optical dipole trap with condensate fraction $f_{\text{c}}>0.6$ containing condensate atom number $N_{\text{c}}\sim 1-2\times 10^4$. As shown in Fig.~\ref{Fig1}a, counter-propagating Raman lasers with an angular frequency difference $\Delta \omegaR$ couple bare spin and momentum states $\left| \downarrow, \hbar(q_y + \k_r) \right\rangle$ and $\left| \uparrow,\hbar(q_y - \k_r) \right\rangle$ to create synthetic 1D SOC (so called equal Rashba-Dresselhaus SOC) along $\hat{y}$ \cite{Olson_LZ_PhysRevA2014}, where the bare spin states $\left| \downarrow \right\rangle  = \left|m_F=- 1 \right\rangle$ and $\left| \uparrow  \right\rangle =\left|m_F= 0\right\rangle$ are Zeeman split by $\hbar \omegaZ\approx \hbar \Delta \omegaR$ using a bias magnetic field $\textbf{B}=B\hat{z}$. Here, $\hbar k_{\downarrow}=\hbar(q_y+ \k_r)$ ($\hbar k_{\uparrow}=\hbar(q_y- \k_r)$) is the mechanical momentum in the $y$ direction of the bare spin component $\left| \downarrow \right\rangle$ ($\left| \uparrow \right\rangle$), where $\hbar q_y$ is the quasimomentum. The photon recoil momentum $\hbar \k_r=2\pi\hbar/\lambda$ and recoil energy $\E_r=\hbar ^2\k_r^2/(2m)$ are set by the Raman laser at the “magic” wavelength $\lambda\sim 790$ nm \cite{LeBlanc_magicWavelegnth_PRA}, where $\hbar$ is the reduced Planck constant and $m$ is the atomic mass of $^{87}$Rb. The $\left|m_F = + 1 \right\rangle$ state can be neglected in a first-order approximation due to the quadratic Zeeman shift ({see Methods}). The single-particle SOC Hamiltonian, $H_{\text{SOC}}$, can be written in the basis of bare spin and momentum states $\{\left| \downarrow, \hbar(q_y + \k_r) \right\rangle, \left| \uparrow,\hbar(q_y - \k_r) \right\rangle\}$ as \cite{Lin_SOC_Nature_2011}:
+\begin{align}
+%\tiny
+\label{eq_hsoc}
+H_{\text{SOC}}=
+\begin{pmatrix}
+\frac{\hbar^2}{2m}(q_y+\k_r)^2-\deltaR&\frac{\Omega}{2} \\ 
+\frac{\Omega}{2} & \frac{\hbar^2}{2m}(q_y-\k_r)^2
+\end{pmatrix}
+\end{align}
+where $\Omega$ is the Raman coupling (tunable by the Raman laser intensity), $\deltaR = \hbar (\Delta {\omegaR}-{\omegaZ})$ is the Raman detuning (tunable by $B$) and is zero in our main measurements ({see Methods}). 
+\begin{figure*}[!ht]
+\centering
+\includegraphics[width=6.9in]{Fig2_Vfinal.pdf}
+\caption{\textbf{SDM of a bare or a dressed BEC.} Select TOF images showing the bare spin and momentum compositions of atoms taken after applying spin-dependent synthetic electric fields $E_{\sigma}$ with $\OmegaF=0$ (bare BEC) in (a) and $\OmegaF= 1.3$ $\E_r$ (SO-coupled BEC) in (b), followed by various hold times ($\thold$) in the dipole trap. The TOF images labeled by $\thold=-1$ ms are taken right before the application of $E_{\sigma}$. The bare spin components (labeled by $m_F$, with $\left| \downarrow  \right\rangle$ in red and $\left| \uparrow  \right\rangle$ in blue) are separated along the horizontal axis. The vertical axis shows the atoms' mechanical momentum $\hbar k$ along the SOC direction ($\hat{y}$). The color scale reflects the measured optical density ($OD$, see Methods). The total condensate atom number of the initial state at $\OmegaI$ is $N_{\text{c}}\sim (1-2)\times{10^4}$ with trap frequencies $\omega_z\sim 2\pi \times (37\pm 5)$ Hz and $\omega_x\sim \omega_y \sim 2\pi\times(205\pm 15)$ Hz. The TOF images (and associated analyzed quantities presented later) are typically the average of a few repetitive measurements.}
+\label{Fig2}
+\end{figure*}
+A dressed state is an eigenstate of Eq.~(\ref{eq_hsoc}), labeled by $q_y$, and is a superposition of bare spin and momentum states. The $q_y$-dependent eigenvalues of (\ref{eq_hsoc}) define the ground and excited energy bands. When $\Omega$ is below a critical $\Omega_{\text{c}}$, the ground band exhibits double wells, which we associate with the dressed spin up $\left| { \uparrow '} \right\rangle $ and down $\left| { \downarrow '} \right\rangle $ states. 
+The double minima at quasimomentum $\hbar q_{\sigma \min }$ can be identified with the light-induced spin-dependent vector potentials $\textbf{A}_{\sigma}=A_{\sigma}\hat{y}$ (controllable by $\Omega$), where $\sigma$ labels $\left| { \uparrow '} \right\rangle $ or $\left| { \downarrow '} \right\rangle $ \cite{Beeler_SHE_Nature_2013} (see Methods). 
+The double minima merge into a single minimum as $\Omega$ increases beyond $\Omega_{\text{c}}$, as shown in the dashed line trajectories in Fig.~\ref{Fig1}c.
+
+
+
+We prepare a BEC around the single minimum of the ground dressed band at $\OmegaI$ ($= 5.2$ $\E_r$ for this work) and $\deltaR= 0$ by ramping on $\Omega$ slowly in $80$ ms and holding it for $100$ ms (Fig.~\ref{Fig1}b,~c, {see Methods for details}). Then, we quickly lower $\Omega$ from $\OmegaI$ to a final value $\OmegaF$ into the “double minima” regime in time $t_{\text{E}}$. The $t_{\text{E}} = 1$ ms used in this work is slow enough to avoid higher band excitations but is fast compared to the trap frequencies. The dotted lines in Fig.~\ref{Fig1}c trace the opposite trajectories of $A_{\uparrow ^{'}}$ and $A_{\downarrow ^{'}}$ during $t_{\text{E}}$. 
+This quench process drives the system across the single minimum to double minima phase transition and generates spin-dependent synthetic electric fields $\textbf{E}_\sigma=E_\sigma\hat{y}=-(\partial {A_\sigma }/\partial t) \hat{y}\approx -(\Delta {A_\sigma }/{t_{\text{E}}})\hat{y}$. Consequently, atoms in different dressed spin components move off in opposite directions from the trap center (or from the region around $q_y=0$ in the quasimomentum space as shown in Fig.~\ref{Fig1}c as dashed circles for two representative $\OmegaF = 0, 1.3$ $\E_r$) and then undergo out-of-phase oscillations, thus exciting the SDM and an AC spin current. Approximately equal populations in the two dressed (or bare) spin components are maintained by keeping $\deltaR= 0$ as $\Omega$ is changed from $\OmegaI$ to $\OmegaF$ ({see Methods}). After the application of $E_{\sigma}$, the Raman coupling is maintained at $\OmegaF$ during the hold time ($\thold$). We then abruptly turn off both the Raman lasers and the dipole trap for time of flight (TOF) absorption imaging, measuring the bare spin and momentum composition of the atoms (Fig.~\ref{Fig1}b). Experiments are performed at various $\thold$ to map out the time evolution in the trap.
+
+
+\vspace{5mm}
+
+\textbf{Measurements of the spin-dipole mode (SDM) and its damping.} 
+
+Fig.~\ref{Fig2} presents SDM measurements for a bare BEC (at $\OmegaF=0$) and a dressed (or SO-coupled) BEC (at $\OmegaF = 1.3$ $\E_r$), with select TOF images taken after representative $\thold$ in the trap. Two TOF images labeled by $\thold= -1$ ms are taken right before the application of $E_{\sigma}$. 
+In the bare case (Fig.~\ref{Fig2}a), the images taken at increasing $\thold$ show several cycles of relative oscillations (SDM) between the two spin components in the momentum space, accompanied by a notable reduction in the BEC fraction. 
+{We refer to the reduction of condensate fraction in this paper as thermalization}. 
+In the dressed case at $\OmegaF = 1.3$ $\E_r$ (Fig.~\ref{Fig2}b), despite the fact that $A_{\sigma}$ are nearly the same as that for the bare case, the SDM is now strongly damped without completing one period. Besides, we observe higher BEC fraction remaining at the end of the measurement compared with the bare case. This can be seen in the narrower momentum distribution of thermal atoms with a more prominent condensate peak in Fig.~\ref{Fig2}b. 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=6.0in]{Fig3_V20_2DTFG_Vfinal.pdf}
+\caption{\textbf{Momentum damping at different \boldmath{$\OmegaF$}, for SDM and the dipole mode of a single dressed spin component.} (a)-(e) Relative momentum oscillations in SDM, $\hbar k_{\text{spin}}$, as a function of $\thold$ at various $\OmegaF$. The experimental data (scatters) are fitted to a damped sinusoidal function (line) to extract the inverse quality factor $1/Q$ of the oscillations. (f) Momentum damping (quantified by $1/Q$) versus $\OmegaF$. The error bar of $1/Q$ is the standard error of the fit. The purple circle data correspond to the SDM (illustrated by (g)) and the red square data correspond to the dipole mode of a BEC with a single dressed spin component prepared in $\left| { \downarrow '} \right\rangle$ (illustrated by (h)). In (g)-(h), the representative band structure is calculated at $\Omega=1.0$ $\E_r$.}
+\label{Fig3}
+\end{figure*}
+From the TOF images, we fit the atomic cloud of each bare spin component (or dominant bare spin component of a dressed spin component) to a 2D bimodal distribution to extract the center-of-mass (CoM) momentum $\hbar k_{\uparrow(\downarrow)}$ or other (dressed) spin-dependent quantities ({see Methods}). The relative mechanical momentum between the two spin components in the SDM is then determined by $\hbar {k_{\text{spin}}} = \hbar ({k_ \uparrow } - {k_ \downarrow })$.
+
+
+
+
+Fig.~\ref{Fig3}a-e presents measurements of $\hbar {k_{\text{spin}}}$ versus $\thold$ at various $\OmegaF$. We see that the initial amplitude ($2 \hbar \k_r$) of $\hbar {k_{\text{spin}}}$ is larger than the width of the atomic momentum distribution ($< \hbar \k_r$), and $\hbar {k_{\text{spin}}}$ damps to around zero at later times. The observed $\hbar k_{\text{spin}}$ as a function of $\thold$ is fitted to a damped sinusoid ${A_0}e^{-\thold/\tau_{\text{damp}}}\cos (\omega {\thold} + {\theta _0}) + {B_0}$ ({see Methods}) to extract the decay time constant ${\tau_{\text{damp}}}$. The SDM damping is then quantified by the inverse quality factor $1/Q = {t_{\text{trap}}}/(\pi {\tau_{\text{damp}}})$, where $1/{t_{\text{trap}}}$ is the trap frequency along $\hat{y}$ taking into account of the effective mass for the dressed case ({see Methods}). We observe that the damping ($1/Q$) is higher for larger $\OmegaF$, summarized by the purple data in Fig.~\ref{Fig3}f. 
+Additionally, we have performed two control experiments, which suggest that SOC alone cannot cause momentum damping and thermalization if there are no collisions between the two dressed spin components.
+{Only when there is SDM would notable thermalization be observed within the time of measurement.}
+First, we measure the dipole oscillations \cite{Lin_E_NP_2011,zhang_dipole_PRL_2012} of a SO-coupled BEC with a single dressed spin component prepared in $\left| {\downarrow '} \right\rangle$ at various $\OmegaF$. This gives a spin current as well as a net mass current. We observe (e.g. Supplementary Fig.~1 in Supplementary Note 1) that these single-component cases exhibit very small damping ($1/Q < 0.05$, summarized by the red square data in Fig.~\ref{Fig3}f) and negligible thermalization. In another control experiment, we generate only an AC mass current without a spin current by exciting in-phase dipole oscillations of two dressed spin components of a SO-coupled BEC without relative collisions (SDM). This experiment also reveals very small damping and negligible thermalization (see Supplementary Fig.~2 in Supplementary Note 1).
+
+
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=7.0in]{Fig4_Vfinal.pdf}
+\caption{\textbf{Thermalization and spin current.} (a) The measured condensate fraction ${f_{\text{c}}} = {N_{\text{c}}}/N$ as a function of $\thold$ for SDM in the bare case (no SOC, $\OmegaF = 0$) and the dressed cases (with SOC, $\OmegaF = 1.3$ $\E_r$ and $\OmegaF = 2.1$ $\E_r$). Representative error bars show the average percentage of the standard error of the mean. The solid curves are the shifted exponential fits to the smoothed $f_{\text{c}}$ (see Methods). The initial condensate fraction (not shown) at $\OmegaI$ (measured at $\thold = -1$ ms) is $\sim 0.6 - 0.7$ for all the cases. (b) The saturation time constant $\tau_{\text{therm}}$ of the decreasing $f_{\text{c}}$ and the saturation condensate fraction $f_{\text{s}}$ versus $\OmegaF$, where the vertical error bar is the standard error of the fit. (c) Spin current $I_{\text{s}}$ (normalized by ${v_r}/\lambda = 7.4 \times 10^3$ /s, where  $v_r \sim 6$ mm/s is the recoil velocity) as a function of $\thold$ for $\OmegaF = 0$ and $1.3$ $\E_r$. The solid curves are fits (see text).}
+\label{Fig4}
+\end{figure*}
+
+
+\vspace{5mm}
+
+\textbf{Thermalization and spin current.}
+
+We now turn our attention to the thermalization, 
+{i.e. the reduction of condensate fraction due to collisions between the two spin components.} 
+To quantitatively describe the observed thermalization, the integrated optical density of the atomic cloud in each spin component is fitted to a 1D bimodal distribution to extract the total condensate fraction ${f_{\text{c}}} = {N_{\text{c}}}/N$ ({see Methods}) with $N$ being the total atom number and $N_{\text{c}}$ the total condensate atom number (including both spin states). The time ($\thold$) evolution of the measured $f_{\text{c}}$ is plotted for the bare ($\OmegaF = 0$) and dressed ($\OmegaF = 1.3$ $\E_r$ and $2.1$ $\E_r$) cases in Fig.~\ref{Fig4}a. In all the cases, we observe that $f_{\text{c}}$  first decreases with time before it no longer changes substantially (within the experimental uncertainty) after some characteristic thermalization time ($\tau_{\text{therm}}$). To capture the overall behavior of the thermalization, we fit the smoothed $\thold$-dependent data of $f_{\text{c}}$ to a shifted exponential decay  ${f_{\text{c}}}({\thold}) = {f_{\text{s}}} + \left( {f_{\text{i}} - {f_{\text{s}}}} \right)\exp ( - {\thold}/{\tau_{\text{therm}}})$, where $\tau_{\text{therm}}$ represents the time constant for the saturation of the decreasing condensate fraction and ${f_{\text{s}}}$  the saturation condensate fraction ({see Methods}). We obtain $\tau_{\text{therm}} = 3.8(4)$ ms, $2.4(3)$ ms, and $0.4(1)$ ms for $\OmegaF = 0$, $1.3$ $\E_r$, and $2.1$ $\E_r$, respectively. Besides, a notably larger condensate fraction ($f_{\text{s}}$) is left for a larger $\OmegaF$, where $f_{\text{s}} \sim 0.2$, $0.3$, and $0.4$ for $\OmegaF = 0$, $1.3$ $\E_r$, and $2.1$ $\E_r$, respectively. 
+{Since thermalization during our measurement time is induced by the SDM}, the observation that a larger $\OmegaF$ gives rise to a smaller $\tau_{\text{therm}}$ and a larger $f_{\text{s}}$ (Fig.~\ref{Fig4}b) thus less thermalization is understood as due to the stronger SDM damping (smaller $\tau_{\text{damp}}$) at larger $\OmegaF$, stopping the relative collision between the two spin components thus the collision-induced thermalization earlier.
+
+
+The coherent spin current is phenomenologically defined as ${I_{\text{s}}} = {I_ \uparrow } - {I_ \downarrow }$ ({see Methods}), where $I_{\sigma=\uparrow, \downarrow}$ is given by: 
+\begin{align}
+%\tiny
+\label{eq_spin_current}
+{I_\sigma} = \frac{{N_{\text{c}}^\sigma }}{{{L^\sigma }}}{v^\sigma } = f_{\text{c}}^\sigma {v^\sigma }\frac{{{N^\sigma }}}{{{L^\sigma }}}
+\end{align}
+Here, $\sigma$ labels the physical quantities associated with the spin component $\sigma$, ${L^\sigma }$ is the \textit{in situ} BEC size along the current direction, and ${v^\sigma } = \hbar {k_\sigma }/m$. We exclude the contribution from the thermal atoms as only the condensate atoms participate in the coherent spin transport. In our experiments, ${N^ \uparrow }/{L^ \uparrow } \approx {N^ \downarrow }/{L^ \downarrow }$ is not observed to decrease significantly with $\thold$, and $f_{\text{c}}^ \uparrow  \approx f_{\text{c}}^ \downarrow  \approx {f_{\text{c}}}$, thus the relaxation of $I_{\text{s}}$ is mainly controlled by that of $f_{\text{c}}^ \uparrow {v^ \uparrow } - f_{\text{c}}^ \downarrow {v^ \downarrow } \approx {f_{\text{c}}}({v^ \uparrow } - {v^ \downarrow })$. Therefore, the SDM damping (reduction of ${v^ \uparrow } - {v^ \downarrow }$) and thermalization (reduction of $f_{\text{c}}$) provide the two main mechanisms for the relaxation of coherent spin current.
+
+
+Fig.~\ref{Fig4}c shows the normalized $I_{\text{s}}$ as a function of $\thold$ extracted ({see Methods}) for $\OmegaF = 0$ and $1.3$ $\E_r$. In the bare case, the spin current oscillates around and decays to zero. In the dressed case, the spin current relaxes much faster to zero without completing one oscillation. Fitting $I_{\text{s}}$ versus $\thold$ to a damped sinusoidal function for $\OmegaF = 0$ or to an exponential decay for $\OmegaF = 1.3$ $\E_r$ (with no observable $I_{\text{s}}$ oscillations) allows us to extract the spin current decay time constant ${\tau_{\text{spin}}}$, which is $5.1(8)$ ms and $0.5(0)$ ms, respectively. In the dressed case $I_{\text{s}}$ decays much faster compared to the bare case because both $\tau_{\text{damp}}$ and $\tau_{\text{therm}}$ are much smaller due to stronger SDM damping. In the bare case, the thermalization plays a more important role in the relaxation of $I_{\text{s}}$ due to the larger reduction of condensate fraction $\left( {f_{\text{i}} - {f_{\text{s}}}} \right)$ compared to the dressed case.
+
+\vspace{5mm}
+
+\textbf{Observation of deformed atomic clouds and BEC shape oscillations.}
+
+{In addition to the SDM damping and thermalization, the atomic clouds can exhibit other rich dynamics after the application of $E_{\sigma}$. 
+We observe deformation of atomic clouds at early stages of the SDM, as shown in Fig.~{\ref{Fig6_elong_shapeOsc}}a-d. Fig.~{\ref{Fig6_elong_shapeOsc}}b,~d shows the observation of an elongated atomic cloud at $\thold = 0.5$ ms in the dressed case at $\OmegaF = 2.1$ $\E_r$, in comparison with the atomic cloud at $\thold = 0.5$ ms in the bare case shown in Fig.~{\ref{Fig6_elong_shapeOsc}}a,~c. Fig.~{\ref{Fig6_elong_shapeOsc}}c,~d shows the integrated optical density (denoted by $OD_y$) of the atomic cloud versus the $y$ direction, obtained by integrating the measured optical density over the horizontal direction in TOF images. 
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=7.0in]{Fig5_elong_shapeOsc_final.pdf}
+\caption{{\textbf{Observation of deformed atomic clouds and BEC shape oscillations.}} (a-d) Observation of deformed atomic clouds at early stages of the SDM. (a-b) TOF images for $\OmegaF = 0$ and $\OmegaF = 2.1$ $\E_r$ at $\thold = 0.5$ ms are shown for comparison. The corresponding integrated optical density ($OD_y$) versus the momentum in the SOC direction ($\hat{y}$) for the spin down and up components is shown respectively in (c) and (d). (e-f) Observation of BEC shape oscillations. The data showing the aspect ratio $W_y/W_{z'}$ (see Methods) of the condensate measured at various $\thold$ are extracted from the SDM measurements in Fig.~\ref{Fig3}, except for the additional measurements \#$2$ and \#$3$ in (e). (e) For the three independent measurements in the bare case, the observed oscillations possess a complicated behavior without having a well-defined frequency given the error bars and the fluctuation in the data. Select TOF images for measurement \#$1$ are shown in Fig.~\ref{Fig2}a. (f) In the dressed cases, aspect ratio oscillations with a well-defined frequency are observed in measurements at three different $\OmegaF$. The average frequency of the three aspect ratio oscillations obtained from the damped sinusoidal fit is around $58$ Hz, consistent with the expected frequency for the ${m=0}$ quadrupole mode ${f_{m = 0}} = \sqrt {2.5} {\omega _z}/(2\pi )\sim 59$ Hz for a cigar-shape BEC in the limit of ${\omega _z}/{\omega _{x,y}} << 1$ \cite{Stringari_Collective_PRL1996}. Note that $\omega_z$ is not modified by Raman lasers and thus does not depend on $\OmegaF$. Select TOF images for $\OmegaF = 1.3$ $\E_r$ are shown in Fig.~\ref{Fig2}b. The representative error bars in (e-f) are standard deviation of at least three measurements. The dashed lines indicate ${\thold}\sim 2{\tau_{\text{damp}}}$ after which the SDM is fully damped out.}
+\label{Fig6_elong_shapeOsc}
+\end{figure*}
+The momentum distribution of the atoms at $\OmegaF = 2.1$ $\E_r$ has lower $OD_y$ and is more elongated without a sharp peak along the SOC direction, in comparison with the bare case that has higher $OD_y$ and a more prominent peak momentum.
+Furthermore, we observe that the relaxation of the spin current is accompanied by BEC shape oscillations} \cite{Stringari_Collective_PRL1996,Ketterle_Collective_PRL1996,Jin_Quadru_Temp_PRL1997} {(Fig.~{\ref{Fig6_elong_shapeOsc}}e,~f), which remain even after the spin current is fully damped. 
+These additional experimental observations are closely related to the spin current relaxation, as discussed below.}
+
+
+\vspace{5mm}
+
+\textbf{GPE simulations and interpretations.}
+
+We have performed numerical simulations {for the SDM} based on the 3D time-dependent Gross-Pitaevskii equation (GPE), using similar parameters as in the experiments. 
+The $\OmegaF$-dependent $1/Q$ extracted from the {GPE-simulated SDM (Fig.~{\ref{Fig5}}a-c)} shows qualitative agreement with the experimental measurements {({Fig.~{\ref{Fig5}}}d,~e)}.  
+{Quantitatively, we notice that the GPE simulation generally underestimates the momentum damping compared to the experimental observation ({Fig.~{\ref{Fig5}}}e), especially at low $\OmegaF$ (including the bare case). 
+This is possibly related to the fact that our GPE simulation cannot treat thermalization (which is more prominent at low $\OmegaF$) and effects of thermal atoms.} 
+Nonetheless, the \textit{in situ} (real space) spin-dependent density profiles {(Fig.~{\ref{Fig5}}f-j)} of the BECs calculated from the GPE simulations have provided important insights to understand why SOC can significantly enhance the SDM damping. {Fig.~{\ref{Fig5}}f} shows that the initial BEC (just before applying $E_{\sigma}$) in the trap is in an equal superposition of bare spin up and down states. {Fig.~{\ref{Fig5}}g-j} shows the density profiles of the BECs at $\thold = 1.5$ ms (after applying $E_{\sigma}$) in the trap with four different $\OmegaF$ (see Supplementary Movies 2,~4,~5 in Supplementary Note 3). For the bare case, the two spin components fully separate in the real space within the trap. As $\OmegaF$ becomes larger, we observe that only a smaller portion of atoms in each spin component is well separated, as marked by the white arrows. 
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=6.0in]{Fig6_GPE_Vfinal.pdf}
+\caption{{\textbf{GPE simulated SDM at various {\boldmath{$\OmegaF$}} and the extracted SDM damping compared with experiment.}} (a-b) GPE simulations of the 1D momentum-space density distributions of the two bare spin components as a function of $\thold$ for the SDM at $\OmegaF = 0$ and $\OmegaF = 1.3$ $\E_r$, respectively. The 1D momentum density ${\rho _\sigma }({k_y})$ is obtained by integrating the 3D momentum density along $k_x$ and $k_z$, i.e. ${\rho _\sigma }({k_y}) = \int {{\rho _\sigma }({k_x},{k_y},{k_z})d{k_x}d{k_z}}$. Then, these integrated 1D atomic momentum densities for sequential hold times ($\thold$) are combined to show the atomic density in momentum space along the SOC direction versus $\thold$. (c) GPE simulations of the SDM damping versus $\thold$ at various $\OmegaF$. The violet lines are the $\hbar k_{\text{spin}}$ (defined as the difference between the CoM momenta of the two spin components) as a function of $\thold$ for various $\OmegaF$. The CoM momentum ($\hbar k_{\uparrow, \downarrow}$) of each bare spin component (at a given $\thold$) is calculated by taking a density-weighted average of the corresponding 1D momentum density distributions such as those shown in (a-b). The black lines are damped sinusoidal fits for the calculated $\hbar k_{\text{spin}}$ to extract the corresponding SDM damping ($1/Q$) which is shown in (d) along with the experimental data reproduced from Fig.~\ref{Fig3}f. (e) Replotting of (d) with $1/Q$ shown in logarithmic scale. (f-j) \textit{In situ} (real space) atomic densities calculated from GPE simulations. (f) Initial \textit{in situ} 2D density at $\Omega = \OmegaI$ (right before applying spin-dependent electric fields $E_\sigma$). (g-j) \textit{In situ} 2D density at $\thold = 1.5$ ms (after the application of $E_\sigma$) for $\OmegaF = 0$, $0.4$ $\E_r$, $0.9$ $\E_r$, and $1.3$ $\E_r$, respectively. For (f-j), the density is designated by brightness and the bare spin polarization by colors (red: $\downarrow$, blue: $\uparrow$, white: equal spin populations). The 2D densities ${\rho _\sigma }({x, y})$ in (f-j) are obtained by integrating the 3D atomic density along $z$, i.e., ${\rho _\sigma }({x, y}) = \int {{\rho _\sigma }({x},{y},{z})d{z}}$. In this figure, the simulations used the following parameters representative of our experiment: $\OmegaI = 5.2$ $\E_r$, ${\deltaR} = 0$, ${N_{\text{c}}} = 1.6 \times {10^4}$, ${\omega _z} = 2\pi\times 37$ Hz, ${\omega _x} = {\omega _y} = 2\pi  \times 205$ Hz, $t_{\text{E}} = 1.0$ ms.}
+\label{Fig5}
+\end{figure*}
+Concomitantly, a larger portion of atoms appears to get stuck around the trap center and form a prominent standing wave pattern, which we interpret as density modulations arising from the interference between the BEC wavefunctions of the two dressed spin components when $\left| { \uparrow '} \right\rangle$ and $\left| { \downarrow '} \right\rangle$ are no longer orthogonal in the presence of SOC ({see Fig.~{\ref{Fig7_eff_interaction}}a}) \cite{Lin_SOC_Nature_2011,Zhai_SOC_2010,Ho_PhysRevLett2011,Stringari_SOC_PRL2012,ketterle_supersolid_2017}. 
+{Compared to the bare case, the formation of density modulations in the dressed case can lead to more deformed clouds in both the real and momentum spaces at early stages in the SDM, as revealed by the GPE simulations (Fig.~{\ref{Fig5}}a,~b,~f-j; Supplementary Movies 2,~4,~5 in Supplementary Note 3). This is consistent with our experimental observation of a highly elongated momentum distribution of the atomic cloud along the SOC direction ($\hat{y}$) at early instants in the SDM of a SO-coupled BEC (Fig.~{\ref{Fig6_elong_shapeOsc}}b,~d).
+
+In addition to density modulations, our GPE simulation also reveals complex spatial modulation in the phase of the BEC wavefunctions {(see Supplementary Fig.~9 and Supplementary Movies 3,~6 in Supplementary Note 3). Such distortions of BEC wavefunctions in the amplitude (which determines the density) and the phase contribute to quantum pressure \cite{Stringari_RevModPhys1999} and local current kinetic energy ({see Methods}) respectively, two forms of the kinetic energy that do not contribute to the global {translational} motion (or CoM kinetic energy) of each spin component. The sum of the CoM kinetic energy, quantum pressure, and local current kinetic energy is the total kinetic energy ({see Methods}). We have used GPE to calculate the time evolution of these different parts of kinetic energy for the dressed case, showing that the damping of the CoM kinetic energy (which decays to zero at later times) is accompanied by (thus likely related to) prominent increase of the quantum pressure and the local current kinetic energy (both remain at some notable finite values at later times) ({see Fig.~{\ref{Fig8_energy}}e-h}).
+\begin{figure*}[ht]
+\includegraphics[width=6.5in]{Fig7_eff_interaction_Vfinal.pdf}
+\caption{\textbf{Calculated nonorthogonality, effective interaction parameters, and immiscibility for two dressed spin states.} In (a-f), the calculations consider $\left|\uparrow'\right\rangle$ and $\left|\downarrow'\right\rangle$ located respectively at $\hbar q_y$ and $-\hbar q_y$. (a) When $\Omega=0$, the nonorthogonality is zero because the two bare spin components are orthogonal. When $\Omega \neq 0$, either increasing $\Omega$ or decreasing $q_y$ would increase $\left\langle\uparrow'|\downarrow'\right\rangle$, giving rise to stronger interference and more significant density modulations in the spatially overlapped region of the two dressed spin components. (b-c) Effective interspecies ($g_{\uparrow'\downarrow'}$) and intraspecies ($g_{\uparrow'\uparrow'}$, $g_{\downarrow'\downarrow'}$) interaction parameters versus quasimomentum at $\Omega=0.1$ $\E_r$ and $1.26$ $\E_r$, respectively. When $\Omega$ increases or $q_y$ decreases, $g_{\uparrow'\downarrow'}$ increases while $g_{\uparrow'\uparrow'}$ and $g_{\downarrow'\downarrow'}$ almost remain at the bare values. As $q_y\rightarrow 0$ at any finite $\Omega$, $g_{\uparrow'\downarrow'}\rightarrow 2 g_{\uparrow'\uparrow'}$ or $2 g_{\downarrow'\downarrow'}$, which is the upper bound of $g_{\uparrow'\downarrow'}$ (see Methods). The inset of (b-c) zooms out to show the maximum. (d) shows the immiscibility metric $\eta=(g_{\uparrow'\downarrow'}^2-g_{\uparrow'\uparrow'}g_{\downarrow'\downarrow'})/g_{\uparrow\uparrow}^2$ in Eq.~(\ref{eq_immiscibility_metric}) (see Methods) versus $\hbar q_y$ corresponding to (b). $\eta<0$ means miscible, and $\eta>0$ means immiscible. Over the range of plotted $\hbar q_y$, (d) can be miscible or immiscible depending on $\hbar q_y$. The inset of (d) zooms in to focus on the sign change of $\eta$. The vertical dotted line in (b-d) indicates $\hbar q_{\sigma\min}$ corresponding to the $\Omega$ in each case. The calculations are performed in the two-state picture described by Eq.~(\ref{eq_hsoc}) with $\deltaR=0$. (e-f) Immiscibility metric $\eta$ versus $\Omega$ for various $q_y$. In (e), as $\Omega$ becomes larger or $q_y$ becomes smaller, the two dressed spin components can become more immiscible until $\eta$ reaches the maximum value set by the upper bound of $g_{\uparrow'\downarrow'}$ (see also (b-c)). (f) Zoom-in of (e) showing the miscible to immiscible transition (indicated by the gray dashed line at $\eta=0$) as a function of $\Omega$ for various $q_y$. The red dot-dashed line corresponds to two dressed spin components located respectively at the band minima $q_{\sigma \min}$, showing the well-known miscible to immiscible transition around $0.2$ $\E_r$ for a stationary SO-coupled BEC. In the dynamical case studied here, BECs can be located away from the band minima and approach $q_y=0$, becoming immiscible even when $\Omega<0.2$ $\E_r$ for small enough $q_y$.} 
+\label{Fig7_eff_interaction}
+\end{figure*}
+{The increasing quantum pressure and local current kinetic energy may reflect the emergence of excitations that do not have the CoM kinetic energy. This is consistent with the experimentally observed generation of BEC shape oscillations} {(Fig.~{\ref{Fig6_elong_shapeOsc}e,~f}), whose kinetic energy can be accounted for by the quantum pressure and the local current kinetic energy. Note that the excitation of BEC shape oscillations may also be understood by the observation of deformed clouds at early stages of the SDM (Fig.~{\ref{Fig6_elong_shapeOsc}}a-d), because the deformed shape of the BEC is no longer in equilibrium with the trap and thus initiates the shape oscillations.} 
+The observed BEC shape oscillations remain even after the SDM is completely damped in both bare and dressed cases. This indicates that the BECs are still excited even after the CoM relaxes to the single-particle band minima within the time of measurement.
+
+
+
+\begin{flushleft}
+{\textbf{Discussion}}
+\end{flushleft}
+
+Previous studies in stationary SO-coupled BECs (located at ground dressed band minima) have found that increasing $\Omega$ drives a miscible to immiscible phase transition at $\Omega \sim 0.2$ $\E_r$ due to the increased effective interspecies interaction (characterized by the interaction parameter $g_{\uparrow'\downarrow'}$)  \cite{Lin_SOC_Nature_2011,Zhai_SOC_2010,Ho_PhysRevLett2011,Stringari_SOC_PRL2012,Ji_FiniteTemp_NP_2014}. In the miscible phase, the two dressed spin components have  substantial spatial overlap, where density modulations form. 
+It is important to note that the effective interactions, immiscibility and interference between the two dressed spin components depend on the quasimomentum ($\hbar q_y$) and $\OmegaF$ ({Fig.~{\ref{Fig7_eff_interaction}}, see Methods for details}). Therefore, in the dynamical case studied here, these properties vary with time and can be notably different from those in the stationary case. During the SDM, the two dressed spin components are forced to collide due to $E_{\sigma}$. 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=7.0in]{Fig8_Energy_Vfinal.pdf}
+\caption{{\textbf{Time ({\boldmath{$\thold$}}) evolution of different forms of energies per particle at different {\boldmath{$\OmegaF$}} as calculated by GPE.}} (a) The total energy is the sum of the total Raman energy, total potential energy, total interaction energy, and the total KE. The result in (a) confirms that the total energy is conserved during $\thold$. (b) Total Raman energy. (c) Total potential energy. (d) Total interaction energy, sum of the bare interaction energies in (i-k). (e) Total KE, sum of different types of kinetic energies in (f-h). (f) Total CoM KE. (g) Total QP. (h) Total LC KE. (i) $g_{\uparrow\uparrow}$ interaction energy. (j) $g_{\downarrow\downarrow}$ interaction energy. (k) $g_{\uparrow\downarrow}$ interaction energy.} 
+\label{Fig8_energy}
+\end{figure*}
+This can give rise to interference-induced density modulations in their spatially overlapped region even when they are immiscible. In addition, the BECs during the SDM can be located away from the band minima and approach $q_y=0$. For the two dressed spin components with quasimomenta $\pm\hbar q_y$, either increasing $\OmegaF$ or decreasing $|q_y|$ (towards $0$) would increase $\left\langle\uparrow'|\downarrow'\right\rangle$ ({Fig.~{\ref{Fig7_eff_interaction}}a}), giving rise to stronger interference and more significant density modulations. 
+Such increased non-orthogonality between the two dressed spin states also notably increases the effective interspecies interaction ($g_{\uparrow'\downarrow'}$) to become even larger than the effective intraspecies interactions ($g_{\uparrow'\uparrow'}\approx g_{\downarrow'\downarrow'}$) ({Fig.~{\ref{Fig7_eff_interaction}}b,~c}), enhancing further the immiscibility ({Fig.~{\ref{Fig7_eff_interaction}}d-f}). 
+{For example,
+Fig.~{\ref{Fig7_eff_interaction}}d shows the calculated immiscibility metric (see Methods), $\eta = \left( {g_{ \uparrow \prime \downarrow \prime }^2 - g_{ \uparrow \prime \uparrow \prime }g_{ \downarrow \prime \downarrow \prime }} \right){\mathrm{/}}g_{ \uparrow \uparrow }^2$, versus $\hbar q_y$  corresponding to Fig.~{\ref{Fig7_eff_interaction}}b. 
+Notice that when $\Omega$ is large enough, $\left|\uparrow'\right\rangle$ and $\left|\downarrow'\right\rangle$ can become immiscible in the whole range of quasimomentum that a BEC can access during the SDM.
+Fig.~{\ref{Fig7_eff_interaction}}e shows $\eta$ versus $\Omega$ at various $\hbar q_y$. We see that as $\Omega$ becomes larger or $q_y$ becomes smaller, the two dressed spin components can become more immiscible (i.e. $\eta$ becomes more positive) until $\eta$ reaches the maximum value set by the upper bound of $g_{\uparrow'\downarrow'}$. Fig.~{\ref{Fig7_eff_interaction}}f zooms in the region of small $\Omega$ in Fig.~{\ref{Fig7_eff_interaction}}e to focus on the sign change of $\eta$ from negative to positive, which indicates the miscible to immiscible transition. Note that the red dot-dashed line (for $q_y=q_{\sigma\min}$) corresponds to two dressed spin components located respectively at the band minima $q_{\sigma\min}$, showing the well-known miscible to immiscible transition around $0.2$ $\E_r$ for a stationary SO-coupled BEC. In the dynamical case studied here, BECs can be located away from the band minima and approach $q_y=0$, becoming immiscible even when $\Omega<0.2$ $\E_r$ for small enough $q_y$.}
+
+We have performed several additional control GPE simulations, showing that the presence or the enhancement of any of these three factors can increase the damping of the relative motion between two colliding BECs: (1) interference (Supplementary Fig.~5 and Supplementary Movie 1 in Supplementary Note 3), (2) immiscibility (Supplementary Fig.~4 and Supplementary Table 1 in Supplementary Note 3), and (3) interactions (Supplementary Figs.~4,~6,~7,~8 and Supplementary Table 1 in Supplementary Note 3), presumably by distorting the BEC wavefunctions (see Supplementary Movies 1-6 in Supplementary Note 3) irreversibly in the presence of interactions to decrease the CoM kinetic energy while increasing the quantum pressure and the local current kinetic energy. 
+{Therefore, enhanced immiscibility, interference, and
+interactions can all increase the damping of the SDM.}
+For simulations in the absence of interactions, we do not observe irreversible damping within the simulation time of 100 ms (Supplementary Figs.~6, 7, 8 in Supplementary Note 3), suggesting that the interactions play an essential role for the damping mechanisms.
+
+
+The physical mechanisms and processes revealed in our work may provide insights to understand spin transport in interacting SO-coupled systems. Our experiment also provides an exemplary study of the evolution of a quantum many-body system, including the generation and decay of collective excitations, following a non-adiabatic parameter change (quench). Such quench dynamics has been of great interest to study many outstanding questions in many-body quantum systems. For example, how such a system, initially prepared in the ground state but driven out of equilibrium due to a parameter quench that drives the system across a quantum phase transition, would evolve to the new ground state or thermalize has attracted great interests (see, e.g., a recent study where coherent inflationary dynamics has been observed for BECs crossing a ferromagnetic quantum critical point \cite{CoherentDynamic_Chin_NPhys2018}). In our case, the sudden reduction of $\Omega$ in the Hamiltonian Eq.~(\ref{eq_hsoc}) excites the coherent spin current, whose relaxation is strongly affected by SOC and is related to the SDM damping as well as thermalization. Besides, the relaxation may be accompanied by the generation of other collective excitations such as BEC shape oscillations. Furthermore, compared to the bare case, the SOC-enhanced damping of the SDM notably reduces the collision-induced thermalization of the BEC, resulting in a higher condensate fraction left in the BEC. This condensate part exhibits a more rapid localization of its CoM motion, which may be more effectively converted to other types of excitations (associated with the SOC-enhanced distortion of the BEC wavefunctions). These features suggest that SOC opens pathways for our interacting quantum system to evolve that are absent without interactions, in our case providing new mechanisms for the spin current relaxation. Experiments on SO-coupled BECs, where many parameters can be well controlled in real time and with the potential of adding other types of synthetic gauge fields, may offer rich opportunities to study nonequilibrium quantum dynamics \cite{Polkovnikov_ND_RevModPhys2011}, {such as Kibble-Zurek physics while quenching through quantum phase transitions} \cite{Kibble_Zurek_SOC_BEC_PhysRevA2017}, {and superfluidity} \cite{ExoticSuperfluid_EPL,Zhai_Review} {in SO-coupled systems.}
+
+\begin{flushleft}
+{\textbf{Methods}}
+\end{flushleft}
+
+
+\textbf{Spin-dependent vector potentials.}
+
+In Eq.~(\ref{eq_hsoc}), the eigenenergies at ${\deltaR} = 0$ are given by:
+\begin{equation}
+{{\rm{E}}_ \pm }\left( q_y \right) = \frac{{{\hbar ^2}{q_y^2}}}{{2m}} + {\E_r} \pm \sqrt {{{\left( {\frac{\Omega }{2}} \right)}^2} + {{\left( {\frac{{{\hbar ^2}{\k_r}q_y}}{m}} \right)}^2}}
+\end{equation}
+For $\Omega < \Omega_{\text{c}}$, the ground band of the energy-quasimomentum dispersion has two minima at:
+\begin{equation}
+{q_{\sigma \min }}\left( \Omega  \right) =  \pm {\k_r}\sqrt {1 - {{\left( {\Omega /{\Omega_{\text{c}}}} \right)}^2}}
+\end{equation}
+The state of the atoms associated with each minimum at ${q_{\sigma \min }}$ can be regarded as a dressed spin state. For a double minima band structure, we thus have two dressed spin components $\sigma = \left| { \downarrow '} \right\rangle$ and $\left| { \uparrow '} \right\rangle$ that constitute a pseudo spin-$1/2$ system (when $\Omega = 0$, $\left| { \uparrow '} \right\rangle$ and $\left| { \downarrow '} \right\rangle$ become the bare spin $\left| { \uparrow} \right\rangle$ and $\left| { \downarrow} \right\rangle$, respectively). The energy spectrum expanded around each ${q_{\sigma \min }}$ as ${\rm{E}}(q_y) = \hbar^2(q_y-q_{\sigma \min })^2/(2{m^*})$ is analogous to the Hamiltonian describing a charged particle with charge $Q$ in a magnetic vector potential $A$, {$\hat{H} = ( {\hat{p_y} - QA})^2/(2{m_Q})$}, where ${m^*}$ is the effective mass of a dressed atom and $m_Q$ is the mass of the charged particle. Therefore, we can identify the quasimomentum ($\hbar q_y$) with the canonical momentum {($\hat{p}_{y}=-i\hbar\frac{\partial}{\partial y}$)}, and $ \hbar {q_{\sigma \min }}$ with the light-induced spin-dependent vector potentials ($A_{\sigma}$, by setting $Q=1$ for our case \cite{Beeler_SHE_Nature_2013}). The velocity operator corresponding to the mechanical momentum, {$\hat{v_y}=-[{\hat{H},y}]/(i\hbar) = \left( {\hat{p}_y - QA} \right)/m_Q$}, thus corresponds to $\hbar(q_y - q_{\sigma \min})/m^*$. These spin-dependent vector potentials ${A_\sigma }$ (represented by $ \hbar {q_{\sigma \min }}$) are tunable by $\Omega$. For example, as seen in Fig.~\ref{Fig1}c, we can decrease $\Omega$ to separate the two $\hbar {q_{\sigma \min }}$ or increase $\Omega$ to combine them in the quasimomentum space.
+
+\vspace{5mm}
+
+\textbf{Effects of the neglected {\boldmath{$\left| {{m_F} =  + 1} \right\rangle$}} state.}
+
+We apply an external bias magnetic field $\textbf{B}=B\hat{z}$ ($\sim 5$ gauss) to Zeeman split the energies $E_{-1}$, $E_{0}$, and $E_{+1}$ of the $\left| {{m_F} =  - 1} \right\rangle $, $\left| {{m_F} =  0} \right\rangle$, and $\left| {{m_F} =  +1} \right\rangle$ sublevels respectively (in the $F = 1$ hyperfine state of $^{87}$Rb atoms), where ${E_{ - 1}} - {E_0} = \hbar {\omegaZ}$, ${E_0} - {E_{ + 1}} = \hbar {\omegaZ} - 2\varepsilon$, $\hbar$ is the reduced Planck constant and $\varepsilon  = ({E_{ - 1}} + {E_{ + 1}})/2 - {E_0}$ is the quadratic Zeeman shift. The frequency difference between the two Raman lasers is $\Delta {\omegaR}/(2\pi ) = 3.5$ MHz. The Raman detuning ${\deltaR} = \hbar (\Delta {\omegaR} - {\omegaZ})$ is controlled by $B$ that controls $\hbar {\omegaZ}$. In a first-order approximation, the third state $\left| {{m_F} =  + 1,\hbar k = \hbar (q_y - 3{\k_r})} \right\rangle$ can be excluded in Eq.~(\ref{eq_hsoc}) due to the quadratic Zeeman shift ($2\varepsilon \sim 0.9$ $\E_r$) from $B$ but can be included in the following three-state Hamiltonian:
+\begingroup\makeatletter\def\f@size{6}\check@mathfonts
+\begin{align}
+\label{eq_hsoc3}
+H_{3}=
+\begin{pmatrix}
+\frac{\hbar^2}{2m}(q_y+\k_r)^2-\deltaR & \frac{\Omega}{2} & 0 \\ 
+\frac{\Omega}{2} & \frac{\hbar^2}{2m}(q_y-\k_r)^2 & \frac{\Omega}{2} \\
+0 & \frac{\Omega}{2} & \frac{\hbar^2}{2m}(q_y-3\k_r)^2+\deltaR+2\varepsilon
+\end{pmatrix}
+\end{align}
+\endgroup
+In our SDM experiments, we always maintain approximately equal spin populations in the $\left|  \downarrow  \right\rangle  = \left| {{m_F} =  - 1} \right\rangle$ and $\left|  \uparrow  \right\rangle  = \left| {{m_F} = 0} \right\rangle$ states both in the initial dressed state prepared at $\OmegaI$ and in the final dressed state at $\OmegaF$ (with approximately equal populations also achieved in $\left| \downarrow' \right\rangle$ and $\left| \uparrow'  \right\rangle$ at $\OmegaF$). In Eq.~(\ref{eq_hsoc}) based on the two-state picture in the main text, ${\deltaR} = 0$ can give rise to such balanced (dressed/bare) spin populations at any given $\Omega$. However, in Eq.~(\ref{eq_hsoc3}) with ${\deltaR} = 0$, a finite $\Omega$ can lead to unbalanced (dressed/bare) spin populations. Therefore, in our experiment $\deltaR$ at a given $\Omega$ has to be changed to $\delta '(\Omega ,\varepsilon )$ to achieve the balanced spin populations (note that in the double minima regime of Eq.~(\ref{eq_hsoc3}), this requirement is in a good approximation equivalent to the so-called balanced band condition where the two minima in the ground dressed band have equal energy). Such an effect is addressed in details in ref.~\cite{Lin_SOC_Nature_2011}. In our case, also note that including the third state in Eq.~(\ref{eq_hsoc3}) would cause the actual transition from the double minima to single minimum to occur at $\Omega_{\text{c}} \sim 4.7$ $\E_r$ rather than at $\Omega_{\text{c}} = 4.0$ $\E_r$ as would be predicted by Eq.~(\ref{eq_hsoc}). Additionally, Eq.~(\ref{eq_hsoc3}) is used for plotting Fig.~\ref{Fig1}c and {Fig.~{\ref{Fig3}}g,~h, which} more precisely means ${\deltaR} = \delta '(\Omega ,\varepsilon )$ to achieve the balanced spin populations for the corresponding $\Omega$. In the following, we use Eq.~(\ref{eq_hsoc3}) to describe the initial state preparation process.
+
+\vspace{5mm}
+
+\textbf{Initial state preparation, spin population balance, and imaging process.} 
+
+We create spin-polarized $^{87}$Rb BECs in $\left| {{m_F} = 0} \right\rangle$ in an optical dipole trap consisting of three cross laser beams (with a third beam added to the double beam dipole trap described in ref.~\cite{Olson_EC_PhysRevA2013}). To prepare the initial state of the BEC at the single minimum of the ground dressed band at $\OmegaI = 5.2$ $\E_r$ (at ${\deltaR} = \delta '({\OmegaI},\varepsilon )$, shown in Fig.~\ref{Fig1}c), first the Raman coupling $\Omega$ is ramped on slowly from 0 to $\OmegaI$ in $80$ ms (slow enough compared to the trap period and any inter-band excitation process) with ${\deltaR} \sim - \varepsilon$ in Eq.~(\ref{eq_hsoc3}), such that the dominant bare spin component of the dressed BEC at any finite $\Omega$ during the ramping process remains in $\left| {{m_F} = 0} \right\rangle$. Subsequently, while holding $\Omega$ at $\OmegaI$, we adjust $B$ to change the Raman detuning from ${\deltaR} \sim - \varepsilon$ to ${\deltaR} = \delta '({\OmegaI},\varepsilon )$ in $80$ ms, and then we hold both $\Omega$ and $\deltaR$ for another $20$ ms to let the system equilibrate. Note that adjusting ${\deltaR}$ to $\delta '({\OmegaI},\varepsilon )$ has to be empirically achieved by realizing the balanced spin populations, with the reasons addressed in the next paragraph. When the BEC is successfully prepared in the initial state at $\OmegaI$, equal populations in the $\left| {{m_F} =  - 1, + \hbar {\k_r}} \right\rangle$ and $\left| {{m_F} = 0, - \hbar {\k_r}} \right\rangle$ states can be achieved and seen in TOF images measured at $\thold=-1$ ms. 
+
+In addition to the change in the band structure when going from the two-state picture to the three-state picture as discussed in the previous section, there are several other experimental factors that can lead to unbalanced spin populations. First, the slow drift in $\Omega$ can tilt (therefore unbalance) the band at a fixed $\deltaR$. Second, a slow drift in $B$ would give rise to a drift in $\deltaR$. Third, sometimes there may still be excitations (for example, small-amplitude collective dipole oscillations of a dressed BEC) at the end of the initial state preparation \cite{Hamner2014}, making the quasimomentum of the dressed BEC deviate slightly from the quasimomentum of the band minimum. As a result, the dressed BEC can have a nonzero group velocity and unbalanced spin populations at $\OmegaI$ (before applying the spin-dependent electric fields $E_{\sigma}$). Hence, this can lead to unbalanced spin populations after the application of $E_{\sigma}$, and the spin polarization $P$ of atoms is not maintained around zero during $\thold$. Here, we define $P = ({N^ \uparrow } - {N^ \downarrow })/({N^ \uparrow } + {N^ \downarrow })$, where ${N^{\uparrow(\downarrow)}}$ is the total atom number of the atomic cloud (measured in the TOF images) for the bare spin component $\uparrow(\downarrow)$. Fourth, the quench process from the single minimum to double minima bands during $t_{\text{E}}$ (Fig.~\ref{Fig1}c) may also give rise to unbalanced spin populations, presumably because of the access to the magnetic phase in the double minima regime where the ground state is the occupation of a single dressed spin state (the two occupied dressed spin states are metastable states).
+
+The above effects are avoided in our experiments by making sure that the balanced spin populations are empirically achieved throughout our experiment (with occasional adjustment of $\deltaR$, and discarding runs with notably unbalanced spin populations). More specifically, we first make sure that balanced spin populations can be achieved at $\OmegaI$, assuring ${\deltaR}=\delta '(\OmegaI,\varepsilon )$ after the initial preparation described above. Then, we linearly ramp ${\deltaR}$ from $\delta '(\OmegaI,\varepsilon )$ to $\delta '(\OmegaF,\varepsilon )$ as we change $\Omega$ from $\OmegaI$ to $\OmegaF$ in $t_{\text{E}}$, and subsequently hold $\deltaR$ at $\delta '(\OmegaF,\varepsilon )$ for various $\thold$. Here, $\deltaR=\delta '(\OmegaF,\varepsilon )$ is empirically achieved by realizing balanced spin populations at $\Omega=\OmegaF$ for various $\thold$. Therefore, when we state $\deltaR=0$ at a given $\Omega$ in the main text, it more precisely means that we realize balanced spin populations (as would be achieved at $\deltaR=0$ in the 2-state picture described by Eq.~(\ref{eq_hsoc})).
+
+The above-mentioned procedure of realizing $\deltaR=\delta '(\OmegaF,\varepsilon )$ is further experimentally verified by observing balanced spin populations using the same bias magnetic fields but with $t_{\text{E}}=15$ ms and $\thold=30$ ms (slow enough to not to excite notable SDM). This suggests that such a choice of $\deltaR = \delta '(\OmegaF,\varepsilon )$ approximates a balanced double minima band (with two equal-energy minima) at $\OmegaF$.
+
+For the SDM measurements (e.g., Fig.~\ref{Fig3}), we make sure that the typical spin polarization is close to zero, with $\left| P \right| = 0.05 \pm 0.04$, where 0.05 is the mean and 0.04 is the standard deviation of the data. Note that we used the total atom numbers $N^{\uparrow (\downarrow)}$ instead of condensate atom numbers $N_{\text{c}}^{\uparrow (\downarrow)}$ to obtain $P$ due to the less fluctuation in the fitted $N^{\uparrow (\downarrow)}$. Typically images with such small $P$, indicating good spin population balance for the whole atomic cloud, also do not exhibit notable spin population imbalance in their condensate parts.
+
+After holding the atoms in the trap at $\OmegaF$ for various $\thold$, we turn off all lasers abruptly and do a $15$-ms TOF, which includes a $9$-ms Stern-Gerlach process in the beginning to separate the atoms of different bare spin states. Then, the absorption imaging is performed at the end of TOF to obtain the bare spin and momentum compositions of atoms. We then extract the physical quantities such as the mechanical momentum, condensate and thermal atom numbers of the atomic cloud in each spin state from such TOF images.
+
+
+\vspace{5mm}
+
+\textbf{Analysis of momentum damping.} 
+
+Since the propagation direction ($\hat{x'}$) of our imaging laser is $\sim 27^{\circ}$ with respect to the $x$-axis in the $x-z$ plane (see Fig.~\ref{Fig1}a), the TOF images are in the $y-z'$ plane (where $\hat{z'}$ is perpendicular to $\hat{x'}$ in the $x-z$ plane). The atomic cloud of each (dominant) bare spin component in the TOF images is fitted to a 2D bimodal distribution: 
+\begin{equation}
+\begin{split}
+A\max {\left( {1 - {{\left( {\frac{{y - {y_{\text{c}}}}}{{{R_y}}}} \right)}^2} - {{\left( {\frac{z'-{z_{\text{c}}}}{R_{z'}}} \right)}^2},0} \right)^{3/2}}\\
++ B\exp \left( { - \frac{1}{2}\left( {{{\left( {\frac{{y - {y_{cT}}}}{{{\sigma _y}}}} \right)}^2} + {{\left( {\frac{{z' - {z_{\text{c}}}}}{{{\sigma_{z'}}}}} \right)}^2}} \right)} \right)
+\label{2D_TFG_Function}
+\end{split}
+\end{equation}
+where the first term corresponds to the condensate part according to the Thomas-Fermi approximation and the second term corresponds to the thermal part. Note that we only fit the majority bare spin cloud component when there is a distinguishable minority bare spin cloud component (which belongs to the same dressed spin state, but has a population $<9\%$ of the majority component in our experiments). This convention also applies to the analysis of the spin polarization defined above, condensate fraction, and the coherent spin current (see below). In the spin current or SOC directions ($\hat{y}$), we obtain the relative mechanical momentum between the two bare spin components $\hbar {k_{\text{spin}}}=\hbar ({k_ \uparrow } - {k_ \downarrow })$ from the difference between the center-of-mass positions of their condensate parts ($y_{\text{c}}^\uparrow-y_{\text{c}}^\downarrow$) and the calibration of $2\hbar \k_r$ in TOF images (for example, $2\hbar \k_r$ can be calibrated from the distance between different bare spin components $\uparrow$ and $\downarrow$ that are in the same dressed spin state $\uparrow'$). To obtain the damping ($1/Q$) of the relative momentum oscillations in SDM (Fig.~\ref{Fig3}), $\hbar {k_{\text{spin}}}$ as a function of $\thold$ is fitted to a damped sinusoidal function ${A_0}e^{-\thold/\tau_{\text{damp}}}\cos (\omega {\thold} + {\theta _0}) + {B_0}$, where ${\tau_{\text{damp}}}$ is the momentum decay time constant. 
+{The data have a small offset $B_0$ because we only use the majority bare spin component in each dressed spin component when extracting $\hbar k_{\uparrow, \downarrow}$.} 
+We extract ${\tau_{\text{damp}}}$ to obtain the inverse quality factor $1/Q = {t_{\text{trap}}}/(\pi {\tau_{\text{damp}}})$, where ${t_{\text{trap}}} = (2\pi /{\omega _y})\sqrt {{m_{\text{eff}}}/m} $ is the trap period along the $y$ direction taking into account of the effective mass ${m_{\text{eff}}}$ for the dressed band around $q_{\sigma\min}$, $m$ is the bare atomic mass, and ${\omega _y}/(2\pi )$ is the trap frequency along the $y$ direction in the absence of Raman lasers. Note that the effective masses around the two minima in the dressed ground band are nearly the same so we take their average as the ${m_{\text{eff}}}$. The standard error of the fit ($95$\% confidence intervals) is obtained for determining the uncertainty of $1/Q$ shown in Fig.~\ref{Fig3} in the main text.
+
+For the dipole oscillations of a BEC with a single dressed spin component prepared in the $\left| { \downarrow '} \right\rangle$ state (see Supplementary Note 1), we fit $\hbar {k_ \downarrow }$ (mechanical momentum of the dominant bare spin component $\left|  \downarrow  \right\rangle$) as a function of $\thold$ to a damped sinusoidal function to extract $\tau_{\text{damp}}$ and thus to obtain $1/Q$. The minority bare spin $\left| \uparrow\right\rangle$ component oscillates in phase with the dominant $\left| \downarrow\right\rangle$ component with similar damping, and thus is not taken into account for determining $1/Q$.
+
+\vspace{5mm}
+
+\textbf{Analysis of condensate fraction.}
+
+During the SDM, the atomic cloud can be significantly deformed along $\hat{y}$ due to the interference between the two dressed spin components (see e.g. {Fig.~{\ref{Fig6_elong_shapeOsc}}}). Therefore, in order to extract the total condensate fraction (${f_{\text{c}}} = {N_{\text{c}}}/N$) of atoms to study the thermalization behavior as shown in Fig.~\ref{Fig4}a,~b, the measured optical density ($OD$) of each bare spin component $\sigma$ in the $y-z'$ plane is integrated along the $y$ direction (the direction of SOC and the spin current as well as the direction along which the cloud can be significantly distorted) to obtain an integrated optical density versus $z'$ (denoted by $OD_{z'}$). We fit $OD_{z'}$ of each bare spin component $\sigma$ to a 1D bimodal distribution $A\max {\left( {1 - {{\left( {\frac{{z' - {z_{\text{c}}}}}{{R_{z'}}}} \right)}^2},0} \right)^2} + B\exp \left( { - \frac{1}{2}{{\left( {\frac{{z' - {z_{\text{c}}}}}{{\sigma _{z'}}}} \right)}^2}} \right)$, where the first term corresponds to the condensate part according to the Thomas-Fermi approximation and the second term corresponds to the thermal part, to get the corresponding condensate and thermal atom numbers, $N_{\text{c}}^\sigma$ and $N_{\text{therm}}^\sigma$, respectively. The total condensate fraction is calculated as ${f_{\text{c}}} = {N_{\text{c}}}/N = \left( {N_{\text{c}}^ \uparrow  + N_{\text{c}}^ \downarrow } \right)/\left( {N_{\text{c}}^ \uparrow  + N_{\text{therm}}^ \uparrow  + N_{\text{c}}^ \downarrow  + N_{\text{therm}}^ \downarrow } \right)$, shown as the scatters (unsmoothed raw data) in Fig.~\ref{Fig4}a.
+
+To quantitatively describe the thermalization, we fit the smoothed total condensate fraction versus $\thold$ to a shifted exponential decay ${f_{\text{c}}}(t) = {f_{\text{s}}} + \left( {f_{\text{i}} - {f_{\text{s}}}} \right)\exp ( - t/{\tau_{\text{therm}}})$, where ${\tau_{\text{therm}}}$ represents the time constant for the thermalization to stop and for the decreasing condensate fraction to saturate, with $f_{\text{s}}$ being the saturation condensate fraction. Because the large fluctuations in the unsmoothed data can give erroneous fitting results, each fitted curve shown as a solid line in Fig.~\ref{Fig4}a is the average of the three fits performed on the smoothed data, obtained using different levels ($M=1, 2, 3$) of smoothing, where the smoothing is done by taking the average of the raw data within the nearest $M$ time intervals. 
+
+Notice that the heating effect due to our Raman lasers (such as from spontaneous emission) is negligible within the time scale of the experiments ($30$ ms), because the lifetime of our BEC in the presence of the Raman lasers (with the Raman coupling considered in this work) is measured to be hundreds of ms. For example, the control experiment in Supplementary Fig.~1 shows no observable thermalization within $30$ ms for dipole oscillations of a BEC with a single dressed spin component in the presence of the Raman lasers.
+
+
+
+\vspace{5mm}
+
+\textbf{Coherent spin current.} 
+
+The $I_{\sigma}$ in Eq.~(\ref{eq_spin_current}) reflects the number of BEC atoms of a specific spin state passing through a cross section per unit time, and can be related to $JA$, where $J=n_{\text{c}}v$ is the current density along the SOC direction ($\hat{y}$) with the effective number density $n_{\text{c}} = {N_{\text{c}}}/\left( {LA} \right)$, $v$ is the corresponding velocity, and $A$ is an effective cross sectional area (the spin index $\sigma$ is dropped in this discussion for simplicity in notations). The \textit{in situ} length in the $y$ direction, $L$, of each bare spin component can be estimated from the measured length of the BEC after TOF by ${L_y}\left( {{t_{\text{TOF}}}} \right) =\sqrt {1+(\omega_y t_{\text{TOF}})^2}{L_y}\left( {{t_{\text{TOF}}} = 0} \right)$ for a cigar-shape interacting BEC with $\omega_{x,y}>>\omega_z$ and in the Thomas-Fermi approximation \cite{Castin_PRL1996}, where ${L_y}\left( {{t_{\text{TOF}}}} \right)$ is defined as $2R_y$ in Eq.~(\ref{2D_TFG_Function}) and ${L_y}\left( {{t_{\text{TOF}}} = 0} \right) = L$. For example, for a typical ${L_y}( {{t_{\text{TOF}}} = }$ $15$ ms$)=88$ $\mu$m measured for one bare spin component of a dressed BEC prepared at $\OmegaI$, we get $L=4.5$ $\mu$m for ${\omega _y}= 2\pi\times 205$ Hz. The two spin components have similar $L$ when the spin populations are balanced. The \textit{in situ} length $L$ is $\thold$-dependent during the dynamics and calculated from the $\thold$-dependent TOF size, and is then used to obtain the $\thold$-dependent spin current in Fig.~\ref{Fig4}b.
+
+In the Thomas-Fermi approximation, we can also calculate $L$ for the initial state at $\OmegaI$ from the condensate atom number and trap frequencies. For example, we obtain $L = 4.7$ $\mu$m using $N_{\text{c}}=1.6\times 10^4$ and ${\omega _y}= 2\pi\times 205$ Hz by $\mu=\frac{1}{2}m\omega _y^2L^2$, where $\mu  = \frac{15^{\frac{2}{5}}}{2}(N_{\text{c}} a/\bar a)^{\frac{2}{5}}\hbar \bar \omega$, $\bar \omega  = {({\omega _x}{\omega _y}{\omega _z})^{1/3}}$, $a$ is the $s$-wave scattering length, and $\bar a = \sqrt{\hbar /(m\bar \omega )}$. In addition, the GPE-simulated $L$ is 4.7 $\mu$m. These results of $L$ are consistent with the value calculated from the TOF width.
+
+
+
+\vspace{5mm}
+
+\textbf{Analysis of BEC shape oscillations.} 
+
+We characterize a condensate's shape oscillations (in the $y-z'$ plane) of the bare spin component $\sigma$ by its aspect ratio $W_y^\sigma /W_{z'}^\sigma$, where the condensate widths $W_y^\sigma  = 2R_y^\sigma$ and $W_{z'}^\sigma  = 2R_{z'}^\sigma$ (respectively along the $y$ and $z'$ directions) are obtained from Eq.~(\ref{2D_TFG_Function}). We take the average of the aspect ratios of the two spin components (${W_y}/{W_{z'}} = (W_y^ \uparrow /W_{z'}^ \uparrow  + W_y^ \downarrow /W_{z'}^ \downarrow )/2$), and plot ${W_y}/{W_{z'}}$ as a function of $\thold$ in {Fig.~{\ref{Fig6_elong_shapeOsc}}}. In {Fig.~{\ref{Fig6_elong_shapeOsc}}e}, caution has to be paid because the prominent thermalization in the bare case can make it challenging to fit the 2D cloud and extract the aspect ratio. The notable distortion of the cloud at the early stages of SDM can also make it difficult to perform the 2D Thomas-Fermi fit. Therefore, in {Fig.~{\ref{Fig6_elong_shapeOsc}}f}, we choose the $\thold$-dependent ${W_y}/{W_{z'}}$ data after the corresponding dashed line (indicating ${\thold}\sim 2{\tau_{\text{damp}}}$ after which the SDM is fully damped) to fit to a damped sinusoidal function to extract the frequency of the aspect ratio oscillations.
+
+In our experiments, there is no external modulation of the trapping potentials or shapes of the BECs to intentionally excite the shape oscillations. However, it is worth noting that shape oscillations can be induced via a non-adiabatic change in the internal energy of atomic clouds \cite{Inguscio_PRL2000,Matthews_interEng_PRL1998}, which can take place when $\Omega$ is quickly changed or when the two spin components collide within the trap. On the other hand, we notice that in the dressed case the formation of density modulations can significantly deform the shape of a BEC ({Fig.~{\ref{Fig6_elong_shapeOsc}}b,~d}; Supplementary Movies 2,~4,~5 in Supplementary Note 3) and may thus also induce energetically-allowed BEC shape oscillations, because the modified shape of the atomic cloud is no longer in equilibrium with the trap. Note that such a shape deformation can also change the internal energy. The $m = 0$ quadrupole mode excitation observed in our experiments has the lowest mode frequency among all possible quadrupole modes given our trap geometry and thus is the most energetically favorable (its mode frequency is also lower than the SDM frequency $\sim\omega_y/(2\pi)$ for our trap parameters). Such nonresonant mode excitation is quite different from most previous studies, in which a collective mode of an atomic cloud is efficiently excited when it matches with the external modulation or perturbation of the trap \cite{Ketterle_Collective_PRL1996,Jin_Quadru_PRL1996} spatially and also spectrally (resonant with the modulation frequency). Compared to the dressed case, the bare case has less damped SDM and more significant thermalization, thus may complicate the shape oscillations due to more repeated SDM collisions and more atom loss \cite{Inguscio_PRL2000,Matthews_interEng_PRL1998}. We expect that the energy of the shape oscillations may eventually be converted to the energy of thermal atoms, leading to decay of the collective modes.
+
+To further verify the excitation of the $m=0$ quadrupole mode in the dressed case, we used another set of trap frequencies (see Supplementary Fig.~3 in Supplementary Note 2), and measured the condensate's aspect ratio as a function of $\thold$. The extracted frequency for the aspect ratio oscillations is again consistent with the predicted frequency for the $m=0$ quadrupole mode.
+
+\vspace{5mm}
+
+\textbf{Calculation of nonorthogonality, effective interaction parameters, and immiscibility.}
+
+The interactions between atoms in bare spinor BECs are characterized by the interspecies ($g_{\uparrow \downarrow}$, $g_{\downarrow \uparrow}$) and intraspecies ($g_{\uparrow \uparrow}$, $g_{\downarrow \downarrow}$) interaction parameters, where $g_{ \downarrow \downarrow }=g_{ \downarrow \uparrow }=g_{ \uparrow \downarrow }=\frac{{4\pi {\hbar ^2}\left( {{c_0} + {c_2}} \right)}}{m}$, ${g_{ \uparrow  \uparrow }}=\frac{{4\pi {\hbar ^2}{c_0}}}{m}$, $c_2 = -0.46a_0$, and $c_0 = 100.86a_0$ ($a_0$ is the Bohr radius) for $^{87}$Rb atoms in our case. 
+For a dressed BEC, in which $\left|\uparrow'\right\rangle$ is at some quasimomentum $\hbar q_y$ ($>0$) and $\left|\downarrow'\right\rangle$ is at $-\hbar q_y$ in the ground dressed band at $\Omega$ (in the two-state picture described by Eq.~(1) in the main text with $\deltaR=0$), the effective interspecies ($g_{\uparrow' \downarrow'}=g_{\downarrow' \uparrow'}$) and intraspecies ($g_{\uparrow' \uparrow'}$, $g_{\downarrow' \downarrow'}$) interaction parameters can be expressed in terms of the bare interaction $g$-parameters:
+\begin{align}
+\begin{split}
+\label{eq_eff_guu}
+g_{\uparrow'\uparrow'}=&\frac{g_{\uparrow\uparrow}}{4}(1+\cos\theta_{q_y})^2+\frac{g_{\downarrow\downarrow}}{4}(1-\cos\theta_{q_y})^2\\+&\frac{g_{\uparrow\downarrow}}{2}(1-\cos^2\theta_{q_y})
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+\label{eq_eff_gdd}
+g_{\downarrow'\downarrow'}=&\frac{g_{\uparrow\uparrow}}{4}(1-\cos\theta_{q_y})^2+\frac{g_{\downarrow\downarrow}}{4}(1+\cos\theta_{q_y})^2\\+&\frac{g_{\uparrow\downarrow}}{2}(1-\cos^2\theta_{q_y})
+\end{split}
+\end{align}
+\begin{align}
+\label{eq_eff_gud}
+g_{\uparrow'\downarrow'}=\frac{g_{\uparrow\uparrow}+g_{\downarrow\downarrow}}{2}(1-\cos^2\theta_{q_y})+g_{\uparrow\downarrow}
+\end{align}
+where $\cos \theta_{q_y}=(\hbar^2q_y \k_r/m)/\sqrt{\hbar^4q_y^2\k_r^2/m^2+(\Omega/2)^2}$. The dressed spin states $\left|\downarrow'\right\rangle$ at $-\hbar q_y$ and $\left|\uparrow'\right\rangle$ at $\hbar q_y$ in the ground dressed band can be expressed as
+\begin{align}
+\left|\downarrow'\right\rangle =
+\begin{pmatrix}
+\cos (\frac{\theta_{q_y}}{2}) \\ 
+-\sin (\frac{\theta_{q_y}}{2})
+\label{eq_dresseddown}
+\end{pmatrix}
+\\
+\left|\uparrow'\right\rangle =
+\begin{pmatrix}
+\sin (\frac{\theta_{q_y}}{2}) \\ 
+-\cos (\frac{\theta_{q_y}}{2})
+\label{eq_dressedup}
+\end{pmatrix}
+\end{align}
+in the bare spin basis of $\{\left|\downarrow\right\rangle, \left|\uparrow\right\rangle\}$. Using Eqs.~(\ref{eq_dresseddown}, \ref{eq_dressedup}), we can further obtain
+\begin{align}
+\left\langle\uparrow'|\downarrow'\right\rangle = \sin \theta_{q_y}=(\Omega/2)/\sqrt{\hbar^4q_y^2\k_r^2/m^2+(\Omega/2)^2}
+\label{eq_nonorthogonality}
+\end{align}
+which characterizes the nonorthogonality (and thus the interference) between the two dressed spin states (where $\left|\uparrow'\right\rangle$ is located at $\hbar q_y$ and $\left|\downarrow'\right\rangle$ is located at $-\hbar q_y$ in the ground dressed band at $\Omega$). {Fig.~{\ref{Fig7_eff_interaction}}a} plots such nonorthogonality versus quasimomentum for various $\Omega$.
+
+
+
+Note that $\theta_{q_y}$ (which is between $0$ and $\pi/2$ in our case) characterizes the degree of bare spin mixing of a single dressed spin state (Eqs.~(\ref{eq_dresseddown}, \ref{eq_dressedup})) as well as the nonorthogonality (due to the bare spin mixing, see Eq.~(\ref{eq_nonorthogonality})) between the two dressed spin states. As we can see, either decreasing $\Omega$ or increasing $q_y$ would decrease $\theta_{q_y}$ (or increase $\cos \theta_{q_y}$). When $\theta_{q_y}\rightarrow 0$ (or $\cos \theta_{q_y}\rightarrow 1$), all the dressed spin states would approach the corresponding bare spin states, i.e., $\left|\uparrow'\right\rangle \rightarrow \left|\uparrow\right\rangle$ and $\left|\downarrow'\right\rangle \rightarrow \left|\downarrow\right\rangle$, thus the nonorthogonality $\left\langle\uparrow'|\downarrow'\right\rangle \rightarrow 0$. In addition, all the effective interaction parameters would approach the corresponding bare values, i.e., $g_{\uparrow'\uparrow'}\rightarrow g_{\uparrow\uparrow}$, $g_{\downarrow'\downarrow'}\rightarrow g_{\downarrow\downarrow}$, and $g_{\uparrow'\downarrow'}\rightarrow g_{\uparrow\downarrow}$. 
+
+
+On the other hand, either increasing $\Omega$ or decreasing $q_y$ would increase $\theta_{q_y}$ towards $\pi/2$ (or decrease $\cos \theta_{q_y}$), thus enhancing the bare spin mixing, nonorthogonality and $g_{\uparrow'\downarrow'}$. When $\theta_{q_y}\rightarrow \pi/2$ (or $\cos \theta_{q_y}\rightarrow 0$), $g_{\uparrow'\uparrow'}\rightarrow\frac{g_{\uparrow\uparrow}}{4}+\frac{g_{\downarrow\downarrow}}{4}+\frac{g_{\uparrow\downarrow}}{2}$, $g_{\downarrow'\downarrow'}\rightarrow\frac{g_{\uparrow\uparrow}}{4}+\frac{g_{\downarrow\downarrow}}{4}+\frac{g_{\uparrow\downarrow}}{2}$, and $g_{\uparrow'\downarrow'}\rightarrow \frac{g_{\uparrow\uparrow}}{2}+\frac{g_{\downarrow\downarrow}}{2}+g_{\uparrow\downarrow}$. Therefore, $g_{\uparrow'\downarrow'}\rightarrow 2 g_{\uparrow'\uparrow'}$ or $2 g_{\downarrow'\downarrow'}$, which is the upper bound of the effective interspecies interaction parameter. {Fig.~{\ref{Fig7_eff_interaction}}b,~c} shows the effective interaction parameters normalized by $g_{\uparrow\uparrow}$ versus quasimomentum $\hbar q_y$ at $\Omega = 0.1$ $\E_r$ and $\Omega = 1.26$ $\E_r$, respectively. When $\Omega$ increases or $q_y$ decreases, $g_{\uparrow'\downarrow'}$ increases while $g_{\uparrow'\uparrow'}$ and $g_{\downarrow'\downarrow'}$ almost remain at the bare values. As $q_y\rightarrow 0$ at any finite $\Omega$, $g_{\uparrow'\downarrow'}$ approaches the upper limit $2g_{\uparrow'\uparrow'}$ or $2 g_{\downarrow'\downarrow'}$. 
+
+In the case of SDM, assume that in the ground dressed band at $\Omega$, $\left|\uparrow'\right\rangle$ is located at $\hbar q_y$ and $\left|\downarrow'\right\rangle$ is located at $-\hbar q_y$ at $\thold$, we may use the immiscibility metric \cite{Ketterle_review_1999}
+\begin{align}
+\eta=(g_{\uparrow'\downarrow'}^2-g_{\uparrow'\uparrow'}g_{\downarrow'\downarrow'})/g_{\uparrow\uparrow}^2
+\label{eq_immiscibility_metric}
+\end{align}
+to understand how $\Omega$ may modify the miscibility ($\eta<0$) or immiscibility ($\eta>0$) between $\left|\uparrow'\right\rangle$ and $\left|\downarrow'\right\rangle$.
+
+
+
+
+
+
+\vspace{5mm}
+
+\textbf{GPE simulations.} 
+
+The dynamical evolution of a BEC is simulated by the 3D time-dependent GPE \cite{Bao2003}. To compare with the experimental data, we conduct simulations with similar parameters as those used in our experiment. The GPE of a SO-coupled BEC can be written in the following form:
+\begin{align}
+\begin{split}
+\label{GPE_Eq}
+&i\hbar {\frac{\partial}{\partial t}}\Psi \left( {\textbf{r},t} \right) = H_{\text{tot}}\Psi\left( {\textbf{r},t} \right) \\
+&= \left( \frac{\hat{p}_x^2}{2m}+\frac{\hat{p}_z^2}{2m} + {{H_{\text{SOC}}} + {V_{\text{trap}}} + {V_{\text{int} }}} \right)\Psi \left( {\textbf{r},t} \right)
+\end{split}
+\end{align}
+where $\hat{p}_{x}=-i\hbar\frac{\partial}{\partial x}$ ($\hat{p}_{z}=-i\hbar\frac{\partial}{\partial z}$) is the momentum operator along $\hat{x}(\hat{z})$, and $H_{\text{SOC}}$ is the (two-state) single-particle Hamiltonian Eq.~(\ref{eq_hsoc}), {with $q_y$ replaced by $\hat{q}_y=\hat{p}_y/\hbar=-i\frac{\partial}{\partial y}$}. $V_{\text{trap}}$ is the external trapping potential:
+\begin{equation}
+{V_{\text{trap}}} = \frac{1}{2}m\omega _x^2{x^2} + \frac{1}{2}m\omega _y^2{y^2} + \frac{1}{2}m\omega _z^2{z^2}
+\end{equation}
+where $\omega_{x(y,z)}$ is the angular trap frequency along the spatial coordinate $x(y,z)$. The wavefunction (order parameter) of a spinor BEC can be written in the form 
+\begin{equation}
+\label{eq_orderpara}
+\Psi=
+\begin{pmatrix}
+\psi_{\downarrow}\\
+\psi_{\uparrow}\\
+\end{pmatrix}=
+\begin{pmatrix}
+\sqrt{n_{\downarrow}(\textbf{r},t)}e^{i\phi_{\downarrow}(\textbf{r},t) } \\ \sqrt{n_{\uparrow}(\textbf{r},t)}e^{i\phi_{\uparrow}(\textbf{r},t) }
+\end{pmatrix}
+\end{equation}
+where $\psi_{\downarrow}$ and $\psi_{\uparrow}$ are the respective condensate wavefunctions of the two components, $n_{\downarrow}$($n_{\uparrow}$) is the condensate density, $\phi_{\downarrow}$($\phi_{\uparrow}$) is the phase of the wavefunction, $\textbf{r}$ is the position, and $t$ is time. The spatial integration of $(n_{\downarrow}+n_{\uparrow})$ gives the total atom number $N$. The two-body interactions between atoms are described by the nonlinear interaction term $V_{\text{int} }$, which can be written in the basis of $\{\psi_{\downarrow}, \psi_{\uparrow}\}$:
+\begin{align}
+%\tiny
+\label{eq_Vint}
+V_{\text{int} }=
+\begin{pmatrix}
+{{g_{ \downarrow  \downarrow }}{{\left| {{\psi _ \downarrow }} \right|}^2} + {g_{ \downarrow  \uparrow }}{{\left| {{\psi _ \uparrow }} \right|}^2}} & 0 \\ 
+0 & {{g_{ \uparrow  \uparrow }}{{\left| {{\psi _ \uparrow }} \right|}^2} + {g_{ \uparrow  \downarrow }}{{\left| {{\psi _ \downarrow }} \right|}^2}}
+\end{pmatrix}
+\end{align}                                  
+The interaction parameters are given by 
+\begin{align}
+g_{ \downarrow \downarrow }=g_{ \downarrow \uparrow }=g_{ \uparrow \downarrow }=\frac{{4\pi {\hbar ^2}\left( {{c_0} + {c_2}} \right)}}{m}
+\label{Eq_bareg_c0plusc2}
+\end{align}
+and
+\begin{align}
+{g_{ \uparrow  \uparrow }}=\frac{{4\pi {\hbar ^2}{c_0}}}{m}
+\label{Eq_bareg_upup_c0}
+\end{align}
+The spin-dependent $s$-wave scattering lengths for $^{87}$Rb atoms are $c_0$ and $c_0+c_2$, where $c_2 = -0.46a_0$ and $c_0 = 100.86a_0$ ($a_0$ is the Bohr radius). The initial state of the SO-coupled BEC is obtained by using the imaginary time propagation method. Next we change $\OmegaI$ to a final value $\OmegaF$ in $t_{\text{E}} = 1.0$ ms to simulate the spin-dependent synthetic electric fields. Eq.~(\ref{GPE_Eq}) is used to simulate the dynamics of the BECs. The momentum space wavefunctions are calculated from the Fourier transformation of the real space wave functions. {The squared amplitude of the momentum space wavefunctions is used to obtain the time-dependent momentum space density distributions shown in e.g. Fig.~{\ref{Fig5}}a,~b.}
+
+For the GPE simulations in {Fig.~{\ref{Fig5}}}, we have checked that moderate variations in these parameters (as in our experimental data) do not affect our conclusions (while they can slightly change the $1/Q$ values, for example, larger $1/Q$ found for higher $N_{\text{c}}$). The simulations also reveal additional interesting features, such as the appearance of the opposite momentum (back-scattering) peak for each spin component in {Fig.~{\ref{Fig5}}a,~b}, which are not well resolved in our experimental data.  
+
+\vspace{5mm}
+
+\textbf{Different forms of energies in GPE simulations.} 
+
+Using Eq.~(\ref{eq_orderpara}), the total energy density $\varepsilon$ (the spatial integration of which gives the total energy of the system) can be expressed as the sum of several terms \cite{Stringari_vorticity_SOCBEC_PRL2017,Stringari_RevModPhys1999}:
+\begin{flalign}
+\varepsilon &= \varepsilon_1+\varepsilon_2+\varepsilon_3+\varepsilon_4+\varepsilon_5\\
+\label{eq_QP}
+\varepsilon_1 &= \frac{\hbar^2}{8mn_{\downarrow}}(\boldsymbol{\nabla} n_{\downarrow})^2+\frac{\hbar^2}{8mn_{\uparrow}}(\boldsymbol{\nabla} n_{\uparrow})^2&&
+\end{flalign}
+\begin{flalign}
+\label{eq_spatial_change_phase}
+\varepsilon_2&=\frac{\hbar^2 n_{\downarrow}}{2m}(\boldsymbol{\nabla} \phi_{\downarrow})^2+\frac{\hbar^2 n_{\uparrow}}{2m}(\boldsymbol{\nabla} \phi_{\uparrow})^2&&\\\nonumber
+&+\frac{\hbar^2 \k_r}{m}(n_{\downarrow}\nabla_y\phi_{\downarrow}-n_{\uparrow}\nabla_y\phi_{\uparrow})+\frac{\hbar^2 \k_r^2}{2m}(n_{\downarrow}+n_{\uparrow})&&
+\end{flalign}
+\begin{flalign}
+\label{eq_Raman_energy}
+\varepsilon_3&=\Omega\sqrt{n_{\downarrow}n_{\uparrow}}\cos(\phi_{\downarrow}-\phi_{\uparrow})\\
+\label{eq_interaction_energy}
+\varepsilon_4 &=\frac{g_{\downarrow\downarrow}}{2}(n_{\downarrow})^2+\frac{g_{\uparrow\uparrow}}{2}(n_{\uparrow})^2+g_{\downarrow\uparrow}n_{\downarrow}n_{\uparrow}\\
+\label{eq_potential}
+\varepsilon_5&=V_{\text{trap}}(n_{\downarrow}+n_{\uparrow})&&
+\end{flalign}
+In the above equations, $\boldsymbol{\nabla}=\frac{\partial}{\partial x}\hat{x}+\frac{\partial}{\partial y}\hat{y}+\frac{\partial}{\partial z}\hat{z}$ and $\nabla_y=\frac{\partial}{\partial y}$. We will introduce $\varepsilon_1$ to $\varepsilon_5$ one by one in the following. The expression of $\varepsilon_1$ in Eq.~(\ref{eq_QP}) is the density of the total (including two spin components) quantum pressure (QP), which is a type of kinetic energy (KE) associated with the spatial variation of the condensate density. An imaginary term $-\frac{i\hbar^2 \k_r}{m}\nabla_y(n_{\downarrow}-n_{\uparrow})$ appearing in the derivation of $\varepsilon_1$ is not shown in Eq.~(\ref{eq_QP}) as its spatial integration (for a confined system) is zero and thus has no contribution to the energy. The expression of $\varepsilon_2$ in Eq.~(\ref{eq_spatial_change_phase}) is the density of the sum of two types of KE, the total CoM KE (sum of the CoM KE of both bare spin components) and the total local current kinetic energy (LC KE). Both the CoM KE and LC KE are associated with the spatial variation of the phase of wavefunctions. The sum of the three types of kinetic energy (total QP, total CoM KE, and total LC KE) gives the total KE. That is, the sum of $\varepsilon_1$ and $\varepsilon_2$ is the density of the total KE. In the following, we derive explicit expressions for the CoM KE and LC KE. For CoM KE, it is nonzero only in the $y$ direction because the SDM is along the $y$ direction. Thus, the expression of CoM KE is:
+\begin{flalign}
+\text{CoM KE}
+&=\frac{1}{2m}(\langle \psi_{\downarrow}|\hbar \hat{k}_{\downarrow}|\psi_{\downarrow}\rangle^2+\langle \psi_{\uparrow}|\hbar \hat{k}_{\uparrow}|\psi_{\uparrow}\rangle^2)\label{eq_CoMKEA}\\
+\label{eq_CoMKEB}
+&= \frac{\hbar^2}{2m}(\langle \psi_{\downarrow}|\nabla_y\phi_{\downarrow}|\psi_{\downarrow}\rangle^2+\langle\psi_{\uparrow}|\nabla_y\phi_{\uparrow}|\psi_{\uparrow}\rangle^2)&&\\\nonumber
+&+\frac{\hbar^2 \k_r}{m}(\langle\psi_{\downarrow}|\nabla_y\phi_{\downarrow}|\psi_{\downarrow}\rangle-\langle \psi_{\uparrow}|\nabla_y\phi_{\uparrow}|\psi_{\uparrow}\rangle)&&\\\nonumber
+&+\langle\Psi|\frac{\hbar^2 \k_r^2}{2m}|\Psi\rangle,&&
+\end{flalign}
+where $\hbar \hat{k}_{\downarrow}=\hbar(\hat{q}_y+\k_r)=\hbar(-i\frac{\partial}{\partial y}+ \k_r)$ ($\hbar \hat{k}_{\uparrow}=\hbar(\hat{q}_y-\k_r)=\hbar(-i\frac{\partial}{\partial y}- \k_r)$) is the momentum operator along $\hat{y}$ for the spin down (up) component, and the last term in Eq.~(\ref{eq_CoMKEB}) is simply $N\frac{\hbar^2 \k_r^2}{2m}$. Recall that $\varepsilon_2$ in Eq.~(\ref{eq_spatial_change_phase}) is the density of the sum of CoM KE and LC KE. Thus, the expression of LC KE can be obtained by subtracting the expression of CoM KE in Eq.~(\ref{eq_CoMKEB}) from the spatial integration of $\varepsilon_2$ (Eq.~(\ref{eq_spatial_change_phase})):
+
+
+\begin{flalign}
+\label{eq_KE_localCurrentsA}
+\text{LC KE}
+&= \frac{\hbar^2}{2m}(\langle \psi_{\downarrow}|(\boldsymbol{\nabla} \phi_{\downarrow})^2|\psi_{\downarrow}\rangle+\langle \psi_{\uparrow}|(\boldsymbol{\nabla} \phi_{\uparrow})^2 |\psi_{\uparrow}\rangle)&&\\\nonumber
+&-\frac{\hbar^2}{2m}(\langle\psi_{\downarrow}|\nabla_y\phi_{\downarrow}|\psi_{\downarrow}\rangle^2+\langle\psi_{\uparrow}|\nabla_y\phi_{\uparrow}|\psi_{\uparrow}\rangle^2)\\
+\label{eq_KE_localCurrentsB}
+&= \frac{\hbar^2}{2m}(\Delta(\nabla_{x} \phi_{\downarrow})+\Delta(\nabla_{x} \phi_{\uparrow})+\Delta(\nabla_{z} \phi_{\downarrow})&&\\\nonumber
+&+\Delta(\nabla_{z} \phi_{\uparrow})+\Delta(\nabla_y\phi_{\downarrow})+\Delta(\nabla_y\phi_{\uparrow})),&&
+\end{flalign}
+where $\Delta(\nabla_{x,y,z}\phi_{\downarrow, \uparrow})$ is the standard deviation of $\nabla_{x,y,z}\phi_{\downarrow, \uparrow}$, and note $\langle\nabla_{x,z} \phi_{\downarrow, \uparrow}\rangle=0$. Thus, if the wavefunction is a plane wave with a phase $\phi = q_yy$, its LC KE is zero. For collective modes that do not have the CoM KE (for example, the quadrupole modes), the associated motional (kinetic) energy can be accounted for by LC KE and QP. The expression of $\varepsilon_3$ in Eq.~(\ref{eq_Raman_energy}) is the density of the Raman energy, associated with the Raman couping $\Omega$. The expression of $\varepsilon_4$ in Eq.~(\ref{eq_interaction_energy}) is the density of the sum of the bare intraspecies and interspecies interaction energies. The expression of $\varepsilon_5$ in Eq.~(\ref{eq_potential}) is the density of the total potential energy. 
+
+To calculate the time ($\thold$) evolution of the various forms of energies, we can in principle integrate the corresponding time-dependent energy densities over the real space. In practice, for the kinetic energy part we only perform spatial integration of $\varepsilon_2$ (given by Eq.~(\ref{eq_spatial_change_phase})). For convenience of computation, the total KE, total CoM KE, total LC KE, and total QP are calculated using a different approach taking advantages of the (quasi)momentum space representation of the quantum mechanical wavefunctions and operators. Specifically, the total KE is calculated by $\langle\psi_{\downarrow}(\textbf{q},t)| \frac{(\hbar \hat{k}_{\downarrow})^2+\hat{p}_x^2+\hat{p}_z^2}{2m}|\psi_{\downarrow}(\textbf{q},t)\rangle+\langle\psi_{\uparrow}(\textbf{q},t)| \frac{(\hbar\hat{k}_{\uparrow})^2+\hat{p}_x^2+\hat{p}_z^2}{2m}|\psi_{\uparrow}(\textbf{q},t)\rangle$ in the quasimomentum space, where $\hbar \hat{k}_{\downarrow}=\hbar(\hat{q}_y+\k_r)$ ($\hbar \hat{k}_{\uparrow}=\hbar(\hat{q}_y-\k_r)$) is the momentum operator along $\hat{y}$ for the spin down (up) component, and $\psi_{\downarrow, \uparrow}(\textbf{q},t)$ is the momentum-space representation of the wavefunctions (in the two directions not affected by SOC, $x$ and $z$, we simply have $q_x=p_x$ and $q_z=p_z$). Similarly, the total CoM KE is calculated in the quasimomentum space using Eq.~(\ref{eq_CoMKEA}). The total LC KE is calculated by subtracting the calculated total CoM KE from the spatial integration of $\varepsilon_2$ (Eq.~(\ref{eq_spatial_change_phase})). The total QP is calculated indirectly by subtracting the spatial integration of $\varepsilon_2$ from the total KE. 
+
+The total Raman energy is calculated by the spatial integration of $\varepsilon_3$ (Eq.~(\ref{eq_Raman_energy})). The total bare intraspecies ($g_{\uparrow\uparrow}$ and $g_{\downarrow\downarrow}$) and interspecies ($g_{\uparrow\downarrow}$) interaction energies are calculated by the spatial integration of the corresponding terms in $\varepsilon_4$ (Eq.~(\ref{eq_interaction_energy})). The total interaction energy is calculated as the sum of the bare intraspecies and interspecies interaction energies. The total potential energy is calculated by the spatial integration of $\varepsilon_5$ (Eq.~(\ref{eq_potential})). Lastly, the total energy of the system is calculated as the sum of the total Raman energy, total potential energy, total interaction energy, and total KE.
+
+We note that even though our GPE simulations do not treat thermalization and thermal energies, the calculated different forms of condensate energies and their time evolution still provide valuable insights to understand the dynamical processes involved in the SDM. The GPE calculated different forms of energies shown in {Fig.~{\ref{Fig8_energy}}} and discussed in the associated texts below refer to the energies per particle (i.e. the calculated energies divided by the total atom number $N$).
+
+In {Fig.~{\ref{Fig8_energy}}a}, the total energy is a constant during $\thold$, confirming the conservation of the total energy. In {Fig.~{\ref{Fig8_energy}}b}, the total Raman energy has relatively small variations during $\thold$. 
+In Fig.~{\ref{Fig8_energy}}c, the total potential energy in dressed cases has smaller variations during $\thold$ compared with that in the bare case.
+In {Fig.~{\ref{Fig8_energy}}d}, the time evolution of the total interaction energy at different $\OmegaF$ possesses a complicated behavior, mainly due to the complicated dynamics of the densities of the two spin components as well as their spatial overlap (see Supplementary Movies 2,~4,~5 in Supplementary Note 3). 
+
+{Fig.~{\ref{Fig8_energy}}e-h} shows the time evolution of the calculated total KE, total CoM KE, total QP, and total LC KE at different $\OmegaF$, respectively. When $\OmegaF$ is larger, the total CoM KE ({Fig.~{\ref{Fig8_energy}}f}) exhibits a faster damping while QP as well as LC KE exhibit a faster increase ({Fig.~{\ref{Fig8_energy}}g,~h}, focusing on the relatively early stage of SDM) presumably due to the enhancement of the interference, immiscibility, and effective interaction between the two dressed spin components.
+
+{Fig.~{\ref{Fig8_energy}}i-k} shows the time evolution of the calculated intraspecies and interspecies interaction energies at different $\OmegaF$. Note that the interaction energies are relatively small compared to other forms of energies, but are essential for the damping mechanisms as discussed in the main text.
+
+
+\vspace{5mm}
+\centerline{\textbf{Data Availability}}
+The data presented in this work are available from the corresponding author upon reasonable request.
+
+
+
+\vspace{5mm}
+\centerline{\textbf{Acknowledgements}}
+We thank Hui Zhai for helpful discussions and Ting-Wei Hsu for his help in experiments. This work has been supported in part by the Purdue University OVPR Research Incentive Grant and the NSF grant PHY-1708134. D.~B.~B. also acknowledges support by the Purdue Research Foundation Ph.D. fellowship. C.~Q. and C.~Z. are supported by NSF (PHY-1505496, PHY-1806227), ARO (W911NF-17-1-0128), and AFOSR (FA9550-16-1-0387). M.~H. and Q.~Z. acknowledge support from Hong Kong Research Council through CRF C6026-16W and start up funds from Purdue University. S.~J.~W. and C.~H.~G. are supported by NSF grant PHY-1607180. Y.~L-G. was supported by the U.S. Department of Energy, Office of Basic Energy Sciences, under Award DE-SC0010544.
+
+
+\vspace{5mm}
+\centerline{\textbf{Author contributions}}
+C.~H.~L., R.~J.~N., D.~B.~B., A.~O., and Y.~P.~C. contributed to the experiment. C.~Q. and C.~Z. contributed to the GPE simulations. 
+M.~H. and Q.~Z. contributed to the computations for the effective interactions. 
+S.~J.~W., C.~H.~G., and Y.~L-G. contributed to additional theoretical insights.  
+Y.~P.~C. supervised the work.   
+All authors contributed to the physical interpretation for the results and to the writing of the manuscript.
+
+\vspace{5mm}
+\centerline{\textbf{Competing interests}}
+The authors declare no competing interests.
+
+
+}
+
+
+
+
+
+
+% unsrt
+%naturemag
+\bibliographystyle{naturemag}
+%\bibliographystyle{apsrev4-1} % Tell bibtex which bibliography style to use
+\bibliography{bibliography_SpinE} % Tell bibtex which .bib file to use (this one is some example file in TexLive's file tree)
+%\clearpage
+\onecolumngrid
+%\appendix
+
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\makeatletter
+\renewcommand{\figurename}{Supplementary Figure}
+\renewcommand\tablename{Supplementary Table}
+\renewcommand{\thetable}{\arabic{table}}
+%\renewcommand{\thefigure}{S\arabic{figure}}
+
+\newpage
+\begin{center}
+\large{\textbf{Supplementary Information}}
+\end{center}
+
+\begin{center}
+\textbf{Supplementary Note 1: Control Experiments}
+\end{center}
+
+\vspace{5mm}
+\noindent
+\textbf{Dipole oscillations of a SO coupled BEC with a single dressed spin component in the $\left| { \downarrow '} \right\rangle$ state.} By quickly changing the Raman coupling/detuning as in \cite{zhang_dipole_PRL_2012}, we can apply a synthetic electric field to a BEC with a single dressed spin component to excite its dipole oscillations in the optical trap. 
+{The experimental timing diagram is similar to Fig.~1b in the main text. First, an 80 ms ramp is used to achieve an initial Raman coupling $\OmegaI = 3.7$ $\E_r$, where the initial detuning in this case is chosen such that the band is tilted and only $\left| { \downarrow '} \right\rangle$ is present. 
+Subsequently, both $\OmegaI$ and the initial detuning are held for another 100 ms. Then, $\OmegaI$ is changed to $\OmegaF$ while the initial detuning is changed to ${\deltaR} = \delta '(\OmegaF ,\varepsilon )$ (which realizes a balanced band at $\OmegaF$) in 1 ms.} 
+This gives a spin current with a net mass current generated from a single dressed spin component. For example, Supplementary Fig.~\ref{FigS4} shows the dipole oscillations of a dressed BEC in the $\left| { \downarrow '} \right\rangle$ state at $\OmegaF = 1.0$ $\E_r$ and ${\deltaR} = \delta '(\OmegaF ,\varepsilon )$ (such that the double minima in the ground dressed band are balanced, although only the one corresponding to $\left| { \downarrow '} \right\rangle$ is occupied). Such single-component dipole oscillations are observed to possess very little damping ($1/Q < 0.05$) and without noticeable thermalization within the time scale of the experiment ($30$ ms), similar to the work in \cite{zhang_dipole_PRL_2012}. Similar results are obtained for the measurements performed at different $\OmegaF$, as shown in the red square data in Fig.~3f in the main text. Note that in the TOF images, the dominant bare spin component is $\left| { \downarrow} \right\rangle$ (red). There is a minority component in $\left| { \uparrow} \right\rangle$ oscillating in phase with but is $2\hbar \k_r$ away from $\left| { \downarrow} \right\rangle$, and thus is not shown in Supplementary Fig.~\ref{FigS4}. The control experiment shows that without a collision partner (i.e. the other dressed spin component in the $\left| { \uparrow '} \right\rangle$ state), the dipole oscillations of a single dressed spin component is very weakly damped without noticeable thermalization within the time scale of the experiment.
+
+\vspace{5mm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=6.6in]{SI_Fig1_pol_Vfinal.pdf}
+\caption{\textbf{Dipole oscillations of a BEC with a single dressed spin component in \boldmath{$\left|{ \downarrow '}\right\rangle$.}} Combined TOF images vs $\thold$ for a dressed BEC in $\left|{ \downarrow '}\right\rangle$ ($\OmegaF = 1.0$ $\E_r$, ${\deltaR} = \delta '({\OmegaF},\varepsilon )$, shown in the main text Fig.~3h) undergoing dipole oscillations, showing very weak damping ($1/Q < 0.05$) and negligible thermalization. Each slice in the image shown is a TOF image at a given $\thold$, but compressed along the horizontal direction. The vertical axis shows the mechanical momentum $\hbar k$ of atoms. The time step between successive image slices is $0.5$ ms. The figure shows bare spin components $\left|  \downarrow\right\rangle$ in red and $\left|  \uparrow\right\rangle$ in blue plotted in the lower and upper panels, respectively.}
+\label{FigS4}
+\end{figure}
+
+
+
+\vspace{5mm}
+\noindent
+\textbf{Common-mode dipole oscillations of two dressed spin components of a SO coupled BEC.} We also excite common-mode dipole oscillations of two dressed spin components of a SO coupled BEC with equal populations in $\left| { \uparrow '} \right\rangle$ and $\left| { \downarrow '} \right\rangle$ (Supplementary Fig.~\ref{FigS5}) by ramping the optical trap power up and back down in $1$ ms. This applies the same force to both dressed spin components and actuates their in-phase dipole oscillations in the trap, creating a mass current without a spin current, therefore also no collisions between the two dressed spin components. To analyze the momentum damping of the individual atomic cloud, $\hbar {k_ \uparrow }$ or $\hbar {k_ \downarrow }$ is fitted to a damped sinusoidal function to obtain the corresponding $1/Q$. We find that such common-mode dipole oscillations in the trap are very weakly damped ($1/Q < 0.05$) without noticeable thermalization within the time scale of the experiment ($30$ ms). This shows that SOC alone would not cause momentum damping of the individual atomic cloud if there is no relative collision between the two spin components.
+
+%\vspace{10mm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=6.6in]{SI_Fig2_ComMode_Vfinal.pdf}
+\caption{\textbf{Common-mode dipole oscillations of two dressed spin components of a SO coupled BEC.} Combined TOF images vs $\thold$ for two dressed spin components of a SO coupled BEC with equal populations in $\left| { \uparrow '} \right\rangle$ and $\left| { \downarrow '} \right\rangle$ ($\OmegaF = 1$ $\E_r$, ${\deltaR} = \delta '({\Omega _F},\varepsilon )$) undergoing in-phase dipole oscillations, showing very little damping ($1/Q < 0.05$) with negligible thermalization. Each slice in the image shown is a TOF image at a given $\thold$, but compressed along the horizontal direction. The time step between successive image slices is $0.5$ ms. The figure shows $\left|\downarrow\right\rangle$ in red and $\left|\uparrow \right\rangle$ in blue plotted in the lower and upper panels, respectively.}
+\label{FigS5}
+\end{figure}
+
+
+
+\clearpage
+\begin{center}
+\textbf{Supplementary Note 2: Observation of the \boldmath${m = 0}$ Quadrupole Mode of a Dressed BEC with Another Set of Trap Frequencies.}
+\end{center}
+
+
+
+To further verify the excitation of the $m = 0$ quadrupole mode in the dressed case, we intentionally changed the trap frequencies to ${\omega _z}\sim 2\pi\times (21 \pm 3)$ Hz and ${\omega _x}\sim{\omega _y}\sim 2\pi\times (144 \pm 10)$ Hz, and measured the aspect ratio of the condensate as a function of $\thold$ at $\OmegaF = 1.3$ $\E_r$ (Supplementary Fig.~\ref{FigSI_shapeOsc_diffTrap}a, with select TOF images shown in Supplementary Fig.~\ref{FigSI_shapeOsc_diffTrap}b) with all the other experimental parameters similar to {Fig.~5f in the main text}. The data after the dashed line (${\thold}\sim 2{\taudamp}$) is fitted to a damped sinusoidal function. The extracted aspect ratio oscillation frequency is around $34$ Hz, again consistent with the prediction ${f_m} = \sqrt {2.5} {\omega _z}/(2\pi )\sim 33$ Hz for the $m = 0$ quadrupole mode. This confirms the excitation of the $m = 0$ quadrupole mode after the SDM is damped out in the dressed case.
+
+\vspace{10mm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=6.6in]{SI_Fig3_diffTrap_Vfinal.pdf}
+\caption{\textbf{Observation of the quadrupole mode of a dressed BEC with another set of trap frequencies.} (a) For $\OmegaF = 1.3$ $\E_r$ with trap frequencies ${\omega _z}\sim 2\pi\times (21 \pm 3)$ Hz and ${\omega _x}\sim{\omega _y}\sim 2\pi\times(144\pm 10)$ Hz used in this measurement, the observed aspect ratio oscillation frequency is around $34$ Hz, consistent with the expected ${m=0}$ quadrupole mode frequency ${f_{m=0}} = \sqrt{2.5}{\omega_z}/(2\pi)\sim 33$ Hz. This further verifies the excitation of the $m = 0$ quadrupole mode. The oscillation frequency is obtained using a damped sinusoidal function to fit the data following the SDM is damped out (when ${\thold}\sim 2{\taudamp}$ as indicated by the dashed line). The representative error bars are standard deviation of at least three measurements. (b) Select TOF images are typically the average of a few repetitive measurements.}
+\label{FigSI_shapeOsc_diffTrap}
+\end{figure} 
+
+
+
+\newpage
+\begin{center}
+\textbf{Supplementary Note 3: Control Simulations, Phase of BEC Wavefunctions in SDM, and Movies}
+\end{center}
+
+\vspace{5mm}
+\noindent
+\textbf{Effect of immiscibility on SDM.} We have used GPE simulations for the bare case with intentionally modified interactions to study the effect of immisciblity on the SDM. Supplementary Fig.~\ref{fig_GPE_miscibility} shows the damping of the relative momentum $\hbar k_{\text{spin}}$ of the SDM for 5 cases without and with modified interactions. Case $1$ is the original bare case without modification of interactions, with the intraspecies and interspecies interaction parameters $g_{ii}$ and $g_{ij}$ ($i,j = \uparrow$, $\downarrow$ and $i\neq j$) given by {Eqs.~(18,19) in the main text}, respectively. Case $2$ corresponds to the same intraspecies interaction parameter $\tilde{g_{ii}}=g_{ii}$ and a modified interspecies interaction parameter $\tilde{g_{ij}}=1.5g_{ij}$. Case $3$ corresponds to $\tilde{g_{ii}}=1.5g_{ii}$ and $\tilde{g_{ij}}=1.5g_{ij}$. Case $4$ corresponds to $\tilde{g_{ii}}=1.5g_{ii}$ and $\tilde{g_{ij}}=g_{ij}$. Case $5$ corresponds to $\tilde{g_{ii}}=1.8g_{ii}$ and $\tilde{g_{ij}}=g_{ij}$. Such modification of interactions is done by immediately increasing the interaction $g$-parameters to the desired values as soon as $\Omega$ is changed from $\OmegaI$ to $\OmegaF$. Among all the cases, only case $2$ is immiscible and we observe that case $2$ possesses the strongest damping, thus suggesting that immiscibility is particularly effective to enhance the damping of the SDM. This is further supported by the observation that case $4$ and case $5$ have similar damping which is less than the original bare case (case $1$), presumably because these two cases are more miscible than case $1$. We have also calculated and listed the immiscibility metric $\eta$ (defined in {Eq.~(13) in the main text}) in Supplementary Fig.~\ref{fig_GPE_miscibility} for the various cases. Note that simply increasing all the interaction $g$-parameters without notably changing $\eta$ can also enhance the SDM damping, as suggested by the observation that the damping in case $3$ ($\eta=-0.0045$, miscible) is stronger than that in case $1$ ($\eta=-0.0045$, miscible) but is not as prominent as in case $2$ ($\eta=1.2341$, immiscible).
+
+\vspace{3mm}
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=5.4in]{SI_Fig4_miscibility_Vfinal.pdf}
+\caption{\textbf{Effect of modified bare interactions and interspecies immiscibility on SDM damping.} In GPE simulations for the bare case SDM, we can change the original interaction parameters $g_{ii}$ and $g_{ij}$ to new values $\tilde{g_{ii}}$ and $\tilde{g_{ij}}$ respectively, where $i,j = \uparrow$ or $\downarrow$ and $i\neq j$. The relative momentum $\hbar k_{\text{spin}}$ versus $\thold$ are shown for five different cases with the corresponding modified interaction parameters and immisciblity metric $\eta=(\tilde{g_{\uparrow\downarrow}}^2-\tilde{g_{\uparrow\uparrow}}\tilde{g_{\downarrow\downarrow}})/\tilde{g_{\uparrow\uparrow}}^2$ listed in Supplementary Table~\ref{table1} below.}
+\label{fig_GPE_miscibility}
+\end{figure*}
+
+\vspace{3mm}
+\begin{table*}[ht]
+\centering
+\begin{tabular}{ | p{2.0cm} | p{1.0cm} | p{1.0cm} | p{3.0cm} |}
+    \hline
+Case number & $\tilde{g_{ii}}/g_{ii}$ & $\tilde{g_{ij}}/g_{ij}$ & $\eta$ \\ \hline 
+Case 1  & 1.0 & 1.0 & -0.0045 (miscible) \\ \hline
+Case 2  & 1.0 & 1.5 & 1.2341 (immiscible)\\ \hline
+Case 3  & 1.5 & 1.5 & -0.0045 (miscible) \\ \hline
+Case 4  & 1.5 & 1.0 & -0.5550 (miscible) \\ \hline
+Case 5  & 1.8 & 1.0 & -0.6896 (miscible) \\
+    \hline
+\end{tabular}
+\caption{\textbf{Cases with different modified interaction parameters and the immiscibility metric.} For each case, the corresponding immisciblity metric $\eta=(\tilde{g_{\uparrow\downarrow}}^2-\tilde{g_{\uparrow\uparrow}}\tilde{g_{\downarrow\downarrow}})/\tilde{g_{\uparrow\uparrow}}^2$ is calculated. The corresponding simulated SDM for each case is shown in Supplementary Fig.~\ref{fig_GPE_miscibility} above.} \label{table1} 
+\end{table*}
+
+
+
+\iffalse
+\begin{enumerate}[label=(Movie {\arabic*})]
+ \item this is item a \label{itema}
+\item another item
+\end{enumerate}
+\ref{itema}
+
+\href{https://www.dropbox.com/s/qvno1thm5vgv6i0/Oi50_Of00.gif?dl=0}{(\hypertarget{anim1}{Movie 1})}
+\href{https://www.dropbox.com/s/fftalm3gtecqzwc/Oi50_Of00_only_g12_1p5times.gif?dl=0}{(\hypertarget{anim2}{Movie 2})}
+\href{https://www.dropbox.com/s/fbcj7stsga3eaih/Oi50_Of00_g_g12_1p5times.gif?dl=0}{(\hypertarget{anim3}{Movie 3})}
+\href{https://www.dropbox.com/s/8uxiq6ueq1ft4yj/Oi50_Of00_only_g_1p5times.gif?dl=0}{(\hypertarget{anim4}{Movie 4})}
+\href{https://www.dropbox.com/s/eh5ubykw9x3r7zo/Oi50_Of00_only_g_1p8times.gif?dl=0}{(\hypertarget{anim5}{Movie 5})}
+The clickable link for each case in the table (column 1) shows the Movie for the corresponding GPE simulation.
+\fi
+
+\clearpage
+\vspace{5mm}
+\noindent
+\textbf{Effect of interference on the relative motion between two colliding BECs.} To investigate the effect of interference on the relative motion between two colliding BECs, we have performed another set of control GPE simulations, in which two (bare) BECs are initially in a double well trap such that they are separated in real space by a potential barrier. Then, we change the double well trap to a single harmonic potential by suddenly removing the potential barrier at $\thold=0$, allowing the two BECs to collide and oscillate against each other in the $y$ direction. We conduct the following simulations: case 1, the two BECs initially in the double well are in the same spin state (called the single spin case), with only one interaction parameter $g=\frac{{4\pi {\hbar ^2}}}{m}100a_0$. Case 2, two BECs initially in the double well have orthogonal spin states ($\downarrow$ and $\uparrow$) with ${g_{ \uparrow  \uparrow }}={g_{ \downarrow  \downarrow }}={g_{ \uparrow  \downarrow }}=g$ (called the two spin case; here all the interaction $g$-parameters are set to be the same to focus on the effect of interference. The cases where the interaction $g$-parameters are varied differently and the effect of immiscibility are also studied separately). 
+\iffalse
+(3) two BECs initially in the double well have orthogonal spin states with ${g_{ \uparrow\uparrow }}={g_{ \downarrow\downarrow }}=g$ and ${g_{ \uparrow\downarrow }}=1.5g$. (4) two BECs initially in the double well have orthogonal spin states with $g_{ \uparrow\uparrow }=g_{ \downarrow\downarrow }=g$ and $g_{ \uparrow\downarrow }=0.5g$. (5) two BECs initially in the double well have orthogonal spin states with $g_{ \uparrow\uparrow }=g_{ \downarrow\downarrow }=g_{ \uparrow\downarrow }=1.5g$.
+\fi
+\vspace{5mm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=5.1in]{SI_Fig5_binary_singleCom_on_long_Vfinal.pdf}
+\caption{\textbf{Effect of interference on the relative motion between two colliding BECs} (a) The effective width of the two BECs oscillating against each other in the $y$ direction versus $\thold$ in the single spin case. (b) The relative momentum between the two orthogonal spin components versus $\thold$ in the two spin case. For (a, b), the two BECs are initially separated by the same potential barrier in the same double well structure. The barrier is then suddenly removed at $\thold=0$ to initiate the dynamics. Note that the oscillation frequency in (a) is twice the frequency in (b) due to the definition of $W_{\text{eff},y}$.}
+\label{FigGPE_binary_singleCom_on_long}
+\end{figure}
+The damping of the relative motion in case $1$ is characterized by the $\thold$-dependent effective width ($W_{\text{eff},y}$, shown in Supplementary Fig.~\ref{FigGPE_binary_singleCom_on_long}a) of the two BECs oscillating against each other in the $y$ direction, where $W_{\text{eff},y}=\sqrt{\langle y^2\rangle}$ ($\langle y^2\rangle$ is the expectation value of $y^2$ and is calculated using the whole wavefunction of the two BECs). In this case, we find that the relative motion almost damps out after $\thold=30$ ms (when we can no longer observe any relative motion between \textit{two} BECs, which have merged into one BEC; the relatively undamped remnant oscillations in the data after $\sim 30$ ms reflect the breathing of width of this merged BEC. See \href{https://www.dropbox.com/s/crpu9r9voftgeue/single_on.gif?dl=0}{\hypertarget{anim1}{Supplementary Movie 1}}). On the other hand, in case $2$ we observe prominent damping only after $\thold=60$ ms (Supplementary Fig.~\ref{FigGPE_binary_singleCom_on_long}b). By comparing case $1$ with case $2$, we avoid the effect of immiscibility and investigate the effect purely due to the interference on damping. This suggests that the interference between the two colliding BECs can enhance the damping of the relative motion. 
+In addition, in the two spin case we have modified the interaction parameters similar to the cases in Supplementary Fig.~\ref{fig_GPE_miscibility}. These results also suggest that immiscibility is particularly effective to enhance the damping of SDM.
+\iffalse
+The following links show the Movies of cases $1$ and $2$.\\
+Case $1$: The single spin case with an interaction parameter $g$ \href{https://www.dropbox.com/s/crpu9r9voftgeue/single_on.gif?dl=0}{(\hypertarget{anim6}{Movie 6})} \\
+Case $2$: The two spin case with interaction parameters ${g_{ \uparrow  \uparrow }}={g_{ \downarrow  \downarrow }}={g_{ \uparrow  \downarrow }}=g$ \href{https://www.dropbox.com/s/ihb2t4x4edzr3u3/Binary_on.gif?dl=0}{(\hypertarget{anim7}{Movie 7})} \\
+\fi
+
+\vspace{5mm}
+\noindent
+\textbf{Effect of turning off interactions on the relative motion between two colliding BECs.} To further investigate the role of interactions on the relative motion between two colliding BECs, we have performed three control GPE simulations where all the interaction parameters are set to zero (i.e. $g={g_{ \uparrow  \uparrow }}={g_{ \downarrow  \downarrow }}={g_{ \uparrow  \downarrow }}=0$): (1) the bare case SDM. (2) the single spin case and the two spin case with two BECs initially in a double well as described in the previous section. (3) the dressed case SDM at $\OmegaF=1.3$ $\E_r$. The results of these cases are shown respectively in Supplementary Figs.~\ref{FigGPE_OF00_on_off_long}, \ref{FigGPE_binary_singleCom_on_off_long}, and \ref{FigGPE_OF13_on_off_long}. In all these non-interacting cases, we find that the relative motion between the two colliding BECs has no noticeable damping within the time of simulation. This suggests that interactions are essential for the damping mechanisms studied in this work. 
+\iffalse
+The following links show the GPE simulations of these non-interacting cases:\\
+(1) The bare case SDM without interactions \href{https://www.dropbox.com/s/ruyam4ynqr4mmqj/Oi50_Of00_off.gif?dl=0}{(\hypertarget{anim8}{Movie 8})} \\
+(2a) The single spin case without interactions \href{https://www.dropbox.com/s/7alnwfevejm3qhg/single_off.gif?dl=0}{(\hypertarget{anim9}{Movie 9})} \\
+(2b) The two spin case without interactions \href{https://www.dropbox.com/s/1ueri6xuxixmleb/Binary_off.gif?dl=0}{(\hypertarget{anim10}{Movie 10})} \\
+(3) The dressed case SDM at $\OmegaF=1.3$ $\E_r$ without interactions \href{https://www.dropbox.com/s/hxtnv1609t93d8q/Oi50_Of13_off.gif?dl=0}{(\hypertarget{anim11}{Movie 11})} \\
+\fi
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5.0in]{SI_Fig6_OF00_on_off_long_Vfinal.pdf}
+\caption{\textbf{The bare case SDM with interactions in (a) and without interactions in (b).} The case (a) is the same simulation as the case of $\OmegaF=0$ in {Fig.~6c in the main text} but shown up to a longer time of $100$ ms.}
+\label{FigGPE_OF00_on_off_long}
+\end{figure}
+\iffalse
+(see Movie 15)
+\fi
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5.0in]{SI_Fig7_binary_singleCom_off_long_Vfinal.pdf}
+\caption{\textbf{The two colliding bare BECs without interactions in the single spin case (a) and in the two spin case (b).} These simulations used the same parameters as in Supplementary Fig.~\ref{FigGPE_binary_singleCom_on_long} except the interaction $g$-parameters have been set to zero.}
+\label{FigGPE_binary_singleCom_on_off_long}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5.0in]{SI_Fig8_OF13_on_off_long_Vfinal.pdf}
+\caption{\textbf{The dressed case SDM at \boldmath{$\OmegaF=1.3 \E_r$} with interactions in (a) and without interactions in (b).} The case (a) is the same simulation as the case of $\OmegaF=1.3$ $\E_r$ in {Fig.~6c in the main text} but shown up to a longer time of $100$ ms.}
+\label{FigGPE_OF13_on_off_long}
+\end{figure}
+\iffalse
+(see Movie 20)
+\fi
+
+
+\newpage
+\noindent
+\textbf{Spatial modulation in the phase of BEC wavefunctions in SDM.} Supplementary Fig.~\ref{FigSI_Phase} is an example showing the spatial modulation in the phase of BEC wavefunctions ({Eq.~(16) in the main text}) at $\thold = 7.2$ ms during SDM for the bare case and the dressed case at $\OmegaF = 1.3$ $\E_r$ (snapshots taken from \hyperlink{anim3}{Supplementary Movie 3} and \hyperlink{anim6}{Supplementary Movie 6} below). We notice much less spatial variation in the gradient of the phase in the bare case than in the dressed case at $\OmegaF = 1.3$ $\E_r$, suggesting that LC KE in the bare case is generally smaller than that in the dressed case at this time (consistent with {Fig.~8h in the main text}).
+\vspace{5mm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=6.8in]{SI_Fig9_Phase_Vfinal.pdf}
+\caption{\textbf{Spatial modulation in the phase of BEC wavefunctions.} The phase of the bare spin up and down components at $\thold = 7.2$ ms in SDM is plotted in the {$x$-$y$} plane for (a) bare case, and (b) dressed case at $\OmegaF=1.3$ $\E_r$. Here, $x$ and $y$ are spatial coordinates.}
+\label{FigSI_Phase}
+\end{figure}
+
+
+\iffalse
+\begin{flushleft}
+{Movies of Experiments:}
+\end{flushleft}
+\hspace*{1.0em} 
+(1) $\OmegaF= 0.0$ \href{https://www.dropbox.com/s/o689xapkhwzg2nw/Exp_Bare_GIF.gif?dl=0}{(\hypertarget{anim12}{Movie 12})} \\
+\hspace*{1.0em} 
+(2) $\OmegaF= 1.3$ $\E_r$ \href{https://www.dropbox.com/s/3vlciugwqio8oxf/Exp_dressed_GIF.gif?dl=0}{(\hypertarget{anim13}{Movie 13})} \\
+\begin{flushleft}
+{Movies of GPE Simulations:}
+\end{flushleft}
+\fi
+
+\vspace{5mm}
+\noindent
+\textbf{Movies of GPE simulations for the SDM in the main text.} When linked to the webpage, choose the web browser to watch it online or download the files.
+
+\hspace*{0em} \href{https://www.dropbox.com/s/qvno1thm5vgv6i0/Oi50_Of00.gif?dl=0}{\hypertarget{anim2}{Supplementary Movie 2}}\\ 
+\hspace*{1.0em} \href{https://www.dropbox.com/s/lznufh6ijodregd/Oi50_Of00_phase.gif?dl=0}{\hypertarget{anim3}{Supplementary Movie 3}}\\
+\hspace*{1.0em} \href{https://www.dropbox.com/s/enmgwg20pyb6ml7/Oi50_Of04.gif?dl=0}{\hypertarget{anim4}{Supplementary Movie 4}}\\
+\hspace*{1.0em} \href{https://www.dropbox.com/s/u0tur863wrannkq/Oi50_Of13.gif?dl=0}{\hypertarget{anim5}{Supplementary Movie 5}}\\
+\hspace*{1.0em} \href{https://www.dropbox.com/s/9t2b3h7goh8d2e5/Oi50_Of13_phase.gif?dl=0}{\hypertarget{anim6}{Supplementary Movie 6}}\\
+
+
+\iffalse
+(4) SDM at $\OmegaF= 0.9$ $\E_r$: 1D and 2D atomic densities in momentum and real spaces\\
+\href{https://www.dropbox.com/s/htc3abpevbr077c/Oi50_Of09.gif?dl=0}{\hspace*{2.6em} (\hypertarget{anim17}{Supplementary Movie 17})}\\  
+\hspace*{1.0em}
+\fi
+\iffalse
+\hspace*{1.0em} 
+(7) SDM at $\OmegaF= 2.1$ $\E_r$: 1D and 2D atomic densities in momentum and real spaces\\
+\hspace*{2.6em} \href{https://www.dropbox.com/s/rm2t39apibr81uz/Oi50_Of21.gif?dl=0}{(\hypertarget{anim20}{Movie 20})}\\ 
+\fi
+Here, the momentum-space (in the $k_x$-$k_y$ plane) 2D density distributions (obtained by the integration over $k_z$, where $\hbar k_{x (y, z)}$ is the mechanical momentum in the $x (y, z)$ direction) of different bare spin components (separated vertically from each other for better visualization) are the Fourier transform of the real-space 2D densities (as those shown in Fig.~5 in the main text). The momentum-space and real-space 1D atomic densities in the $y$ direction (SOC direction) are obtained by integrating the momentum-space and real-space 2D densities over $k_x$ and $x$, respectively. In addition, the snapshot shown in Supplementary Fig.~\ref{FigSI_Phase} for comparing the phase in the cases of $\OmegaF = 0$ and $\OmegaF = 1.3$ $\E_r$ is taken from \hyperlink{anim3}{Supplementary Movie 3} and \hyperlink{anim6}{Supplementary Movie 6}.
+
+
+
+
+
+\end{document}
+
+

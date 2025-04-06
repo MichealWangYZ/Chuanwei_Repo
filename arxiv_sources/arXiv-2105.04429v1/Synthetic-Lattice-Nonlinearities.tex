@@ -1,0 +1,1426 @@
+\documentclass[notitlepage,aps,prl,reprint,twocolumn,longbibliography,superscriptaddress]{revtex4-1}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage[colorlinks, allcolors=blue]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage[mathlines]{lineno}
+\usepackage{braket}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{ulem}
+
+\newcommand{\pref}[2]{\hyperref[#1]{\ref{#1}(#2)}}
+\newcommand{\preff}[2]{\hyperref[#1]{\ref{#1}#2}}
+\newcommand{\eqpref}[1]{\hyperref[#1]{(\ref{#1})}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+\newcommand{\rb}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\mb}[1]{\textcolor{magenta}{\textbf{#1}}}
+
+\newcommand{\vsp}{\vspace{5pt}}
+\newcommand{\qs}{\widetilde{q}}
+\newcommand{\squig}{{\raise.17ex\hbox{$\scriptstyle\sim$}}}
+\newcommand{\cut}{\noindent\rule{\columnwidth}{1pt}}
+
+%tunnelings
+\newcommand{\ts}{$t_\text{sys}$}
+\newcommand{\tl}{$t_\text{link}$}
+\newcommand{\tr}{$t_\text{res}$}
+\newcommand{\tslr}{(t_\text{sys},t_\text{link},t_\text{res})}
+
+\newcommand{\version}[0]{1}
+
+\begin{document}
+\title{Nonlinear dynamics in a synthetic momentum state lattice}
+\author{Fangzhao Alex An}
+\thanks{Present address: Honeywell Quantum Solutions, Golden Valley, MN 55422}
+\affiliation{Department of Physics, University of Illinois at Urbana-Champaign, Urbana, IL 61801-3080, USA}
+\author{Bhuvanesh Sundar}
+\affiliation{Department of Physics and Astronomy, Rice University, Houston, TX 77005, USA}
+\affiliation{Rice Center for Quantum Materials, Rice University, Houston, TX 77005, USA}
+\affiliation{JILA, Department of Physics, University of Colorado, Boulder, CO 80309, USA}
+\author{Junpeng Hou}
+\affiliation{Department of Physics, The University of Texas at Dallas, Richardson, Texas 75080-3021, USA}
+\author{Xi-Wang Luo}
+\affiliation{Department of Physics, The University of Texas at Dallas, Richardson, Texas 75080-3021, USA}
+\author{Eric J.~Meier}
+\affiliation{Department of Physics, University of Illinois at Urbana-Champaign, Urbana, IL 61801-3080, USA}
+\author{Chuanwei Zhang}
+\email{chuanwei.zhang@utdallas.edu}
+\affiliation{Department of Physics, The University of Texas at Dallas, Richardson, Texas 75080-3021, USA}
+\author{Kaden R.~A.~Hazzard}
+\email{kaden@rice.edu}
+\affiliation{Department of Physics and Astronomy, Rice University, Houston, TX 77005, USA}
+\affiliation{Rice Center for Quantum Materials, Rice University, Houston, TX 77005, USA}
+\author{Bryce Gadway}
+\email{bgadway@illinois.edu}
+\affiliation{Department of Physics, University of Illinois at Urbana-Champaign, Urbana, IL 61801-3080, USA}
+\date{\today}
+
+\begin{abstract}
+The scope of analog simulation in atomic, molecular, and optical systems has expanded greatly over the past decades.
+Recently, the idea of synthetic dimensions -- in which transport occurs in a space spanned by internal or motional states coupled by field-driven transitions -- has played a key role in this expansion.
+While approaches based on synthetic dimensions have led to rapid advances in single-particle Hamiltonian engineering, strong interaction effects have been conspicuously absent from most synthetic dimensions platforms.
+Here, in a lattice of coupled atomic momentum states, we show that
+atomic interactions
+result in large and qualitative changes to dynamics in the synthetic dimension.
+We explore how the interplay of nonlinear interactions and coherent tunneling enriches the dynamics of a one-band tight-binding model, giving rise to macroscopic self-trapping and phase-driven Josephson dynamics with a nonsinusoidal current-phase relationship, which can be viewed as stemming from a nonlinear band structure arising from interactions.
+\end{abstract}
+\maketitle
+
+The concept of synthetic dimensions~\cite{Review-OzawaPrice}, where motion in space is abstracted to encompass dynamics in spaces spanned by internal~\cite{Boada-SynthDim,Celi-SynthSynth,Wall-Synthetic-Clock,Sundar-Synth-Mol,Sundar2} or discrete motional states~\cite{Gadway-KSPACE,Price-Shaking,Lincoln1}, has led to new capabilities for analog simulation with quantum matter~\cite{Mancini2015,Stuhl2015,Livi2016,Kolkowitz2017,Shin-Tubes1,Shin-Tube2,Chen-Tubes1,Meier-AtomOptics,Meier-SSH,Meier-TAI,An-FluxLadder,An-Disorder,An-MobEdge,An-GAA,Lapp_2019,Xiao2020,Gou-NonRecip,Xie-TopQuantWalks,Genkina_2019,Sugawa1429,chen2020quantum,Xiao-Top-Critical,Chalopin2020,RydSynth,Cornish-synth}.
+Under this approach, the role of synthetic lattice sites is played by discrete internal or motional states, and tunneling between the sites is accomplished by driving state-to-state transitions. The spectroscopic control over the resulting tight-binding model, including direct control over tunneling phases, opens up new capabilities for Hamiltonian engineering. By combining these new possibilities for single-particle control with the native interactions in atomic and molecular systems~\cite{Sundar-Synth-Mol,Sundar2,An-Inter,Hou-PRL,Barbarino_2016,Guan-MSL,GuanSwallow}, synthetic dimensions hold much promise for the exploration of exotic many-body physics.
+
+To date, studies based on synthetic dimensions have almost uniformly been restricted to the non-interacting regime, or regimes in which there are mostly subtle modifications to the system's behavior~\cite{Bromley-Inter,An-MobEdge,An-GAA,Xie-TopQuantWalks}. Here, using lattices of atomic momentum states, we observe that the dynamics in the synthetic dimension is qualitatively altered by the presence of nonlinear atomic interactions.
+The controlled addition of atomic interactions to even a simple one-band tight-binding model leads to a rich variety of phenomena, including the transition to a macroscopically self-trapped regime and the appearance of a nonsinusoidal current-phase relationship in phase-driven Josephson dynamics, which we observe with single-site resolution in the synthetic dimension.
+We note that these observations can be viewed as resulting from the emergence of a nonlinear band structure arising from interactions~\cite{Erich-swallowtails,Koller-swallowtails}.
+As synthetic lattices can readily incorporate designer disorder, gauge fields, and other features, these results pave the way for future explorations of novel collective phenomena in synthetic dimensions.
+
+\begin{figure}[t]
+	\includegraphics[width=0.97\columnwidth]{fig1-EricReconfigure-Finished.pdf}
+	\caption{\label{FIG:fig1}
+		\textbf{Synthetic momentum state lattices with atom-atom interactions.}
+		\textbf{(a)}~Two-photon Bragg transitions individually couple atomic momentum modes along a synthetic dimension.
+		\textbf{(b)}~The synthetic lattice features inter-site tunneling terms with controlled amplitude $J_i$ and phase $\varphi_i$
+		set by the Bragg laser amplitudes and phases, lattice site energies $\varepsilon_i$ set by the two-photon Bragg detuning,
+		and naturally occurring long-ranged and mode-dependent atomic interactions: atoms in the same site experience a repulsive pairwise interaction of strength $u$, and atoms in different sites have a repulsive interaction of strength $2u$.
+	}
+\end{figure}
+
+Figure~\ref{FIG:fig1} depicts our approach based on atomic momentum states~\cite{Gadway-KSPACE,Meier-AtomOptics}.
+A Bose--Einstein condensate (BEC) containing $\squig 10^5$ $^{87}$Rb atoms is subjected to two counterpropagating lasers (wavelength $\lambda = 1064$~nm, wave vector $k = 2\pi/\lambda$) that both trap the atoms and couple the atomic momentum states.
+These laser fields allow for discrete momentum transfer to the atoms in units of two photon recoil momenta, $2\hbar k$, defining a set of states with momenta $p_n = 2 n \hbar k$ and energies $E_n = p_n^2 / 2 M$, with $M$ the atomic mass.
+Because the energy difference between adjacent states $p_n$ and $p_{n+1}$ is unique, we individually address various nearest-neighbor transitions simply by driving the atoms with a comb of discrete frequency components.
+We write a controlled spectrum of frequency components onto one of the lasers, such that the interference between the multifrequency beam (colored arrows) and the single-frequency beam (black arrows) addresses two-photon Bragg transitions between many pairs of momentum states.
+This creates a lattice of states in a synthetic dimension (momentum), where all tunneling amplitudes, tunneling phases, and site energies are controlled by the amplitudes, phases, and detunings from Bragg resonance of the corresponding laser frequency components~\cite{Meier-AtomOptics}.
+The site populations are all simultaneously measured via time-of-flight absorption imaging.
+
+We briefly summarize how atomic collisions lead to relevant interactions in synthetic lattices of atomic momentum states~\cite{An-Inter,Ozeri-RMP}. The strength of the collisional interaction is $U = g \rho = \left( 4\pi \hbar^2 a / M \right) \rho$,
+where $a$ is the $s$-wave scattering length ($\sim$100~$a_0$ for $^{87}$Rb), and $\rho$ is the real-space atomic density.
+In momentum-space, the $s$-wave collision is ostensibly all-to-all and state-independent. However, quantum statistics leads to a natural state-dependence to the interactions.
+A pair of atoms occupying the same momentum state experience a direct interaction term $u = U/N$. In contrast, a pair of atoms occupying distinguishable momentum states experience an additional exchange energy due to bosonic exchange statistics, resulting in a total interaction of $2u$ [Fig.~\pref{FIG:fig1}{b}].
+
+\begin{figure}[hbt!]
+	\includegraphics[width=0.97\columnwidth]{fig2-EricReconfigure-Finished.pdf}
+	\centering
+	\caption{\label{FIG:fig2}
+		\textbf{Macroscopic self-trapping in an array of laser-coupled momentum states.}
+        \textbf{(a)}~Atoms initialized to a single lattice site evolve in a one-dimensional lattice with uniform tunneling $J$. Self-trapping occurs when the collective interaction strength $U$ exceeds the tunneling bandwidth $4J$.
+		\textbf{(b,c)}~Population dynamics for strong ($J/h = 1281(5)$~Hz) and weak tunneling ($J/h = 93.3(2)$~Hz). Left: Data from integrated optical density (OD) images after $18$~ms time of flight, averaged over 5 experimental realizations. Right: Dynamics from numerical simulations.
+		\textbf{(d)}~Integrated OD images plotted vs.\ the tunneling strength $J$, taken at times of $t = 1.5 \hbar / J$.
+		\textbf{(e)}~Standard deviation of the atomic distributions from (d), shown alongside the simulation results. The solid blue curve assumes the ideal Hamiltonian after application of the rotating wave approximation, while the dashed red curve includes residual time dependence due to off-resonant effects. The expected self-trapping transition $U/J=4$ is shown as a vertical gray line.
+		Data for (d,e) are averaged over 20 experimental realizations, and the error bars in (e) are the standard error of the mean.
+		Numerical simulations in (b,c,e) assume a homogeneous mean-field energy of $U/h = 520$~Hz.
+	}
+\end{figure}
+
+In Ref.~\cite{An-Inter}, we laid the groundwork for interactions in momentum-state lattices and their influence on a double-well system.
+Here, we explore the simplest one-dimensional lattice, with uniform nearest-neighbor tunneling, $J$, between 21 sites.
+Following the above discussion, the interaction is approximately~\cite{SuppMats} described by $ u \sum_i n_i (n_i - 1)/2 + 2u \sum_{i<j} n_i n_j = U(N-1/2) - (u/2) \sum_i n_i^2$. This yields, up to irrelevant energy shifts, the combined Hamiltonian
+\begin{equation}
+H = -J\sum_i ( c_i^\dagger c^{\phantom \dagger}_{i+1} + h.c.) - \frac{u}{2}\sum_i n_i^2 \ .
+\end{equation}
+Here, $i$ and $j$ index the synthetic lattice sites and $n_i = c_i^\dag c^{\phantom \dagger}_i$ is the number operator for site $i$, with $c^{\phantom \dagger}_i$ and $c^\dag_i$ the site-$i$ annihilation and creation operators, respectively.
+
+We begin with all atoms in the nearly pure BEC and compose the Bragg frequencies such that the
+$k=0$ mode relates to the central lattice site, as depicted in Fig.~\pref{FIG:fig2}{a}.
+We note that, because each synthetic site hosts only one discrete state, the lattice is intrinsically single-band, with a simple cosine energy dispersion and a total bandwidth of $4J$.
+Initializing at a single site projects the atoms onto a superposition of all eigenstates in the band structure, giving rise to nonequilibrium dynamics and ballistic transport across the lattice~\cite{Meier-AtomOptics,An-Disorder}, as shown in Fig.~\pref{FIG:fig2}{b} in the limit where tunneling ($J/h = 1281(5)$~Hz) exceeds the collective interaction shift ($U/h = 520$~Hz).
+
+We expect that, at weaker $J$, the nonlinear interactions can compete with the tunneling and influence the dynamics. In particular, when the nonlinear interaction strength $U$ becomes greater than the full tunneling bandwidth $4J$, the atoms should be confined from spreading in a soliton-like state. That is, tunneling from the initially occupied mode will be suppressed by being off-resonant in energy with the other modes, a mechanism known as macroscopic quantum self trapping~\cite{Raghavan,Maciej-self-trap}. Figure~\pref{FIG:fig2}{c} shows such a lack of dynamics in the weak-tunneling regime ($J/h = 93.3(2)$~Hz), with atoms largely remaining on the initially populated site.
+Dynamics in both the strong- and weak-tunneling limits are in good agreement with Gross--Pitaevskii equation (GPE) simulations, which, for simplicity, approximate the trapped condensate as having a uniform mean-field energy of $U/h=520$~Hz~\cite{SuppMats}.
+Figure~\pref{FIG:fig2}{d} shows the transition from ballistic spreading to self-trapping more comprehensively for a range of tunneling rates. All data are taken at equivalent evolution times of $t = 1.5 \ \hbar/J$.
+For large $J$, the ballistic evolution leads to a bimodal distribution peaked around the $\pm 4 \hbar k$ states.
+As the tunneling rate decreases and interactions begin to dominate, population is found to spread less far out, eventually remaining fully within the initialized site in the self-trapping region.
+By plotting the distribution width $\sigma_n$ for each $J$ in Fig.~\pref{FIG:fig2}{e}, we see that it is nearly constant at large $J$ and that there is a rather steep turnover at low $J$ values, in good agreement with the GPE simulations.
+
+\begin{figure*}[htb!]
+	\includegraphics{fig4-EricReconfigure-Finished.pdf}
+	\centering
+	\caption{\label{FIG:fig4}
+		\textbf{Phase-driven dynamics in a synthetic bosonic Josephson junction array.}
+        \textbf{(a)}~Atoms are prepared in a superposition state on two lattice sites, $n = -1$ and $n = 0$, with equal weight and a relative phase of $\phi$. Starting at time $t=0$, the full lattice is turned on and the atoms evolve for a time $\Delta t$. We then measure the atomic distribution, from which we determine the mean displacement $\bar{n}$ (mean position + 0.5) and spread  $\sigma_n$ (standard deviation of position) of the wavepacket.
+        \textbf{(b)}~In the non-interacting limit, $\bar{n}$ and $\sigma_n$ can be related to the single-band energy $E(q)$ of quasimomentum states in the synthetic lattice, as the wavepackets with phase offset $\phi$ populate a spread of quasimomentum states about a mean synthetic quasimomentum $q_0 = \phi$.
+        The plots show the band energy $E(q)$, the group velocity $v_g \propto dE/dq$, and the dispersion $d^2 E / dq^2$ of the synthetic lattice.
+        \textbf{(c)}~Integrated density patterns (after 2 tunneling times) vs.\ $\phi$ for the regimes of strong (left, $J/h = 1253(12)$~Hz) and weak tunneling (right, $J/h = 156.7(1.3)$~Hz).
+		\textbf{(d,e)}~$\bar{n}$ vs.\ $\phi$ and $\sigma_n$ vs.\ $\phi$, respectively, for several tunneling values [$J/h = \{156.7(1.3), 257(3), 402(3), 583(6), 1253(12)\}$]. Dots are experimental data and the lines are theory.
+		The results for different tunneling values are offset for clarity in (d). No offset is applied for (e).
+		The theory curves in (d,e) are based on a real-space GPE simulation, as described in the text.
+		Data for (c-e) are averaged over 10 experimental realizations, with error bars in (d,e) representing the standard error of the mean.
+		The data sets in (c-e) were taken over a $2\pi$ range of $\phi$ values, uniformly shifted in phase to correct for phase shifts acquired during the wavepacket initialization, and then mapped onto a larger and redundant $4\pi$ range.
+	}
+\end{figure*}
+
+This direct, site-resolved observation of macroscopic self trapping, in excellent agreement with the Gross-Pitaevskii mean-field simulations~\cite{SuppMats}, underscores the coherent interplay between tunneling dynamics and atomic interactions in our synthetic lattice. We note that, while there have been numerous explorations of self-trapping~\cite{Albiez-DirectJosephson,Zibold,Chen-DoubleWell,Fattori-TunableDoubleWell,Anker-SelfTrap,Reinhard-SelfTrap,OTT-ndc,Xhani_2020,Smaleeaax1568} and other Josephson phenomena~\cite{Anderson-Interference,Cataliotti-01,Levy-JosephsonBEC,LeblancJunction,Jorg-Relaxation,Roati-JosephsonBECBCS,2D-JosephsonArray,Steinberg-tunneling} in real-space potentials and in few-state spin mixtures~\cite{Chapman-Spinor,Zibold,Ferrari-Internal,Gerbier-Shapiro}, this is the first such observation in a many-site synthetic lattice. The incredible control over synthetic lattices promises the extension to future explorations of more complex dynamical phase transitions~\cite{Heyl_2019}, including those of non-ground states~\cite{Tian-excitedstate}.
+
+We now move to make use of one of the most immediate and unique tools of synthetic lattices, the direct control of tunneling phase~\cite{Hou-PRL}. Specifically, we utilize this phase control to initialize superposition states with atoms delocalized over two adjacent sites and with a relative phase $\phi$, as illustrated in Fig.~\pref{FIG:fig4}{a}. We then probe the phase-driven Josephson dynamics~\cite{JOSEPHSON1962251,Raghavan} in our many-site lattice by suddenly turning on the tunnelings and allowing the initialized wave packet to evolve for two tunneling times.
+As in the case of single-site initialization, there will be a propensity for the atoms to spread out across the lattice due to coherent tunneling. In addition, the relative phase $\phi$ can act to drive a net current of atoms in the lattice. In this case of phase-driven dynamics, we again expect interactions to play a nontrivial role.
+
+We can gain some insight into the expected phase-dependent dynamics of our initial two-site wave packets by considering their far-field response, and by considering their distribution after two tunneling times as an approximation thereof.
+We expect the average displacement $\bar{n}$ in the lattice after the quench time to be roughly proportional to the group velocity $v_g$ of the initialized wave packet. Correspondingly, the spread (standard deviation) of the distribution after the quench, $\sigma_n$, should correspond to the spread in group velocities of the initialized wave packet. In the absence of interactions, the group velocity and dispersion (spread in group velocity) of our initialized two-site wave packets would be determined by the simple cosine band structure of the synthetic tight-binding lattice. That is, the initialization procedure will populate a range of Bloch-like states with an average synthetic quasimomentum of $q_0 = \phi$.
+
+As shown in Fig.~\pref{FIG:fig4}{a}, the measured displacement and spread of the final distribution thus serve as probes of the synthetic band structure, at least in the non-interacting limit. Figure~\pref{FIG:fig4}{b} provides an intuitive picture for the expected phase-driven dynamics in the $U=0$ limit.
+The measured displacement $\bar{n}$, proportional to the group velocity $v_g$, should scale as the first derivative of the band structure, \textit{i.e.}, with $\partial E / \partial q \propto \sin (\phi)$. More generally (away from $U=0$), measurement of $\bar{n}$ vs.\ $\phi$ probes the current-phase relationship (CPR)~\cite{CPR-RMP} of this synthetic bosonic Josephson junction array.
+Similarly, in the $U=0$ and far-field limit, one expects the measured width $\sigma_n$ to scale as the magnitude of the second derivative of the band structure, \textit{i.e.}, with $|\partial^2 E / \partial q^2| \propto |\cos (\phi)|$.
+
+Figure~\pref{FIG:fig4}{c} depicts the evolved atomic distributions in the tunneling-dominated regime (left, $J/h = 1253(12)$~Hz) and interaction-dominated regime (right, $J/h = 156.7(1.3)$~Hz), with plots of the integrated density patterns vs.~$\phi$. In the large $J$ limit, where interactions play a minor role, we indeed see agreement with the above description: Atomic currents are driven in the positive (negative) direction when the sinusoidal group velocity is maximally positive (negative) for $\phi$ values of $\pi/2$ ($-\pi/2$). At $\phi$ values of $0$ and $\pi$, we find atoms flowing equally in the positive and negative direction, and the distribution has maximum width. In lowering $J$ and entering into the interaction-dominated regime (right panel), we find dramatically different atomic distributions, with an almost complete collapse and absence of spreading, similar to the earlier self-trapped condition. However, we find that a clear $\phi$-dependence of the displacement survives, hinting at the formation of a partially mobile soliton.
+
+A more quantitative analysis of the phase-driven dynamics is found in Fig.~\pref{FIG:fig4}{d,\,e}, with the $\phi$-dependence of $\bar{n}$ and $\sigma_n$
+shown for several $J$ values.
+Even for the largest tunneling
+($J/h = 1253(12)$~Hz), we observe a clear deviation from the $U=0$ expectation.
+The measured CPR ($\bar{n}$ vs.\ $\phi$) deviates from the simple sine dependence, instead showing a skewed form that is in good agreement with the numerical simulation curves, which are based upon real-space GPE simulations (solid line)~\cite{SuppMats}.
+Similarly, while in the non-interacting limit
+$\sigma_n$ is $\pi$-periodic with $\phi$ due to the insensitivity to the sign of the dispersion, we see that the distribution width is larger at the band edge ($\phi = \pm\pi$) than at the band center ($\phi = 0$).
+
+While the density and scattering length of our atomic gas are fixed, we can increase the ratio $U/J$,
+to explore how the phase-driven dynamics are impacted as interactions play a more dominant role, by simply lowering
+the tunneling $J$ (maintaining an evolution time of $2\hbar/J$).
+As $J$ is decreased ($U/J$ increased), we observe that the measured current-phase response starts to become further skewed and nonsinusoidal.
+
+For a general tunnel junction, a nonsinusoidal CPR can arise for a host of reasons~\cite{CPR-RMP}.
+In real materials~\cite{CPR-RMP,Hart-Interactions,Klapw-PiJunction,Kouw-PiJunction,PiJunction-nanotube} and in real-space atomtronic junctions~\cite{Ramanthan-WeakLink,Campbell-Hysteresis,EckelCPR,Ryu-SQUID,Chien2015,Neely-Atomtronic,Ryu2020}, such a skewed CPR can arise even in the absence of interactions between the current carriers, purely from the details of the junction.
+In our synthetic junction array,
+however, the ``junctions'' are featureless, simply relating to laser-driven state-to-state transitions.
+Still, even in this ideal synthetic junction array, it is predicted that nonlinear interactions alone can give rise to a skewed, nonsinusoidal CPR, as seen from the theory comparisons for increasing $U/J$~\cite{SuppMats}.
+In addition to becoming skewed, the overall amplitude of the CPR becomes suppressed as $U/J$ increases. This muted response
+signals that the atoms of the fluid become effectively ``heavier'' as the collective interactions are increased relative to the tunneling.
+This can be interpreted in terms of a collapse of the effective nonlinear band structure
+as the atoms' effective mass increases and they behave like a collective soliton.
+
+The dependence of the distribution widths $\sigma_n$ on $J$ can further shed light on how the atomic mobility is impacted by the increase in $U/J$.
+We observe that the overall ($\phi$-averaged) values of the $\sigma_n$ slowly decrease for small $U/J$ values (shown for the cases of $J/h = 402(3)$~Hz and 1253(12)~Hz). Then, for larger $U/J$ values, there is a sudden collapse of the distribution widths, similar to that seen in Fig.~\pref{FIG:fig2}{e}.
+The dependence of $\sigma_n$ on $\phi$ reveals additional features. The initial asymmetry in the $\sigma_n$ values at $\phi = 0$ and $\pm\pi$ becomes more pronounced as the tunneling is decreased. Specifically, we find that the sudden reduction in $\sigma_n$ with decreasing $J$ (increasing $U/J$) first occurs for the $\phi=0$ peak feature, and then, at lower $J$ and larger $U/J$, for the broader $\phi=\pm\pi$ peaks.
+The GPE simulations show a similar response, with the central $\sigma_n$ peak getting narrower and smaller before the decrease at $\phi = \pm \pi$. This signals a $\phi$-dependent collapse of transport, with the atoms first becoming self-trapped for equal-phase superpositions ($\phi=0$) and then, at larger $U/J$, for the out-of-phase state ($\phi=\pi$). This behavior in our many-site array is reminiscent of the frequency response seen in Josephson double-wells, where in-phase superposition modes are softened by the introduction of nonlinear interactions, while the out-of-phase plasma mode acquires a stiffened response~\cite{Raghavan,Fattori-TunableDoubleWell}.
+
+We note that the numerical simulation curves in Fig.~\pref{FIG:fig4}{d,\,e} are based on real-space GPE calculations~\cite{SuppMats}, which naturally incorporate the influence of the real-space trapping potential and the resulting inhomogeneous atomic density. This real-space treatment was necessitated by the use of a stiffer trapping potential, characterized by a trapping frequency of 60~Hz along the spatial axis of the synthetic lattice (as compared to $\sim$10$-$15~Hz for the data of Fig.~\ref{FIG:fig2}). This stiffer trap additionally led to a larger characteristic mean interaction strength, with a value of $\bar{U}/h = 1568$~Hz used in the simulation curves of Fig.~\pref{FIG:fig4}{d,\,e}. Importantly, the key observations of a non-sinusoidal CPR and a $\phi$-dependent collapse of the distribution width are both found in simulations that assume a homogeneous $U$ term~\cite{SuppMats}. However, the real-space GPE analysis is key to capturing several features, or lack thereof, in the experimental data. Specifically, the effective spatial averaging over a range of $U/J$ leads to an overall dulling of the $\phi$-dependent collapse of $\sigma_n$. Similarly, GPE simulations with a uniform $U$ predict an intriguing reversal of the atomic current (sign reversal of the CPR) over a range of $U/J$ values close to the onset of self-trapping, however this effect is not present in the real-space simulations. Finally, the slow drift of the data minima away from $\phi = 0$ in Fig.~\pref{FIG:fig4}{e}, seen for increasing $U/J$, stems from the real-space trapping potential and our exploring dynamics out to times that are not small compared to the trap period.
+
+To conclude, we have performed the first measurements of significant interaction effects in a many-site synthetic lattice.
+These observations pave the way for the exploration of exotic nonlinear phenomena by straightforward extensions to more sophisticated synthetic lattices with gauge fields, disorder, and non-Hermiticity.
+
+In addition to nonlinear phenomena captured by a classical mean-field description, atomic collisions~\cite{Ozeri-RMP} can also give rise to quantum correlations in synthetic momentum state lattices, which can be explored through number-resolved imaging~\cite{Luo620,Gerb}.
+Furthermore, the extension of synthetic dimensions studies to spin systems~\cite{Sundar-Synth-Mol,Sundar2,RydSynth} opens up a promising path to studying strongly correlated matter in synthetic dimensions.
+
+\section{Acknowledgements}
+This material is based upon work supported by the Air Force Office of Scientific Research under Grant No.~FA9550-18-1-0082. K.R.A.H and B.S. acknowledge funding support from NSF Grant No.~PHY-1848304 and Welch Grant No.~C-1872. J.H., X.W.L. and C.Z. acknowledge funding support from AFOSR (FA9550-20-1-0220), NSF (PHY-1806227), and ARO (W911NF-17-1-0128).
+
+\bibliographystyle{apsrev4-1}
+\begin{thebibliography}{84}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{http://dx.doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Ozawa}\ and\ \citenamefont
+  {Price}(2019)}]{Review-OzawaPrice}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Ozawa}}\ and\ \bibinfo {author} {\bibfnamefont {H.~M.}\ \bibnamefont
+  {Price}},\ }\href {\doibase 10.1038/s42254-019-0045-3} {\bibfield  {journal}
+  {\bibinfo  {journal} {Nat. Rev. Phys.}\ }\textbf {\bibinfo {volume} {1}},\
+  \bibinfo {pages} {349} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Boada}\ \emph {et~al.}(2012)\citenamefont {Boada},
+  \citenamefont {Celi}, \citenamefont {Latorre},\ and\ \citenamefont
+  {Lewenstein}}]{Boada-SynthDim}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.}~\bibnamefont
+  {Boada}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Celi}},
+  \bibinfo {author} {\bibfnamefont {J.~I.}\ \bibnamefont {Latorre}}, \ and\
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Lewenstein}},\ }\href
+  {\doibase 10.1103/PhysRevLett.108.133001} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {108}},\ \bibinfo
+  {pages} {133001} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Celi}\ \emph {et~al.}(2014)\citenamefont {Celi},
+  \citenamefont {Massignan}, \citenamefont {Ruseckas}, \citenamefont {Goldman},
+  \citenamefont {Spielman}, \citenamefont {Juzeli\ifmmode~\bar{u}\else
+  \={u}\fi{}nas},\ and\ \citenamefont {Lewenstein}}]{Celi-SynthSynth}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Celi}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Massignan}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Ruseckas}}, \bibinfo
+  {author} {\bibfnamefont {N.}~\bibnamefont {Goldman}}, \bibinfo {author}
+  {\bibfnamefont {I.~B.}\ \bibnamefont {Spielman}}, \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Juzeli\ifmmode~\bar{u}\else
+  \={u}\fi{}nas}}, \ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Lewenstein}},\ }\href {\doibase 10.1103/PhysRevLett.112.043001} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo
+  {volume} {112}},\ \bibinfo {pages} {043001} (\bibinfo {year}
+  {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Wall}\ \emph {et~al.}(2016)\citenamefont {Wall},
+  \citenamefont {Koller}, \citenamefont {Li}, \citenamefont {Zhang},
+  \citenamefont {Cooper}, \citenamefont {Ye},\ and\ \citenamefont
+  {Rey}}]{Wall-Synthetic-Clock}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~L.}\ \bibnamefont
+  {Wall}}, \bibinfo {author} {\bibfnamefont {A.~P.}\ \bibnamefont {Koller}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Li}}, \bibinfo {author}
+  {\bibfnamefont {X.}~\bibnamefont {Zhang}}, \bibinfo {author} {\bibfnamefont
+  {N.~R.}\ \bibnamefont {Cooper}}, \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Ye}}, \ and\ \bibinfo {author} {\bibfnamefont {A.~M.}\
+  \bibnamefont {Rey}},\ }\href {\doibase 10.1103/PhysRevLett.116.035301}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {116}},\ \bibinfo {pages} {035301} (\bibinfo {year}
+  {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Sundar}\ \emph {et~al.}(2018)\citenamefont {Sundar},
+  \citenamefont {Gadway},\ and\ \citenamefont {Hazzard}}]{Sundar-Synth-Mol}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Sundar}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}}, \
+  and\ \bibinfo {author} {\bibfnamefont {K.~R.~A.}\ \bibnamefont {Hazzard}},\
+  }\href {\doibase 10.1038/s41598-018-21699-x} {\bibfield  {journal} {\bibinfo
+  {journal} {Sci. Rep.}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo {pages}
+  {3422} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Sundar}\ \emph {et~al.}(2019)\citenamefont {Sundar},
+  \citenamefont {Thibodeau}, \citenamefont {Wang}, \citenamefont {Gadway},\
+  and\ \citenamefont {Hazzard}}]{Sundar2}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Sundar}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Thibodeau}},
+  \bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont {Wang}}, \bibinfo {author}
+  {\bibfnamefont {B.}~\bibnamefont {Gadway}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {K.~R.~A.}\ \bibnamefont {Hazzard}},\ }\href {\doibase
+  10.1103/PhysRevA.99.013624} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. A}\ }\textbf {\bibinfo {volume} {99}},\ \bibinfo {pages} {013624}
+  (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gadway}(2015)}]{Gadway-KSPACE}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Gadway}},\ }\href {\doibase 10.1103/PhysRevA.92.043606} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume}
+  {92}},\ \bibinfo {pages} {043606} (\bibinfo {year} {2015})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Price}\ \emph {et~al.}(2017)\citenamefont {Price},
+  \citenamefont {Ozawa},\ and\ \citenamefont {Goldman}}]{Price-Shaking}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.~M.}\ \bibnamefont
+  {Price}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Ozawa}}, \ and\
+  \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Goldman}},\ }\href
+  {\doibase 10.1103/PhysRevA.95.023607} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {95}},\ \bibinfo
+  {pages} {023607} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Heimsoth}\ \emph {et~al.}(2013)\citenamefont
+  {Heimsoth}, \citenamefont {Hochstuhl}, \citenamefont {Creffield},
+  \citenamefont {Carr},\ and\ \citenamefont {Sols}}]{Lincoln1}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Heimsoth}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Hochstuhl}},
+  \bibinfo {author} {\bibfnamefont {C.~E.}\ \bibnamefont {Creffield}}, \bibinfo
+  {author} {\bibfnamefont {L.~D.}\ \bibnamefont {Carr}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {F.}~\bibnamefont {Sols}},\ }\href {\doibase
+  10.1088/1367-2630/15/10/103006} {\bibfield  {journal} {\bibinfo  {journal}
+  {New Journal of Physics}\ }\textbf {\bibinfo {volume} {15}},\ \bibinfo
+  {pages} {103006} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Mancini}\ \emph {et~al.}(2015)\citenamefont
+  {Mancini}, \citenamefont {Pagano}, \citenamefont {Cappellini}, \citenamefont
+  {Livi}, \citenamefont {Rider}, \citenamefont {Catani}, \citenamefont {Sias},
+  \citenamefont {Zoller}, \citenamefont {Inguscio}, \citenamefont {Dalmonte},\
+  and\ \citenamefont {Fallani}}]{Mancini2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Mancini}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Pagano}},
+  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Cappellini}}, \bibinfo
+  {author} {\bibfnamefont {L.}~\bibnamefont {Livi}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {Rider}}, \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Catani}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Sias}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Zoller}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Inguscio}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Dalmonte}}, \ and\
+  \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Fallani}},\ }\href
+  {\doibase 10.1126/science.aaa8736} {\bibfield  {journal} {\bibinfo  {journal}
+  {Science}\ }\textbf {\bibinfo {volume} {349}},\ \bibinfo {pages} {1510}
+  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Stuhl}\ \emph {et~al.}(2015)\citenamefont {Stuhl},
+  \citenamefont {Lu}, \citenamefont {Aycock}, \citenamefont {Genkina},\ and\
+  \citenamefont {Spielman}}]{Stuhl2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~K.}\ \bibnamefont
+  {Stuhl}}, \bibinfo {author} {\bibfnamefont {H.-I.}\ \bibnamefont {Lu}},
+  \bibinfo {author} {\bibfnamefont {L.~M.}\ \bibnamefont {Aycock}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Genkina}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {I.~B.}\ \bibnamefont {Spielman}},\ }\href {\doibase
+  10.1126/science.aaa8515} {\bibfield  {journal} {\bibinfo  {journal}
+  {Science}\ }\textbf {\bibinfo {volume} {349}},\ \bibinfo {pages} {1514}
+  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Livi}\ \emph {et~al.}(2016)\citenamefont {Livi},
+  \citenamefont {Cappellini}, \citenamefont {Diem}, \citenamefont {Franchi},
+  \citenamefont {Clivati}, \citenamefont {Frittelli}, \citenamefont {Levi},
+  \citenamefont {Calonico}, \citenamefont {Catani}, \citenamefont {Inguscio},\
+  and\ \citenamefont {Fallani}}]{Livi2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.~F.}\ \bibnamefont
+  {Livi}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Cappellini}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Diem}}, \bibinfo {author}
+  {\bibfnamefont {L.}~\bibnamefont {Franchi}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Clivati}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Frittelli}}, \bibinfo {author} {\bibfnamefont
+  {F.}~\bibnamefont {Levi}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Calonico}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Catani}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Inguscio}}, \ and\
+  \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Fallani}},\ }\href
+  {\doibase 10.1103/PhysRevLett.117.220401} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {117}},\ \bibinfo
+  {pages} {220401} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kolkowitz}\ \emph {et~al.}(2017)\citenamefont
+  {Kolkowitz}, \citenamefont {Bromley}, \citenamefont {Bothwell}, \citenamefont
+  {Wall}, \citenamefont {Marti}, \citenamefont {Koller}, \citenamefont {Zhang},
+  \citenamefont {Rey},\ and\ \citenamefont {Ye}}]{Kolkowitz2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Kolkowitz}}, \bibinfo {author} {\bibfnamefont {S.~L.}\ \bibnamefont
+  {Bromley}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Bothwell}},
+  \bibinfo {author} {\bibfnamefont {M.~L.}\ \bibnamefont {Wall}}, \bibinfo
+  {author} {\bibfnamefont {G.~E.}\ \bibnamefont {Marti}}, \bibinfo {author}
+  {\bibfnamefont {A.~P.}\ \bibnamefont {Koller}}, \bibinfo {author}
+  {\bibfnamefont {X.}~\bibnamefont {Zhang}}, \bibinfo {author} {\bibfnamefont
+  {A.~M.}\ \bibnamefont {Rey}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Ye}},\ }\href {http://dx.doi.org/10.1038/nature20811}
+  {\bibfield  {journal} {\bibinfo  {journal} {Nature}\ }\textbf {\bibinfo
+  {volume} {542}},\ \bibinfo {pages} {66} (\bibinfo {year} {2017})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Kang}\ \emph {et~al.}(2018)\citenamefont {Kang},
+  \citenamefont {Han},\ and\ \citenamefont {Shin}}]{Shin-Tubes1}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~H.}\ \bibnamefont
+  {Kang}}, \bibinfo {author} {\bibfnamefont {J.~H.}\ \bibnamefont {Han}}, \
+  and\ \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Shin}},\ }\href
+  {\doibase 10.1103/PhysRevLett.121.150403} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {121}},\ \bibinfo
+  {pages} {150403} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Han}\ \emph {et~al.}(2019)\citenamefont {Han},
+  \citenamefont {Kang},\ and\ \citenamefont {Shin}}]{Shin-Tube2}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~H.}\ \bibnamefont
+  {Han}}, \bibinfo {author} {\bibfnamefont {J.~H.}\ \bibnamefont {Kang}}, \
+  and\ \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Shin}},\ }\href
+  {\doibase 10.1103/PhysRevLett.122.065303} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {122}},\ \bibinfo
+  {pages} {065303} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Li}\ \emph {et~al.}(2018)\citenamefont {Li},
+  \citenamefont {Yan}, \citenamefont {Choudhury}, \citenamefont {Blasing},
+  \citenamefont {Zhou},\ and\ \citenamefont {Chen}}]{Chen-Tubes1}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.-H.}\ \bibnamefont
+  {Li}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yan}}, \bibinfo
+  {author} {\bibfnamefont {S.}~\bibnamefont {Choudhury}}, \bibinfo {author}
+  {\bibfnamefont {D.~B.}\ \bibnamefont {Blasing}}, \bibinfo {author}
+  {\bibfnamefont {Q.}~\bibnamefont {Zhou}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {Y.~P.}\ \bibnamefont {Chen}},\ }\href@noop {} {} (\bibinfo
+  {year} {2018}),\ \Eprint {http://arxiv.org/abs/1809.02122} {arXiv:1809.02122}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Meier}\ \emph
+  {et~al.}(2016{\natexlab{a}})\citenamefont {Meier}, \citenamefont {An},\ and\
+  \citenamefont {Gadway}}]{Meier-AtomOptics}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont
+  {Meier}}, \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {An}}, \
+  and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {\doibase 10.1103/PhysRevA.93.051602} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {93}},\ \bibinfo
+  {pages} {051602} (\bibinfo {year} {2016}{\natexlab{a}})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Meier}\ \emph
+  {et~al.}(2016{\natexlab{b}})\citenamefont {Meier}, \citenamefont {An},\ and\
+  \citenamefont {Gadway}}]{Meier-SSH}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont
+  {Meier}}, \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {An}}, \
+  and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {http://dx.doi.org/10.1038/ncomms13986} {\bibfield  {journal} {\bibinfo
+  {journal} {Nat. Commun.}\ }\textbf {\bibinfo {volume} {7}},\ \bibinfo {pages}
+  {13986} (\bibinfo {year} {2016}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Meier}\ \emph {et~al.}(2018)\citenamefont {Meier},
+  \citenamefont {An}, \citenamefont {Dauphin}, \citenamefont {Maffei},
+  \citenamefont {Massignan}, \citenamefont {Hughes},\ and\ \citenamefont
+  {Gadway}}]{Meier-TAI}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont
+  {Meier}}, \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {An}},
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Dauphin}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Maffei}}, \bibinfo {author}
+  {\bibfnamefont {P.}~\bibnamefont {Massignan}}, \bibinfo {author}
+  {\bibfnamefont {T.~L.}\ \bibnamefont {Hughes}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href {\doibase
+  10.1126/science.aat3406} {\bibfield  {journal} {\bibinfo  {journal}
+  {Science}\ }\textbf {\bibinfo {volume} {362}},\ \bibinfo {pages} {929}
+  (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {An}\ \emph {et~al.}(2017{\natexlab{a}})\citenamefont
+  {An}, \citenamefont {Meier},\ and\ \citenamefont {Gadway}}]{An-FluxLadder}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont
+  {An}}, \bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont {Meier}}, \
+  and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {\doibase 10.1126/sciadv.1602685} {\bibfield  {journal} {\bibinfo  {journal}
+  {Sci. Adv.}\ }\textbf {\bibinfo {volume} {3}},\ \bibinfo {pages} {e1602685}
+  (\bibinfo {year} {2017}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {An}\ \emph {et~al.}(2017{\natexlab{b}})\citenamefont
+  {An}, \citenamefont {Meier},\ and\ \citenamefont {Gadway}}]{An-Disorder}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont
+  {An}}, \bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont {Meier}}, \
+  and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {\doibase 10.1038/s41467-017-00387-w} {\bibfield  {journal} {\bibinfo
+  {journal} {Nat. Commun.}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo {pages}
+  {325} (\bibinfo {year} {2017}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {An}\ \emph {et~al.}(2018{\natexlab{a}})\citenamefont
+  {An}, \citenamefont {Meier},\ and\ \citenamefont {Gadway}}]{An-MobEdge}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont
+  {An}}, \bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont {Meier}}, \
+  and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {\doibase 10.1103/PhysRevX.8.031045} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. X}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo {pages}
+  {031045} (\bibinfo {year} {2018}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {An}\ \emph {et~al.}(2021)\citenamefont {An},
+  \citenamefont {Padavi\ifmmode~\acute{c}\else \'{c}\fi{}}, \citenamefont
+  {Meier}, \citenamefont {Hegde}, \citenamefont {Ganeshan}, \citenamefont
+  {Pixley}, \citenamefont {Vishveshwara},\ and\ \citenamefont
+  {Gadway}}]{An-GAA}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont
+  {An}}, \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Padavi\ifmmode~\acute{c}\else \'{c}\fi{}}}, \bibinfo {author} {\bibfnamefont
+  {E.~J.}\ \bibnamefont {Meier}}, \bibinfo {author} {\bibfnamefont
+  {S.}~\bibnamefont {Hegde}}, \bibinfo {author} {\bibfnamefont
+  {S.}~\bibnamefont {Ganeshan}}, \bibinfo {author} {\bibfnamefont {J.~H.}\
+  \bibnamefont {Pixley}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Vishveshwara}}, \ and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Gadway}},\ }\href {\doibase 10.1103/PhysRevLett.126.040603} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo
+  {volume} {126}},\ \bibinfo {pages} {040603} (\bibinfo {year}
+  {2021})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lapp}\ \emph {et~al.}(2019)\citenamefont {Lapp},
+  \citenamefont {Ang'ong'a}, \citenamefont {An},\ and\ \citenamefont
+  {Gadway}}]{Lapp_2019}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Lapp}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Ang'ong'a}},
+  \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {An}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href {\doibase
+  10.1088/1367-2630/ab1147} {\bibfield  {journal} {\bibinfo  {journal} {New
+  Journal of Physics}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
+  {045006} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Xiao}\ \emph
+  {et~al.}(2020{\natexlab{a}})\citenamefont {Xiao}, \citenamefont {Xie},
+  \citenamefont {Gou}, \citenamefont {Chen}, \citenamefont {Deng},
+  \citenamefont {Yi},\ and\ \citenamefont {Yan}}]{Xiao2020}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Xiao}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Xie}}, \bibinfo
+  {author} {\bibfnamefont {W.}~\bibnamefont {Gou}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont
+  {T.-S.}\ \bibnamefont {Deng}}, \bibinfo {author} {\bibfnamefont
+  {W.}~\bibnamefont {Yi}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {B.}~\bibnamefont {Yan}},\ }\href {\doibase 10.1140/epjd/e2020-10019-6}
+  {\bibfield  {journal} {\bibinfo  {journal} {The European Physical Journal D}\
+  }\textbf {\bibinfo {volume} {74}},\ \bibinfo {pages} {152} (\bibinfo {year}
+  {2020}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gou}\ \emph {et~al.}(2020)\citenamefont {Gou},
+  \citenamefont {Chen}, \citenamefont {Xie}, \citenamefont {Xiao},
+  \citenamefont {Deng}, \citenamefont {Gadway}, \citenamefont {Yi},\ and\
+  \citenamefont {Yan}}]{Gou-NonRecip}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
+  {Gou}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Chen}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Xie}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Xiao}}, \bibinfo {author} {\bibfnamefont
+  {T.-S.}\ \bibnamefont {Deng}}, \bibinfo {author} {\bibfnamefont
+  {B.}~\bibnamefont {Gadway}}, \bibinfo {author} {\bibfnamefont
+  {W.}~\bibnamefont {Yi}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {B.}~\bibnamefont {Yan}},\ }\href {\doibase 10.1103/PhysRevLett.124.070402}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {124}},\ \bibinfo {pages} {070402} (\bibinfo {year}
+  {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Xie}\ \emph {et~al.}(2020)\citenamefont {Xie},
+  \citenamefont {Deng}, \citenamefont {Xiao}, \citenamefont {Gou},
+  \citenamefont {Chen}, \citenamefont {Yi},\ and\ \citenamefont
+  {Yan}}]{Xie-TopQuantWalks}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Xie}}, \bibinfo {author} {\bibfnamefont {T.-S.}\ \bibnamefont {Deng}},
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Xiao}}, \bibinfo {author}
+  {\bibfnamefont {W.}~\bibnamefont {Gou}}, \bibinfo {author} {\bibfnamefont
+  {T.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
+  {Yi}}, \ and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Yan}},\
+  }\href {\doibase 10.1103/PhysRevLett.124.050502} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {124}},\
+  \bibinfo {pages} {050502} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Genkina}\ \emph {et~al.}(2019)\citenamefont
+  {Genkina}, \citenamefont {Aycock}, \citenamefont {Lu}, \citenamefont {Lu},
+  \citenamefont {Pineiro},\ and\ \citenamefont {Spielman}}]{Genkina_2019}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Genkina}}, \bibinfo {author} {\bibfnamefont {L.~M.}\ \bibnamefont {Aycock}},
+  \bibinfo {author} {\bibfnamefont {H.-I.}\ \bibnamefont {Lu}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Lu}}, \bibinfo {author}
+  {\bibfnamefont {A.~M.}\ \bibnamefont {Pineiro}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {I.~B.}\ \bibnamefont {Spielman}},\ }\href {\doibase
+  10.1088/1367-2630/ab165b} {\bibfield  {journal} {\bibinfo  {journal} {New
+  Journal of Physics}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
+  {053021} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Sugawa}\ \emph {et~al.}(2018)\citenamefont {Sugawa},
+  \citenamefont {Salces-Carcoba}, \citenamefont {Perry}, \citenamefont {Yue},\
+  and\ \citenamefont {Spielman}}]{Sugawa1429}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Sugawa}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Salces-Carcoba}}, \bibinfo {author} {\bibfnamefont {A.~R.}\ \bibnamefont
+  {Perry}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yue}}, \ and\
+  \bibinfo {author} {\bibfnamefont {I.~B.}\ \bibnamefont {Spielman}},\ }\href
+  {\doibase 10.1126/science.aam9031} {\bibfield  {journal} {\bibinfo  {journal}
+  {Science}\ }\textbf {\bibinfo {volume} {360}},\ \bibinfo {pages} {1429}
+  (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chen}\ \emph {et~al.}(2020)\citenamefont {Chen},
+  \citenamefont {Gou}, \citenamefont {Xie}, \citenamefont {Xiao}, \citenamefont
+  {Yi}, \citenamefont {Jing},\ and\ \citenamefont {Yan}}]{chen2020quantum}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Chen}}, \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Gou}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Xie}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Xiao}}, \bibinfo {author} {\bibfnamefont
+  {W.}~\bibnamefont {Yi}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Jing}}, \ and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Yan}},\
+  }\href@noop {} {} (\bibinfo {year} {2020}),\ \Eprint
+  {http://arxiv.org/abs/2009.01419} {arXiv:2009.01419} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Xiao}\ \emph
+  {et~al.}(2020{\natexlab{b}})\citenamefont {Xiao}, \citenamefont {Xie},
+  \citenamefont {Dong}, \citenamefont {Chen}, \citenamefont {Yi},\ and\
+  \citenamefont {Yan}}]{Xiao-Top-Critical}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Xiao}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Xie}}, \bibinfo
+  {author} {\bibfnamefont {Z.}~\bibnamefont {Dong}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont
+  {W.}~\bibnamefont {Yi}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {B.}~\bibnamefont {Yan}},\ }\href@noop {} {} (\bibinfo {year}
+  {2020}{\natexlab{b}}),\ \Eprint {http://arxiv.org/abs/2011.03666}
+  {arXiv:2011.03666} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chalopin}\ \emph {et~al.}(2020)\citenamefont
+  {Chalopin}, \citenamefont {Satoor}, \citenamefont {Evrard}, \citenamefont
+  {Makhalov}, \citenamefont {Dalibard}, \citenamefont {Lopes},\ and\
+  \citenamefont {Nascimbene}}]{Chalopin2020}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Chalopin}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Satoor}},
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Evrard}}, \bibinfo
+  {author} {\bibfnamefont {V.}~\bibnamefont {Makhalov}}, \bibinfo {author}
+  {\bibfnamefont {J.}~\bibnamefont {Dalibard}}, \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {Lopes}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Nascimbene}},\ }\href {\doibase
+  10.1038/s41567-020-0942-5} {\bibfield  {journal} {\bibinfo  {journal} {Nature
+  Physics}\ }\textbf {\bibinfo {volume} {16}},\ \bibinfo {pages} {1017}
+  (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kanungo}\ \emph {et~al.}(2021)\citenamefont
+  {Kanungo}, \citenamefont {Whalen}, \citenamefont {Lu}, \citenamefont {Yuan},
+  \citenamefont {Dasgupta}, \citenamefont {Dunning}, \citenamefont {Hazzard},\
+  and\ \citenamefont {Killian}}]{RydSynth}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~K.}\ \bibnamefont
+  {Kanungo}}, \bibinfo {author} {\bibfnamefont {J.~D.}\ \bibnamefont {Whalen}},
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Lu}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {Yuan}}, \bibinfo {author} {\bibfnamefont
+  {S.}~\bibnamefont {Dasgupta}}, \bibinfo {author} {\bibfnamefont {F.~B.}\
+  \bibnamefont {Dunning}}, \bibinfo {author} {\bibfnamefont {K.~R.~A.}\
+  \bibnamefont {Hazzard}}, \ and\ \bibinfo {author} {\bibfnamefont {T.~C.}\
+  \bibnamefont {Killian}},\ }\href@noop {} {} (\bibinfo {year} {2021}),\
+  \Eprint {http://arxiv.org/abs/2101.02871} {arXiv:2101.02871} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Blackmore}\ \emph {et~al.}(2020)\citenamefont
+  {Blackmore}, \citenamefont {Gregory}, \citenamefont {Bromley},\ and\
+  \citenamefont {Cornish}}]{Cornish-synth}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~A.}\ \bibnamefont
+  {Blackmore}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont
+  {Gregory}}, \bibinfo {author} {\bibfnamefont {S.~L.}\ \bibnamefont
+  {Bromley}}, \ and\ \bibinfo {author} {\bibfnamefont {S.~L.}\ \bibnamefont
+  {Cornish}},\ }\href {\doibase 10.1039/D0CP04651E} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Chem. Chem. Phys.}\ }\textbf {\bibinfo {volume}
+  {22}},\ \bibinfo {pages} {27529} (\bibinfo {year} {2020})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {An}\ \emph {et~al.}(2018{\natexlab{b}})\citenamefont
+  {An}, \citenamefont {Meier}, \citenamefont {Ang'ong'a},\ and\ \citenamefont
+  {Gadway}}]{An-Inter}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont
+  {An}}, \bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont {Meier}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Ang'ong'a}}, \ and\
+  \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Gadway}},\ }\href
+  {\doibase 10.1103/PhysRevLett.120.040407} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {120}},\ \bibinfo
+  {pages} {040407} (\bibinfo {year} {2018}{\natexlab{b}})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Hou}\ \emph {et~al.}(2018)\citenamefont {Hou},
+  \citenamefont {Luo}, \citenamefont {Sun}, \citenamefont {Bersano},
+  \citenamefont {Gokhroo}, \citenamefont {Mossman}, \citenamefont {Engels},\
+  and\ \citenamefont {Zhang}}]{Hou-PRL}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Hou}}, \bibinfo {author} {\bibfnamefont {X.-W.}\ \bibnamefont {Luo}},
+  \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Sun}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Bersano}}, \bibinfo {author} {\bibfnamefont
+  {V.}~\bibnamefont {Gokhroo}}, \bibinfo {author} {\bibfnamefont
+  {S.}~\bibnamefont {Mossman}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Engels}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Zhang}},\ }\href {\doibase 10.1103/PhysRevLett.120.120401}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {120}},\ \bibinfo {pages} {120401} (\bibinfo {year}
+  {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Barbarino}\ \emph {et~al.}(2016)\citenamefont
+  {Barbarino}, \citenamefont {Taddia}, \citenamefont {Rossini}, \citenamefont
+  {Mazza},\ and\ \citenamefont {Fazio}}]{Barbarino_2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Barbarino}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Taddia}},
+  \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Rossini}}, \bibinfo
+  {author} {\bibfnamefont {L.}~\bibnamefont {Mazza}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {Fazio}},\ }\href {\doibase
+  10.1088/1367-2630/18/3/035010} {\bibfield  {journal} {\bibinfo  {journal}
+  {New Journal of Physics}\ }\textbf {\bibinfo {volume} {18}},\ \bibinfo
+  {pages} {035010} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Guan}\ \emph
+  {et~al.}(2020{\natexlab{a}})\citenamefont {Guan}, \citenamefont {Bersano},
+  \citenamefont {Mossman}, \citenamefont {Engels},\ and\ \citenamefont
+  {Blume}}]{Guan-MSL}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Q.}~\bibnamefont
+  {Guan}}, \bibinfo {author} {\bibfnamefont {T.~M.}\ \bibnamefont {Bersano}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Mossman}}, \bibinfo
+  {author} {\bibfnamefont {P.}~\bibnamefont {Engels}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {D.}~\bibnamefont {Blume}},\ }\href {\doibase
+  10.1103/PhysRevA.101.063620} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {101}},\ \bibinfo {pages}
+  {063620} (\bibinfo {year} {2020}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Guan}\ \emph
+  {et~al.}(2020{\natexlab{b}})\citenamefont {Guan}, \citenamefont {Ome},
+  \citenamefont {Bersano}, \citenamefont {Mossman}, \citenamefont {Engels},\
+  and\ \citenamefont {Blume}}]{GuanSwallow}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Q.}~\bibnamefont
+  {Guan}}, \bibinfo {author} {\bibfnamefont {M.~K.~H.}\ \bibnamefont {Ome}},
+  \bibinfo {author} {\bibfnamefont {T.~M.}\ \bibnamefont {Bersano}}, \bibinfo
+  {author} {\bibfnamefont {S.}~\bibnamefont {Mossman}}, \bibinfo {author}
+  {\bibfnamefont {P.}~\bibnamefont {Engels}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {D.}~\bibnamefont {Blume}},\ }\href {\doibase
+  10.1103/PhysRevLett.125.213401} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {125}},\ \bibinfo {pages}
+  {213401} (\bibinfo {year} {2020}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bromley}\ \emph {et~al.}(2018)\citenamefont
+  {Bromley}, \citenamefont {Kolkowitz}, \citenamefont {Bothwell}, \citenamefont
+  {Kedar}, \citenamefont {Safavi-Naini}, \citenamefont {Wall}, \citenamefont
+  {Salomon}, \citenamefont {Rey},\ and\ \citenamefont {Ye}}]{Bromley-Inter}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~L.}\ \bibnamefont
+  {Bromley}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Kolkowitz}},
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Bothwell}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Kedar}}, \bibinfo {author}
+  {\bibfnamefont {A.}~\bibnamefont {Safavi-Naini}}, \bibinfo {author}
+  {\bibfnamefont {M.~L.}\ \bibnamefont {Wall}}, \bibinfo {author}
+  {\bibfnamefont {C.}~\bibnamefont {Salomon}}, \bibinfo {author} {\bibfnamefont
+  {A.~M.}\ \bibnamefont {Rey}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Ye}},\ }\href {\doibase 10.1038/s41567-017-0029-0}
+  {\bibfield  {journal} {\bibinfo  {journal} {Nat. Phys.}\ }\textbf {\bibinfo
+  {volume} {14}},\ \bibinfo {pages} {399} (\bibinfo {year} {2018})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Mueller}(2002)}]{Erich-swallowtails}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~J.}\ \bibnamefont
+  {Mueller}},\ }\href {\doibase 10.1103/PhysRevA.66.063603} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume}
+  {66}},\ \bibinfo {pages} {063603} (\bibinfo {year} {2002})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Koller}\ \emph {et~al.}(2016)\citenamefont {Koller},
+  \citenamefont {Goldschmidt}, \citenamefont {Brown}, \citenamefont {Wyllie},
+  \citenamefont {Wilson},\ and\ \citenamefont {Porto}}]{Koller-swallowtails}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~B.}\ \bibnamefont
+  {Koller}}, \bibinfo {author} {\bibfnamefont {E.~A.}\ \bibnamefont
+  {Goldschmidt}}, \bibinfo {author} {\bibfnamefont {R.~C.}\ \bibnamefont
+  {Brown}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Wyllie}},
+  \bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont {Wilson}}, \ and\
+  \bibinfo {author} {\bibfnamefont {J.~V.}\ \bibnamefont {Porto}},\ }\href
+  {\doibase 10.1103/PhysRevA.94.063634} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {94}},\ \bibinfo
+  {pages} {063634} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ozeri}\ \emph {et~al.}(2005)\citenamefont {Ozeri},
+  \citenamefont {Katz}, \citenamefont {Steinhauer},\ and\ \citenamefont
+  {Davidson}}]{Ozeri-RMP}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Ozeri}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Katz}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Steinhauer}}, \ and\
+  \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Davidson}},\ }\href
+  {\doibase 10.1103/RevModPhys.77.187} {\bibfield  {journal} {\bibinfo
+  {journal} {Rev. Mod. Phys.}\ }\textbf {\bibinfo {volume} {77}},\ \bibinfo
+  {pages} {187} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
+\bibitem [{Sup()}]{SuppMats}%
+  \BibitemOpen
+  \href@noop {} {}\bibinfo {note} {See Supplementary Material for more
+  experimental details and explanations of the different simulation techniques
+  used in the paper.}\BibitemShut {Stop}%
+\bibitem [{\citenamefont {Raghavan}\ \emph {et~al.}(1999)\citenamefont
+  {Raghavan}, \citenamefont {Smerzi}, \citenamefont {Fantoni},\ and\
+  \citenamefont {Shenoy}}]{Raghavan}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Raghavan}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Smerzi}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Fantoni}}, \ and\
+  \bibinfo {author} {\bibfnamefont {S.~R.}\ \bibnamefont {Shenoy}},\ }\href
+  {\doibase 10.1103/PhysRevA.59.620} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {59}},\ \bibinfo {pages} {620}
+  (\bibinfo {year} {1999})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Juli\'a-D\'{\i}az}\ \emph {et~al.}(2010)\citenamefont
+  {Juli\'a-D\'{\i}az}, \citenamefont {Dagnino}, \citenamefont {Lewenstein},
+  \citenamefont {Martorell},\ and\ \citenamefont {Polls}}]{Maciej-self-trap}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Juli\'a-D\'{\i}az}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Dagnino}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Lewenstein}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Martorell}}, \ and\
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Polls}},\ }\href
+  {\doibase 10.1103/PhysRevA.81.023615} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {81}},\ \bibinfo
+  {pages} {023615} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Albiez}\ \emph {et~al.}(2005)\citenamefont {Albiez},
+  \citenamefont {Gati}, \citenamefont {F\"olling}, \citenamefont {Hunsmann},
+  \citenamefont {Cristiani},\ and\ \citenamefont
+  {Oberthaler}}]{Albiez-DirectJosephson}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Albiez}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Gati}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {F\"olling}}, \bibinfo
+  {author} {\bibfnamefont {S.}~\bibnamefont {Hunsmann}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {Cristiani}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {M.~K.}\ \bibnamefont {Oberthaler}},\ }\href {\doibase
+  10.1103/PhysRevLett.95.010402} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {95}},\ \bibinfo {pages}
+  {010402} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Zibold}\ \emph {et~al.}(2010)\citenamefont {Zibold},
+  \citenamefont {Nicklas}, \citenamefont {Gross},\ and\ \citenamefont
+  {Oberthaler}}]{Zibold}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Zibold}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Nicklas}},
+  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Gross}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {M.~K.}\ \bibnamefont {Oberthaler}},\ }\href
+  {\doibase 10.1103/PhysRevLett.105.204101} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {105}},\ \bibinfo
+  {pages} {204101} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chen}\ \emph {et~al.}(2010)\citenamefont {Chen},
+  \citenamefont {Huber}, \citenamefont {Trotzky}, \citenamefont {Bloch},\ and\
+  \citenamefont {Altman}}]{Chen-DoubleWell}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.-A.}\ \bibnamefont
+  {Chen}}, \bibinfo {author} {\bibfnamefont {S.~D.}\ \bibnamefont {Huber}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Trotzky}}, \bibinfo
+  {author} {\bibfnamefont {I.}~\bibnamefont {Bloch}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {E.}~\bibnamefont {Altman}},\ }\href {\doibase
+  10.1038/nphys1801} {\bibfield  {journal} {\bibinfo  {journal} {Nat. Phys.}\
+  }\textbf {\bibinfo {volume} {7}},\ \bibinfo {pages} {61} (\bibinfo {year}
+  {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Spagnolli}\ \emph {et~al.}(2017)\citenamefont
+  {Spagnolli}, \citenamefont {Semeghini}, \citenamefont {Masi}, \citenamefont
+  {Ferioli}, \citenamefont {Trenkwalder}, \citenamefont {Coop}, \citenamefont
+  {Landini}, \citenamefont {Pezz\`e}, \citenamefont {Modugno}, \citenamefont
+  {Inguscio}, \citenamefont {Smerzi},\ and\ \citenamefont
+  {Fattori}}]{Fattori-TunableDoubleWell}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Spagnolli}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Semeghini}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Masi}},
+  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Ferioli}}, \bibinfo
+  {author} {\bibfnamefont {A.}~\bibnamefont {Trenkwalder}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Coop}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Landini}}, \bibinfo {author} {\bibfnamefont
+  {L.}~\bibnamefont {Pezz\`e}}, \bibinfo {author} {\bibfnamefont
+  {G.}~\bibnamefont {Modugno}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Inguscio}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Smerzi}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Fattori}},\ }\href {\doibase
+  10.1103/PhysRevLett.118.230403} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {118}},\ \bibinfo {pages}
+  {230403} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Anker}\ \emph {et~al.}(2005)\citenamefont {Anker},
+  \citenamefont {Albiez}, \citenamefont {Gati}, \citenamefont {Hunsmann},
+  \citenamefont {Eiermann}, \citenamefont {Trombettoni},\ and\ \citenamefont
+  {Oberthaler}}]{Anker-SelfTrap}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Anker}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Albiez}},
+  \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Gati}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Hunsmann}}, \bibinfo {author}
+  {\bibfnamefont {B.}~\bibnamefont {Eiermann}}, \bibinfo {author}
+  {\bibfnamefont {A.}~\bibnamefont {Trombettoni}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {M.~K.}\ \bibnamefont {Oberthaler}},\ }\href {\doibase
+  10.1103/PhysRevLett.94.020403} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {94}},\ \bibinfo {pages}
+  {020403} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Reinhard}\ \emph {et~al.}(2013)\citenamefont
+  {Reinhard}, \citenamefont {Riou}, \citenamefont {Zundel}, \citenamefont
+  {Weiss}, \citenamefont {Li}, \citenamefont {Rey},\ and\ \citenamefont
+  {Hipolito}}]{Reinhard-SelfTrap}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Reinhard}}, \bibinfo {author} {\bibfnamefont {J.-F.}\ \bibnamefont {Riou}},
+  \bibinfo {author} {\bibfnamefont {L.~A.}\ \bibnamefont {Zundel}}, \bibinfo
+  {author} {\bibfnamefont {D.~S.}\ \bibnamefont {Weiss}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Li}}, \bibinfo {author} {\bibfnamefont
+  {A.~M.}\ \bibnamefont {Rey}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {R.}~\bibnamefont {Hipolito}},\ }\href {\doibase
+  10.1103/PhysRevLett.110.033001} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {110}},\ \bibinfo {pages}
+  {033001} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Labouvie}\ \emph {et~al.}(2015)\citenamefont
+  {Labouvie}, \citenamefont {Santra}, \citenamefont {Heun}, \citenamefont
+  {Wimberger},\ and\ \citenamefont {Ott}}]{OTT-ndc}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Labouvie}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Santra}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Heun}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Wimberger}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {H.}~\bibnamefont {Ott}},\ }\href {\doibase
+  10.1103/PhysRevLett.115.050601} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {115}},\ \bibinfo {pages}
+  {050601} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Xhani}\ \emph {et~al.}(2020)\citenamefont {Xhani},
+  \citenamefont {Galantucci}, \citenamefont {Barenghi}, \citenamefont {Roati},
+  \citenamefont {Trombettoni},\ and\ \citenamefont {Proukakis}}]{Xhani_2020}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Xhani}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Galantucci}},
+  \bibinfo {author} {\bibfnamefont {C.~F.}\ \bibnamefont {Barenghi}}, \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {Roati}}, \bibinfo {author}
+  {\bibfnamefont {A.}~\bibnamefont {Trombettoni}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {N.~P.}\ \bibnamefont {Proukakis}},\ }\href {\doibase
+  10.1088/1367-2630/abc8e4} {\bibfield  {journal} {\bibinfo  {journal} {New
+  Journal of Physics}\ }\textbf {\bibinfo {volume} {22}},\ \bibinfo {pages}
+  {123006} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Smale}\ \emph {et~al.}(2019)\citenamefont {Smale},
+  \citenamefont {He}, \citenamefont {Olsen}, \citenamefont {Jackson},
+  \citenamefont {Sharum}, \citenamefont {Trotzky}, \citenamefont {Marino},
+  \citenamefont {Rey},\ and\ \citenamefont {Thywissen}}]{Smaleeaax1568}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Smale}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {He}}, \bibinfo
+  {author} {\bibfnamefont {B.~A.}\ \bibnamefont {Olsen}}, \bibinfo {author}
+  {\bibfnamefont {K.~G.}\ \bibnamefont {Jackson}}, \bibinfo {author}
+  {\bibfnamefont {H.}~\bibnamefont {Sharum}}, \bibinfo {author} {\bibfnamefont
+  {S.}~\bibnamefont {Trotzky}}, \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Marino}}, \bibinfo {author} {\bibfnamefont {A.~M.}\
+  \bibnamefont {Rey}}, \ and\ \bibinfo {author} {\bibfnamefont {J.~H.}\
+  \bibnamefont {Thywissen}},\ }\href {\doibase 10.1126/sciadv.aax1568}
+  {\bibfield  {journal} {\bibinfo  {journal} {Science Advances}\ }\textbf
+  {\bibinfo {volume} {5}} (\bibinfo {year} {2019}),\
+  10.1126/sciadv.aax1568}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Anderson}\ and\ \citenamefont
+  {Kasevich}(1998)}]{Anderson-Interference}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~P.}\ \bibnamefont
+  {Anderson}}\ and\ \bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
+  {Kasevich}},\ }\href {\doibase 10.1126/science.282.5394.1686} {\bibfield
+  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo {volume}
+  {282}},\ \bibinfo {pages} {1686} (\bibinfo {year} {1998})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Cataliotti}\ \emph {et~al.}(2001)\citenamefont
+  {Cataliotti}, \citenamefont {Burger}, \citenamefont {Fort}, \citenamefont
+  {Maddaloni}, \citenamefont {Minardi}, \citenamefont {Trombettoni},
+  \citenamefont {Smerzi},\ and\ \citenamefont {Inguscio}}]{Cataliotti-01}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~S.}\ \bibnamefont
+  {Cataliotti}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Burger}},
+  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Fort}}, \bibinfo {author}
+  {\bibfnamefont {P.}~\bibnamefont {Maddaloni}}, \bibinfo {author}
+  {\bibfnamefont {F.}~\bibnamefont {Minardi}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Trombettoni}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Smerzi}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Inguscio}},\ }\href {\doibase 10.1126/science.1062612}
+  {\bibfield  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo
+  {volume} {293}},\ \bibinfo {pages} {843} (\bibinfo {year}
+  {2001})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Levy}\ \emph {et~al.}(2007)\citenamefont {Levy},
+  \citenamefont {Lahoud}, \citenamefont {Shomroni},\ and\ \citenamefont
+  {Steinhauer}}]{Levy-JosephsonBEC}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Levy}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Lahoud}},
+  \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont {Shomroni}}, \ and\
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Steinhauer}},\ }\href
+  {\doibase 10.1038/nature06186} {\bibfield  {journal} {\bibinfo  {journal}
+  {Nature}\ }\textbf {\bibinfo {volume} {449}},\ \bibinfo {pages} {579}
+  (\bibinfo {year} {2007})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {LeBlanc}\ \emph {et~al.}(2011)\citenamefont
+  {LeBlanc}, \citenamefont {Bardon}, \citenamefont {McKeever}, \citenamefont
+  {Extavour}, \citenamefont {Jervis}, \citenamefont {Thywissen}, \citenamefont
+  {Piazza},\ and\ \citenamefont {Smerzi}}]{LeblancJunction}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.~J.}\ \bibnamefont
+  {LeBlanc}}, \bibinfo {author} {\bibfnamefont {A.~B.}\ \bibnamefont {Bardon}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {McKeever}}, \bibinfo
+  {author} {\bibfnamefont {M.~H.~T.}\ \bibnamefont {Extavour}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Jervis}}, \bibinfo {author}
+  {\bibfnamefont {J.~H.}\ \bibnamefont {Thywissen}}, \bibinfo {author}
+  {\bibfnamefont {F.}~\bibnamefont {Piazza}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {A.}~\bibnamefont {Smerzi}},\ }\href {\doibase
+  10.1103/PhysRevLett.106.025302} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {106}},\ \bibinfo {pages}
+  {025302} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Pigneur}\ \emph {et~al.}(2018)\citenamefont
+  {Pigneur}, \citenamefont {Berrada}, \citenamefont {Bonneau}, \citenamefont
+  {Schumm}, \citenamefont {Demler},\ and\ \citenamefont
+  {Schmiedmayer}}]{Jorg-Relaxation}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Pigneur}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Berrada}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Bonneau}}, \bibinfo
+  {author} {\bibfnamefont {T.}~\bibnamefont {Schumm}}, \bibinfo {author}
+  {\bibfnamefont {E.}~\bibnamefont {Demler}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {J.}~\bibnamefont {Schmiedmayer}},\ }\href {\doibase
+  10.1103/PhysRevLett.120.173601} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {120}},\ \bibinfo {pages}
+  {173601} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Valtolina}\ \emph {et~al.}(2015)\citenamefont
+  {Valtolina}, \citenamefont {Burchianti}, \citenamefont {Amico}, \citenamefont
+  {Neri}, \citenamefont {Xhani}, \citenamefont {Seman}, \citenamefont
+  {Trombettoni}, \citenamefont {Smerzi}, \citenamefont {Zaccanti},
+  \citenamefont {Inguscio},\ and\ \citenamefont
+  {Roati}}]{Roati-JosephsonBECBCS}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Valtolina}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Burchianti}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Amico}},
+  \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Neri}}, \bibinfo {author}
+  {\bibfnamefont {K.}~\bibnamefont {Xhani}}, \bibinfo {author} {\bibfnamefont
+  {J.~A.}\ \bibnamefont {Seman}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Trombettoni}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Smerzi}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Zaccanti}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Inguscio}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {G.}~\bibnamefont {Roati}},\ }\href {\doibase 10.1126/science.aac9725}
+  {\bibfield  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo
+  {volume} {350}},\ \bibinfo {pages} {1505} (\bibinfo {year}
+  {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Schweikhard}\ \emph {et~al.}(2007)\citenamefont
+  {Schweikhard}, \citenamefont {Tung},\ and\ \citenamefont
+  {Cornell}}]{2D-JosephsonArray}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Schweikhard}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Tung}}, \
+  and\ \bibinfo {author} {\bibfnamefont {E.~A.}\ \bibnamefont {Cornell}},\
+  }\href {\doibase 10.1103/PhysRevLett.99.030401} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {99}},\
+  \bibinfo {pages} {030401} (\bibinfo {year} {2007})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Potnis}\ \emph {et~al.}(2017)\citenamefont {Potnis},
+  \citenamefont {Ramos}, \citenamefont {Maeda}, \citenamefont {Carr},\ and\
+  \citenamefont {Steinberg}}]{Steinberg-tunneling}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Potnis}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Ramos}},
+  \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Maeda}}, \bibinfo
+  {author} {\bibfnamefont {L.~D.}\ \bibnamefont {Carr}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {A.~M.}\ \bibnamefont {Steinberg}},\ }\href {\doibase
+  10.1103/PhysRevLett.118.060402} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {118}},\ \bibinfo {pages}
+  {060402} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chang}\ \emph {et~al.}(2005)\citenamefont {Chang},
+  \citenamefont {Qin}, \citenamefont {Zhang}, \citenamefont {You},\ and\
+  \citenamefont {Chapman}}]{Chapman-Spinor}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.-S.}\ \bibnamefont
+  {Chang}}, \bibinfo {author} {\bibfnamefont {Q.}~\bibnamefont {Qin}}, \bibinfo
+  {author} {\bibfnamefont {W.}~\bibnamefont {Zhang}}, \bibinfo {author}
+  {\bibfnamefont {L.}~\bibnamefont {You}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {M.~S.}\ \bibnamefont {Chapman}},\ }\href {\doibase
+  10.1038/nphys153} {\bibfield  {journal} {\bibinfo  {journal} {Nat. Phys.}\
+  }\textbf {\bibinfo {volume} {1}},\ \bibinfo {pages} {111} (\bibinfo {year}
+  {2005})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Farolfi}\ \emph {et~al.}(2021)\citenamefont
+  {Farolfi}, \citenamefont {Zenesini}, \citenamefont {Trypogeorgos},
+  \citenamefont {Recati}, \citenamefont {Lamporesi},\ and\ \citenamefont
+  {Ferrari}}]{Ferrari-Internal}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Farolfi}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Zenesini}},
+  \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Trypogeorgos}}, \bibinfo
+  {author} {\bibfnamefont {A.}~\bibnamefont {Recati}}, \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Lamporesi}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Ferrari}},\ }\href@noop {} {} (\bibinfo
+  {year} {2021}),\ \Eprint {http://arxiv.org/abs/2101.12643} {arXiv:2101.12643}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Evrard}\ \emph {et~al.}(2019)\citenamefont {Evrard},
+  \citenamefont {Qu}, \citenamefont {Jim\'enez-Garc\'{\i}a}, \citenamefont
+  {Dalibard},\ and\ \citenamefont {Gerbier}}]{Gerbier-Shapiro}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Evrard}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Qu}}, \bibinfo
+  {author} {\bibfnamefont {K.}~\bibnamefont {Jim\'enez-Garc\'{\i}a}}, \bibinfo
+  {author} {\bibfnamefont {J.}~\bibnamefont {Dalibard}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {F.}~\bibnamefont {Gerbier}},\ }\href {\doibase
+  10.1103/PhysRevA.100.023604} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {100}},\ \bibinfo {pages}
+  {023604} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Heyl}(2019)}]{Heyl_2019}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Heyl}},\ }\href {\doibase 10.1209/0295-5075/125/26001} {\bibfield  {journal}
+  {\bibinfo  {journal} {{EPL} (Europhysics Letters)}\ }\textbf {\bibinfo
+  {volume} {125}},\ \bibinfo {pages} {26001} (\bibinfo {year}
+  {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Tian}\ \emph {et~al.}(2020)\citenamefont {Tian},
+  \citenamefont {Yang}, \citenamefont {Qiu}, \citenamefont {Liang},
+  \citenamefont {Yang}, \citenamefont {Xu},\ and\ \citenamefont
+  {Duan}}]{Tian-excitedstate}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Tian}}, \bibinfo {author} {\bibfnamefont {H.-X.}\ \bibnamefont {Yang}},
+  \bibinfo {author} {\bibfnamefont {L.-Y.}\ \bibnamefont {Qiu}}, \bibinfo
+  {author} {\bibfnamefont {H.-Y.}\ \bibnamefont {Liang}}, \bibinfo {author}
+  {\bibfnamefont {Y.-B.}\ \bibnamefont {Yang}}, \bibinfo {author}
+  {\bibfnamefont {Y.}~\bibnamefont {Xu}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {L.-M.}\ \bibnamefont {Duan}},\ }\href {\doibase
+  10.1103/PhysRevLett.124.043001} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {124}},\ \bibinfo {pages}
+  {043001} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Josephson}(1962)}]{JOSEPHSON1962251}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Josephson}},\ }\href {\doibase https://doi.org/10.1016/0031-9163(62)91369-0}
+  {\bibfield  {journal} {\bibinfo  {journal} {Physics Letters}\ }\textbf
+  {\bibinfo {volume} {1}},\ \bibinfo {pages} {251} (\bibinfo {year}
+  {1962})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Golubov}\ \emph {et~al.}(2004)\citenamefont
+  {Golubov}, \citenamefont {Kupriyanov},\ and\ \citenamefont
+  {Il'ichev}}]{CPR-RMP}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont
+  {Golubov}}, \bibinfo {author} {\bibfnamefont {M.~Y.}\ \bibnamefont
+  {Kupriyanov}}, \ and\ \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Il'ichev}},\ }\href {\doibase 10.1103/RevModPhys.76.411} {\bibfield
+  {journal} {\bibinfo  {journal} {Rev. Mod. Phys.}\ }\textbf {\bibinfo {volume}
+  {76}},\ \bibinfo {pages} {411} (\bibinfo {year} {2004})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Hart}\ \emph {et~al.}(2019)\citenamefont {Hart},
+  \citenamefont {Cui}, \citenamefont {M\'enard}, \citenamefont {Deng},
+  \citenamefont {Antipov}, \citenamefont {Lutchyn}, \citenamefont {Krogstrup},
+  \citenamefont {Marcus},\ and\ \citenamefont {Moler}}]{Hart-Interactions}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Hart}}, \bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont {Cui}}, \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {M\'enard}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {Deng}}, \bibinfo {author} {\bibfnamefont
+  {A.~E.}\ \bibnamefont {Antipov}}, \bibinfo {author} {\bibfnamefont {R.~M.}\
+  \bibnamefont {Lutchyn}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Krogstrup}}, \bibinfo {author} {\bibfnamefont {C.~M.}\ \bibnamefont
+  {Marcus}}, \ and\ \bibinfo {author} {\bibfnamefont {K.~A.}\ \bibnamefont
+  {Moler}},\ }\href {\doibase 10.1103/PhysRevB.100.064523} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume}
+  {100}},\ \bibinfo {pages} {064523} (\bibinfo {year} {2019})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Baselmans}\ \emph {et~al.}(1999)\citenamefont
+  {Baselmans}, \citenamefont {Morpurgo}, \citenamefont {van Wees},\ and\
+  \citenamefont {Klapwijk}}]{Klapw-PiJunction}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~J.~A.}\
+  \bibnamefont {Baselmans}}, \bibinfo {author} {\bibfnamefont {A.~F.}\
+  \bibnamefont {Morpurgo}}, \bibinfo {author} {\bibfnamefont {B.~J.}\
+  \bibnamefont {van Wees}}, \ and\ \bibinfo {author} {\bibfnamefont {T.~M.}\
+  \bibnamefont {Klapwijk}},\ }\href {\doibase 10.1038/16204} {\bibfield
+  {journal} {\bibinfo  {journal} {Nature}\ }\textbf {\bibinfo {volume} {397}},\
+  \bibinfo {pages} {43} (\bibinfo {year} {1999})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {van Dam}\ \emph {et~al.}(2006)\citenamefont {van
+  Dam}, \citenamefont {Nazarov}, \citenamefont {Bakkers}, \citenamefont
+  {De~Franceschi},\ and\ \citenamefont {Kouwenhoven}}]{Kouw-PiJunction}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~A.}\ \bibnamefont
+  {van Dam}}, \bibinfo {author} {\bibfnamefont {Y.~V.}\ \bibnamefont
+  {Nazarov}}, \bibinfo {author} {\bibfnamefont {E.~P. A.~M.}\ \bibnamefont
+  {Bakkers}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {De~Franceschi}}, \ and\ \bibinfo {author} {\bibfnamefont {L.~P.}\
+  \bibnamefont {Kouwenhoven}},\ }\href {\doibase 10.1038/nature05018}
+  {\bibfield  {journal} {\bibinfo  {journal} {Nature}\ }\textbf {\bibinfo
+  {volume} {442}},\ \bibinfo {pages} {667} (\bibinfo {year}
+  {2006})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Delagrange}\ \emph {et~al.}(2015)\citenamefont
+  {Delagrange}, \citenamefont {Luitz}, \citenamefont {Weil}, \citenamefont
+  {Kasumov}, \citenamefont {Meden}, \citenamefont {Bouchiat},\ and\
+  \citenamefont {Deblock}}]{PiJunction-nanotube}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Delagrange}}, \bibinfo {author} {\bibfnamefont {D.~J.}\ \bibnamefont
+  {Luitz}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Weil}},
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Kasumov}}, \bibinfo
+  {author} {\bibfnamefont {V.}~\bibnamefont {Meden}}, \bibinfo {author}
+  {\bibfnamefont {H.}~\bibnamefont {Bouchiat}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {Deblock}},\ }\href {\doibase
+  10.1103/PhysRevB.91.241401} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. B}\ }\textbf {\bibinfo {volume} {91}},\ \bibinfo {pages} {241401}
+  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ramanathan}\ \emph {et~al.}(2011)\citenamefont
+  {Ramanathan}, \citenamefont {Wright}, \citenamefont {Muniz}, \citenamefont
+  {Zelan}, \citenamefont {Hill}, \citenamefont {Lobb}, \citenamefont
+  {Helmerson}, \citenamefont {Phillips},\ and\ \citenamefont
+  {Campbell}}]{Ramanthan-WeakLink}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Ramanathan}}, \bibinfo {author} {\bibfnamefont {K.~C.}\ \bibnamefont
+  {Wright}}, \bibinfo {author} {\bibfnamefont {S.~R.}\ \bibnamefont {Muniz}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Zelan}}, \bibinfo
+  {author} {\bibfnamefont {W.~T.}\ \bibnamefont {Hill}}, \bibinfo {author}
+  {\bibfnamefont {C.~J.}\ \bibnamefont {Lobb}}, \bibinfo {author}
+  {\bibfnamefont {K.}~\bibnamefont {Helmerson}}, \bibinfo {author}
+  {\bibfnamefont {W.~D.}\ \bibnamefont {Phillips}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {G.~K.}\ \bibnamefont {Campbell}},\ }\href {\doibase
+  10.1103/PhysRevLett.106.130401} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {106}},\ \bibinfo {pages}
+  {130401} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Eckel}\ \emph
+  {et~al.}(2014{\natexlab{a}})\citenamefont {Eckel}, \citenamefont {Lee},
+  \citenamefont {Jendrzejewski}, \citenamefont {Murray}, \citenamefont {Clark},
+  \citenamefont {Lobb}, \citenamefont {Phillips}, \citenamefont {Edwards},\
+  and\ \citenamefont {Campbell}}]{Campbell-Hysteresis}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Eckel}}, \bibinfo {author} {\bibfnamefont {J.~G.}\ \bibnamefont {Lee}},
+  \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Jendrzejewski}}, \bibinfo
+  {author} {\bibfnamefont {N.}~\bibnamefont {Murray}}, \bibinfo {author}
+  {\bibfnamefont {C.~W.}\ \bibnamefont {Clark}}, \bibinfo {author}
+  {\bibfnamefont {C.~J.}\ \bibnamefont {Lobb}}, \bibinfo {author}
+  {\bibfnamefont {W.~D.}\ \bibnamefont {Phillips}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {Edwards}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {G.~K.}\ \bibnamefont {Campbell}},\ }\href {\doibase
+  10.1038/nature12958} {\bibfield  {journal} {\bibinfo  {journal} {Nature}\
+  }\textbf {\bibinfo {volume} {506}},\ \bibinfo {pages} {200} (\bibinfo {year}
+  {2014}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Eckel}\ \emph
+  {et~al.}(2014{\natexlab{b}})\citenamefont {Eckel}, \citenamefont
+  {Jendrzejewski}, \citenamefont {Kumar}, \citenamefont {Lobb},\ and\
+  \citenamefont {Campbell}}]{EckelCPR}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Eckel}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Jendrzejewski}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Kumar}}, \bibinfo {author} {\bibfnamefont {C.~J.}\ \bibnamefont {Lobb}}, \
+  and\ \bibinfo {author} {\bibfnamefont {G.~K.}\ \bibnamefont {Campbell}},\
+  }\href {\doibase 10.1103/PhysRevX.4.031052} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. X}\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages}
+  {031052} (\bibinfo {year} {2014}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ryu}\ \emph {et~al.}(2013)\citenamefont {Ryu},
+  \citenamefont {Blackburn}, \citenamefont {Blinova},\ and\ \citenamefont
+  {Boshier}}]{Ryu-SQUID}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Ryu}}, \bibinfo {author} {\bibfnamefont {P.~W.}\ \bibnamefont {Blackburn}},
+  \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Blinova}}, \ and\
+  \bibinfo {author} {\bibfnamefont {M.~G.}\ \bibnamefont {Boshier}},\ }\href
+  {\doibase 10.1103/PhysRevLett.111.205301} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {111}},\ \bibinfo
+  {pages} {205301} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chien}\ \emph {et~al.}(2015)\citenamefont {Chien},
+  \citenamefont {Peotta},\ and\ \citenamefont {Di~Ventra}}]{Chien2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.-C.}\ \bibnamefont
+  {Chien}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Peotta}}, \
+  and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Di~Ventra}},\ }\href
+  {\doibase 10.1038/nphys3531} {\bibfield  {journal} {\bibinfo  {journal}
+  {Nature Physics}\ }\textbf {\bibinfo {volume} {11}},\ \bibinfo {pages} {998}
+  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gauthier}\ \emph {et~al.}(2019)\citenamefont
+  {Gauthier}, \citenamefont {Szigeti}, \citenamefont {Reeves}, \citenamefont
+  {Baker}, \citenamefont {Bell}, \citenamefont {Rubinsztein-Dunlop},
+  \citenamefont {Davis},\ and\ \citenamefont {Neely}}]{Neely-Atomtronic}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Gauthier}}, \bibinfo {author} {\bibfnamefont {S.~S.}\ \bibnamefont
+  {Szigeti}}, \bibinfo {author} {\bibfnamefont {M.~T.}\ \bibnamefont {Reeves}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Baker}}, \bibinfo
+  {author} {\bibfnamefont {T.~A.}\ \bibnamefont {Bell}}, \bibinfo {author}
+  {\bibfnamefont {H.}~\bibnamefont {Rubinsztein-Dunlop}}, \bibinfo {author}
+  {\bibfnamefont {M.~J.}\ \bibnamefont {Davis}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {T.~W.}\ \bibnamefont {Neely}},\ }\href {\doibase
+  10.1103/PhysRevLett.123.260402} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {123}},\ \bibinfo {pages}
+  {260402} (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ryu}\ \emph {et~al.}(2020)\citenamefont {Ryu},
+  \citenamefont {Samson},\ and\ \citenamefont {Boshier}}]{Ryu2020}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Ryu}}, \bibinfo {author} {\bibfnamefont {E.~C.}\ \bibnamefont {Samson}}, \
+  and\ \bibinfo {author} {\bibfnamefont {M.~G.}\ \bibnamefont {Boshier}},\
+  }\href {\doibase 10.1038/s41467-020-17185-6} {\bibfield  {journal} {\bibinfo
+  {journal} {Nature Communications}\ }\textbf {\bibinfo {volume} {11}},\
+  \bibinfo {pages} {3338} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Luo}\ \emph {et~al.}(2017)\citenamefont {Luo},
+  \citenamefont {Zou}, \citenamefont {Wu}, \citenamefont {Liu}, \citenamefont
+  {Han}, \citenamefont {Tey},\ and\ \citenamefont {You}}]{Luo620}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {X.-Y.}\ \bibnamefont
+  {Luo}}, \bibinfo {author} {\bibfnamefont {Y.-Q.}\ \bibnamefont {Zou}},
+  \bibinfo {author} {\bibfnamefont {L.-N.}\ \bibnamefont {Wu}}, \bibinfo
+  {author} {\bibfnamefont {Q.}~\bibnamefont {Liu}}, \bibinfo {author}
+  {\bibfnamefont {M.-F.}\ \bibnamefont {Han}}, \bibinfo {author} {\bibfnamefont
+  {M.~K.}\ \bibnamefont {Tey}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {L.}~\bibnamefont {You}},\ }\href {\doibase 10.1126/science.aag1106}
+  {\bibfield  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo
+  {volume} {355}},\ \bibinfo {pages} {620} (\bibinfo {year}
+  {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Qu}\ \emph {et~al.}(2020)\citenamefont {Qu},
+  \citenamefont {Evrard}, \citenamefont {Dalibard},\ and\ \citenamefont
+  {Gerbier}}]{Gerb}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Qu}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Evrard}}, \bibinfo
+  {author} {\bibfnamefont {J.}~\bibnamefont {Dalibard}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {F.}~\bibnamefont {Gerbier}},\ }\href {\doibase
+  10.1103/PhysRevLett.125.033401} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {125}},\ \bibinfo {pages}
+  {033401} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bader}\ \emph {et~al.}(2013)\citenamefont {Bader},
+  \citenamefont {Blanes},\ and\ \citenamefont {Casas}}]{imag-time-split-op}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Bader}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Blanes}}, \
+  and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Casas}},\ }\href
+  {\doibase 10.1063/1.4821126} {\bibfield  {journal} {\bibinfo  {journal} {The
+  Journal of Chemical Physics}\ }\textbf {\bibinfo {volume} {139}},\ \bibinfo
+  {pages} {124117} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\end{thebibliography}%
+
+
+
+
+\newcommand{\hH}{\hat{H}}
+\newcommand{\hp}{\hat{\psi}}
+\newcommand{\+}{^\dagger}
+\newcommand{\rmi}{{\rm i}}
+\newcommand{\rmd}{{\rm d}}
+%\newcommand{\noplus}{^{\phantom\dagger}}
+% \newcommand{\bra}[1]{\langle #1|}
+% \newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\vk}{\mathbf{k}}
+\newcommand{\vp}{\mathbf{p}}
+\newcommand{\vq}{\mathbf{q}}
+
+\clearpage
+%\begin{widetext}
+
+\section*{Supplementary Materials}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+
+
+
+\subsection{Experimental details}
+
+These experiments based on condensates of $^{87}$Rb operate with a fixed atomic scattering length $a$ and a nearly fixed particle number. For the studies in the main text (Fig.~\ref{FIG:fig2} and Fig.~\ref{FIG:fig4}), the characteristic collective interaction strength $U$ is only weakly altered by a change of the trapping potential, whereby the density is increased for the data of Fig.~\ref{FIG:fig4} (with a stiffer trap having a trapping frequency of 60~Hz along the direction of imparted momentum) as compared to Fig.~\ref{FIG:fig2} (based on a looser, essentially single-beam trap having a trapping frequency of $\sim$10$-$15~Hz along the direction of imparted momentum). A larger variation of the ratio of Hamiltonian parameters $U$ and $J$ is achieved by directly modifying the tunneling energy $J$ and investigating dynamics at equivalent times in units of the tunneling time $\hbar/J$.
+
+\subsubsection{Tunneling calibration}
+
+For all experimental data runs, we calibrated the value of tunneling by independently measuring two-site Rabi oscillations.
+That is, we turn on a single tunneling link for a range of evolution times and fit the resulting Rabi oscillation dynamics to obtain the effective tunneling rate. This is performed in the strong-tunneling limit, to minimize the influence of the mean-field interactions on the observed rate of tunneling.
+We then generate the frequencies for a lattice experiment under identical experimental conditions (voltages, laser powers), scaling the tunneling amplitudes according to the calibration.
+We run calibrations immediately before and after each data set, and the quoted tunneling values relate to the mean of the two calibration values, to account for drifts over time. The quoted tunneling errors relate to the standard error of the mean, incorporating the uncertainty (standard error of the fit of the Rabi oscillations) for each individual calibration.
+
+\subsubsection{Initialization of two-site superpositions}
+
+For the data in Fig.~\ref{FIG:fig4}, we initialized the system with equal populations at sites $0$ and $-1$.
+We apply a step-function $\pi/2$ pulse to the $0 \leftrightarrow -1$ tunneling link (evolving for one quarter of a Rabi period), also applying a controlled phase shift within the range $\phi/\pi = [-1,0.9]$ (in steps of 0.1).
+In all cases, the two-site superposition states acquire an additional relative phase shift of $-0.85\pi$ due to interactions during the initialization process, as determined by a comparison of the results to simulations in the high-tunneling limit.
+This leaves us with initialized states characterized by relative phase terms $\phi/\pi = [-0.95,0.95]$.
+For presentation purposes, we map the data onto a redundant range with span $4\pi$, copying data in the range $\phi/\pi = [0.05,0.95]$ to $\phi/\pi = [-1.95,-1.05]$ and copying data in the range $\phi/\pi = [-0.95,-0.05]$ to $\phi/\pi = [1.05,1.95]$.
+
+\begin{figure*}[t!]
+	\includegraphics[width=0.75\textwidth]{supplemetary_figure_MSL.pdf}
+	\centering
+	\caption{\label{FIG:figS1}
+		\textbf{Discrete-mode Gross--Pitaevskii simulations of phase-driven dynamics in a 21-site lattice.}
+		\textbf{(a,b)}~Mean displacement $\bar{n}$ and distribution width $\sigma_n$ vs. the initial relative phase $\phi$ of two-site superposition states after an evolution for two tunneling times. The curves relate to the same quantities presented in Fig.~\ref{FIG:fig4}, but are based on simplified discrete-mode GP simulations that neglect the influence of the real-space trapping potential. The solid curves assume a homogeneous mean-field energy of $U/h = 1500$~Hz, and are evaluated for the tunneling values labeled in the legend in (b). For reference, dashed black lines denote the mean displacement $\bar{n}$ and distribution width $\sigma_n$ vs. $\phi$ results for the non-interacting model.
+		\textbf{(c)}~The mean displacement $\bar{n}$ of the superposition state with an initial relative phase of $\pi/2$, plotted as a function of the interaction energy-to-tunneling energy ratio $U/J$ (for an evolution over two tunneling times).
+		\textbf{(d)}~The distribution width $\sigma_n$ of the superposition state with initial relative phases of $0$ (black) and $\pi$ (orange), plotted as a function of the interaction energy-to-tunneling energy ratio $U/J$ (for an evolution over two tunneling times).
+	}
+\end{figure*}
+
+\subsection{Numerical simulations}
+
+We compare the experimental data to simulations based on the nonlinear Schr\"{o}dinger equation (NLSE), alternatively referred to in the text as the Gross-Pitaevskii equation (GPE), with mean-field nonlinearities capturing the influences of atomic interactions. We utilize simulations of varying levels of complexity, opting for the simplest description capable of capturing the key experimental observations for each study. These analyses involve (1) solving a simple NLSE of 21 discrete modes with a uniform interaction energy to capture the self-trapping transition observed in Fig.~\ref{FIG:fig2} and (2) solving a real-space 1D NLSE that additionally incorporates the influences of the real-space trapping potential and the inhomogeneous and time-evolving atomic density to capture the phase-driven dynamics of Fig.~\ref{FIG:fig4}.
+
+\subsubsection{Discrete-mode Gross-Pitaevskii simulations}
+
+The simulation curves accompanying the experimental data in Fig.~\ref{FIG:fig2} reflect the results of a NLSE with 21 discrete momentum modes. This classical mean-field simulation is justified by the macroscopic populations of the momentum modes in the experiments, with the number of atoms greatly exceeding the number of coupled momentum modes. For concreteness, we solve the dynamics of the (normalized) wave functions under the equations
+\begin{equation}
+i \hbar \dot{\psi_j} = - J (\psi_{j-1} + \psi_{j+1}) + U \sum_{j'} g_{j,j'} |\psi_{j'}|^2 \psi_{j} \ ,
+\label{EQ:PsiHam}
+\end{equation}
+where $g_{j,j'} = 2 - \delta (j - j')$. This term reflects the different strengths of intra-mode and inter-mode interactions~\cite{Ozeri-RMP}. The exact difference by a factor of 2 reflects a simplifying approximation, whereby we assume the momentum modes to be perfectly distinguishable. This approximation, which neglects the influence of screening, is strictly valid when $2U \ll 4E_r \approx h \times 8.10$~kHz, where $E_r = \hbar^2 k^2 / 2M$ is the photon recoil energy.
+The term $U = N u$ represents the collective interaction, and normalization imposes $\sum_j |\psi_j|^2 = 1$.
+Implicit in this applied form is the projection of the full interaction Hamiltonian onto the modes comprising the 1D synthetic lattice. This maintains mode-conserving (forward) collisions but ignores mode-changing collisions that would populate states outside of the considered synthetic lattice state space~\cite{An-Inter}. We note that the forward collision rate is dominant when $\rho \sigma v \ll g \rho$ (with $\sigma$ the scattering cross section and $v$ the relative velocity of scattering atoms), or equivalently when the relative $k$-vector of scattering atoms $\Delta k$ is much less than $\hbar/a$, which is well satisfied for most of the cases explored.
+
+While these simple discrete-mode simulations adequately describe the results of Fig.~\ref{FIG:fig2}, they fail to capture several key features of the phase-driven dynamics data of Fig.~\ref{FIG:fig4}. Specifically, as discussed in the main text, discrete-mode simulations that ignore the real-space trapping potential both predict an effective reversal of atomic current (sign flip of the CPR, $\bar{n}$~vs.~$\phi$) under interaction strengths close to the self-trapping regime and also predict that the distribution width $\sigma_n$ should have $\phi$-dependence that is symmetric with respect to $\phi = 0$.
+
+Figure~\ref{FIG:figS1} summarizes the predicted behavior under the discrete-mode simulations. Figure~\pref{FIG:figS1}{a,\,b} show the predicted curves for $\bar{n}$~vs.~$\phi$ and $\sigma_n$~vs.~$\phi$ for the simple discrete-mode NLSE, which assumes a uniform interaction energy of $U=h \times 1500$~Hz. The curves are evaluated at the same values of $J$ as considered in Fig.~\ref{FIG:fig4}, with the curve assignments specified by the color legend in panel (b). For comparison, we also include the results for the non-interacting dynamics (dashed line, for $U=0$).
+
+While the non-interacting CPR in Fig.~\pref{FIG:figS1}{a} is purely sinusoidal, in line with our expectations of the group velocity of a simple cosine band structure, the interacting simulation curves become more and more skewed as $J$ is decreased. Furthermore, for the two smallest values of $J$ considered, the CPR in fact reverses sign over a broad range of $\phi$ values. Or, more directly, the CPR gains a more intricate $\phi$-dependence with several zero-crossings between $\phi = 0$ and $\phi = 2\pi$. To capture the dependence on the interaction energy-to-tunneling energy $U/J$, we summarize in Fig.~\pref{FIG:figS1}{c} the dependence of $\bar{n}$ on $\phi$ for the exemplary superposition state with relative phase $\phi = \pi/2$. For this discrete-mode GP simulation, a reversal of $\bar{n}$ (and by extension a reversal of the group velocity) is predicted for increasing $U/J$, along with an overall damping of the magnitude of $\bar{n}$ as full self-trapping sets in. This intriguing behavior is not observed in experiment, and is found to be absent in the simulations that incorporate the influence of the real-space trapping potential (detailed below).
+
+For the distribution width dependence on $\phi$ shown in Fig.~\pref{FIG:figS1}{b}, one again finds the expected dependence in the non-interacting limit. That is, viewing this as probing the evolution under the cosine band structure, equivalent large widths are found when the dispersion is largest at the band center ($\phi = 0$) and band edge ($\phi = \pm \pi$), and the smallest widths are found at the points where the group velocity is nearly constant ($\phi = \pm \pi/2$). Interactions again significantly change the response of $\sigma_n$~vs.~$\phi$. In particular, the discrete-mode simulations clearly depict the $\phi$-dependent collapse of spreading that is seen in Fig.~\ref{FIG:fig4}. First, for decreasing $J$ (increasing $U/J$), one finds that the in-phase state with $\phi = 0$ undergoes a collapse of $\sigma_n$ while the spreading of the out-of-phase state ($\phi = \pm \pi$) remains robust. The interaction-dependence is summarized in Fig.~\pref{FIG:figS1}{d}, where we plot the dependence of $\sigma_n$ on the ratio $U/J$ for the superposition states with $\phi=0$ and $\phi = \pi$. Although these results are for a short evolution of just two tunneling times, there is an apparent difference in the responses of these two states, indicating a $\phi$-dependent self-trapping transition that occurs at lower $U/J$ values for the equal-phase superposition state as compared to the out-of-phase state.
+
+Finally, we remark that further intricacies in the $\phi$-dependence of $\sigma_n$ can be seen in Fig.~\pref{FIG:figS1}{b} for the $J/h = 157$~Hz curve. Additional local minima of $\sigma_n$ are found (\textit{i.e.}, near $\pm\pi/2$), seemingly coinciding with the appearance of additional features in the $J/h = 157$~Hz CPR curve in Fig.~\pref{FIG:figS1}{a}. While the investigation of this behavior lies outside of the scope of the present study, this hints at the instability of different superposition states to a collapse of spreading, perhaps with an interpretation in terms of a nonlinear band structure and its evolution under an increasing $U/J$ ratio.
+
+\subsubsection{Real-space Gross-Pitaevskii simulations}
+
+As stated in the main text, a stiffer optical trapping condition was utilized for the data of Fig.~\ref{FIG:fig4} as compared to Fig.~\ref{FIG:fig2}, to achieve a slight enhancement of the collective $U$ (through enhancement of the atomic density). The higher trapping frequency of Fig.~\ref{FIG:fig4}, and the correspondingly shorter trap period, had resulted in the trapping potential having a non-negligible influence on the momentum-space evolution during the experiments. To capture the influence of the trap, along with the resulting inhomogeneous atomic density, real-space simulations were performed.
+
+In these numerical simulations, we treat the system as a 1D BEC in a harmonic trap under proper controlling laser fields. The simulation is done with dimensionless units by choosing the recoil momentum $\hbar k=\hbar\times 5.91\times 10^{6}~\text{m}^{-1}$ and energy $E_r= h \times 2.03$~kHz as the units for momentum and energy, and setting $\hbar=1$. A complete run of simulations consists of the following three phases.
+
+\begin{enumerate}
+    \item
+    \textbf{Imaginary-time evolution}. The BEC ground state is achieved through imaginary-time evolution with a time-split-operator numerical method~\cite{imag-time-split-op} and the ground-state energy is achieved to a precision up to $10^{-10}E_r$.
+    \item
+    \textbf{Equal superposition state}. The coupling laser field is incorporated in real space and the zero-momentum ground state is adiabatically evolved into the desired initial states with equally populated momentum modes. A relative phase between two major momentum states is imprinted through adjusting the phase of the lasers fields.
+    \item
+    \textbf{Wavepacket dynamics}. All real-space laser potentials are turned on, and the system is evolved (real-time evolution) up to two tunneling times before we achieve the final states.
+\end{enumerate}
+
+In our simulation, the real space is sampled by $2^{15}$ points and the step in momentum space is $6.67\times 10^{-3}\hbar k$. The time-evolution (both real and imaginary) step is $\delta t = 5\times 10^{-5}\hbar/E_r$ (corresponding to $3.92\times 10^{-9}$~s), which ensures the convergence of the final states. The trapping frequency is 60 Hz and the mean interaction strength of the initial state takes a value of $U/h=1568$~Hz as averaged over the whole trap. Finally, we confirm that our real-space GPE simulation agrees well with the tight-binding simulations when evaluated in the weak interaction and strong coupling limits.
+
+For both the experimental data and simulation curves of Fig.~\ref{FIG:fig4}, the evaluations of the expectation value and standard deviation of the displaced position in the synthetic lattice are restricted to a range of states that does not span the entire 21-site lattice. Specifically, those evaluations are performed over the site ranges of $\{-6, \ldots 5\}$ for the $J/h = 1253$~Hz and 583~Hz sets, $\{-5, \ldots 5\}$ for the $J/h = 402$~Hz set, $\{-4, \ldots 4\}$ for the $J/h = 257$~Hz set, and $\{-3, \ldots 3\}$ for the $J/h = 157$~Hz set.
+
+\end{document} 
